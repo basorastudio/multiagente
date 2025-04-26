@@ -3,7 +3,7 @@
     <q-table
       class="my-sticky-dynamic"
       title="Contactos"
-      :id="`tabela-contatos-${isChatContact ? 'atendimento' : ''}`"
+      :id="`tabla-contactos-${isChatContact ? 'atendimiento' : ''}`"
       :data="contacts"
       :columns="columns"
       :loading="loading"
@@ -34,7 +34,7 @@
             icon="mdi-close"
             @click="$router.push({ name: 'chat-empty' })"
           />
-          Contatos
+          Contactos
         </div>
         <q-space />
         <q-input
@@ -367,7 +367,7 @@ export default {
         { name: 'profilePicUrl', label: '', field: 'profilePicUrl', style: 'width: 50px', align: 'center' },
         {
           name: 'name',
-          label: 'Nome',
+          label: 'Nombre',
           field: 'name',
           align: 'left',
           style: 'width: 300px',
@@ -381,7 +381,7 @@ export default {
         { name: 'number', label: 'WhatsApp', field: 'number', align: 'center', style: 'width: 300px' },
         {
           name: 'wallet',
-          label: 'Carteira',
+          label: 'Cartera',
           field: 'wallet',
           align: 'center',
           style: 'width: 300px'
@@ -414,7 +414,7 @@ export default {
   },
   methods: {
     downloadModelCsv () {
-      const csvContent = 'nome;numero\nCliente;5511999999999'
+      const csvContent = 'nombre;numero\nCliente;5511999999999'
       const blob = new Blob([csvContent], { type: 'text/csv' })
       const link = document.createElement('a')
       link.href = window.URL.createObjectURL(blob)
@@ -602,7 +602,7 @@ export default {
             this.abrirAtendimentoExistente(contact, ticketAtual)
             return
           }
-          this.$notificarErro('Ocorreu um erro!', error)
+          this.$notificarErro('Ocurrió un error!', error)
         }
         this.loading = false
       })
@@ -681,7 +681,7 @@ export default {
           this.abrirChatContato(ticket)
         } catch (error) {
           this.$notificarErro(
-            'Não foi possível atualizar o token',
+            'No fue posible actualizar el token',
             error
           )
         }
@@ -690,15 +690,15 @@ export default {
     confirmarSincronizarContatos () {
       this.$q.dialog({
         title: '¡Atención! ¿Realmente desea sincronizar los contactos?',
-        message: 'Todos los contactos con los que ha conversado por Whatsapp serán creados. Esto puede tardar un poco...',
+        message: 'Todos los contactos con los que ha conversado por WhatsApp serán creados. Esto puede tardar un poco...',
         cancel: {
-          label: 'Não',
+          label: 'No',
           rounded: true,
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           rounded: true,
           color: 'warning',
           push: true

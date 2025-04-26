@@ -3,12 +3,12 @@
     <q-card class="q-ma-md">
       <q-card-section>
         <div class="text-h6">
-          Configurações API
+          Configuraciones API
           <q-btn
             class="float-right"
             color="primary"
             rounded
-            label="Adicionar"
+            label="Añadir"
             style="margin: 2px;"
             @click="apiEdicao = {}; modalApi = !modalApi;"
           />
@@ -27,7 +27,7 @@
 
           <q-item-section top>
             <q-item-label class="text-bold text-h6 q-my-sm">
-              Nome: {{ api.name }}
+              Nombre: {{ api.name }}
               <div class="text-grey-8 q-gutter-xs float-right">
                 <q-btn
                   class="gt-xs"
@@ -103,17 +103,17 @@
             </q-item-label>
             <q-item-label caption>
               <p class="text-weight-medium">
-                <span class="text-bold">WebHook Status Whatsapp:</span> <span> {{ api.urlServiceStatus }} </span>
+                <span class="text-bold">WebHook Estado Whatsapp:</span> <span> {{ api.urlServiceStatus }} </span>
               </p>
             </q-item-label>
             <q-item-label caption>
               <p class="text-weight-medium">
-                <span class="text-bold">WebHook Status Mensagem:</span> <span> {{ api.urlMessageStatus }} </span>
+                <span class="text-bold">WebHook Estado Mensaje:</span> <span> {{ api.urlMessageStatus }} </span>
               </p>
             </q-item-label>
             <q-item-label style="word-break: break-all;">
               <p class="text-weight-medium text-nowrap q-pr-md">
-                <span class="text-bold">Token Autenticação:
+                <span class="text-bold">Token Autenticación:
                 </span>
                 {{ api.authToken }}
               </p>
@@ -129,7 +129,7 @@
             style="margin: 2px;"
             @click="download" />
               <p class="text-weight-medium text-nowrap q-pr-md">
-                <span class="text-bold">Baixe o arquivo do postman verifique uso no site
+                <span class="text-bold">Descargue el archivo de postman y verifique su uso en el sitio
                 </span>
                 <a href="https://www.postman.com/" target="_blank">https://www.postman.com/</a>
               </p>
@@ -228,17 +228,17 @@ export default {
     },
     gerarNovoToken (api) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente gerar novo token para "${api.name}"?
-        Lembre que as integrações que utilizam atual irão parar de funcionar
-        até que atualize o token onde for necessário.`,
+        title: '¡Atención!!',
+        message: `¿Realmente desea generar un nuevo token para "${api.name}"?
+        Recuerde que las integraciones que usan el token actual dejarán de funcionar
+        hasta que actualice el token donde sea necesario.`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -247,10 +247,10 @@ export default {
         try {
           const { data } = await NovoTokenAPI(api)
           this.apiEditada(data)
-          this.$notificarSucesso('Token atualizado!')
+          this.$notificarSucesso('¡Token actualizado!')
         } catch (error) {
           this.$notificarErro(
-            'Não foi possível atualizar o token',
+            'No fue posible actualizar el token',
             error
           )
         }
@@ -258,15 +258,15 @@ export default {
     },
     deletarApi (api) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar "${api.name}"?`,
+        title: '¡Atención!!',
+        message: `¿Realmente desea eliminar "${api.name}"?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -278,9 +278,9 @@ export default {
             let newApis = [...this.apis]
             newApis = newApis.filter(a => a.id !== api.id)
             this.apis = [...newApis]
-            this.$notificarSucesso(`${api.name} deletada!`)
+            this.$notificarSucesso(`¡${api.name} eliminada!`)
           })
-          .catch(error => this.$notificarErro(`Não foi possível deletar ${api.name}`, error))
+          .catch(error => this.$notificarErro(`No fue posible eliminar ${api.name}`, error))
         this.loading = false
       })
     }

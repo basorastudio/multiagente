@@ -202,9 +202,9 @@
                                   class="q-mr-sm"
                                 >
                                   <q-tooltip content-class="bg-light-blue-1 text-black q-pa-sm shadow-4">
-                                    <span class="text-weight-medium"> Mensaje de respuesta: </span>
+                                    <span class="text-weight-medium"> Mensaje de retorno: </span>
                                     <span class="row col">
-                                      {{ acao.row.replyDefinition || 'Sin mensaje de respuesta' }}
+                                      {{ acao.row.replyDefinition || 'Sin mensaje de retorno' }}
                                     </span>
                                   </q-tooltip>
 
@@ -308,12 +308,12 @@ export default {
       ],
       // tipoEtapa: [
       //   { value: '1', label: 'Menú' },
-      //   { value: '2', label: 'Redirección' }
+      //   { value: '2', label: 'Redireccionamiento' }
       // ],
       acaoEtapa: [
         { value: '0', label: 'Próxima Etapa' },
-        { value: '1', label: 'Derivar a Fila' },
-        { value: '2', label: 'Derivar a Usuario' }
+        { value: '1', label: 'Enviar a Cola' },
+        { value: '2', label: 'Enviar a Usuario' }
       ],
       pagination: {
         rowsPerPage: 40,
@@ -337,7 +337,7 @@ export default {
           format: (v) => this.tipoAutoResposta.find(a => a.value == v).label || ''
         },
         { name: 'isActive', label: 'Estado', field: 'isActive', align: 'center', format: (v) => v === true ? 'Activo' : 'Inactivo' },
-        { name: 'celularTeste', label: 'Celular Prueba', field: 'celularTeste', align: 'center' },
+        { name: 'celularTeste', label: 'Celular de Prueba', field: 'celularTeste', align: 'center' },
         { name: 'acoes', label: '', field: 'acoes', align: 'center' }
       ],
       columnsEtapas: [
@@ -352,7 +352,7 @@ export default {
         { name: 'action', label: 'Acción', field: 'action', align: 'left', format: (v) => this.acaoEtapa.find(a => a.value == v).label },
         {
           name: 'queueId',
-          label: 'Fila Destino',
+          label: 'Cola Destino',
           field: 'queueId',
           align: 'center',
           format: (v) => v ? this.filas.find(f => f.id === v).queue : ''
@@ -394,7 +394,7 @@ export default {
     async deletarAutoResposta (autoResposta) {
       this.$q.dialog({
         title: '¡Atención!',
-        message: `¿Desea realmente eliminar la Respuesta Automática "${autoResposta.name}"?`,
+        message: `¿Realmente desea eliminar la Respuesta Automática "${autoResposta.name}"?`,
         cancel: {
           label: 'No',
           color: 'primary',
@@ -475,7 +475,7 @@ export default {
       }
       this.$q.dialog({
         title: '¡Atención!',
-        message: `¿Desea realmente eliminar la Etapa "ID: ${etapa.id}"?`,
+        message: `¿Realmente desea eliminar la Etapa "ID: ${etapa.id}"?`,
         cancel: {
           label: 'No',
           color: 'primary',
@@ -535,7 +535,7 @@ export default {
       this.etapaAutoRespostaEdicao = etapa
       this.$q.dialog({
         title: '¡Atención!',
-        message: `¿Desea realmente eliminar la Acción de "Clave: ${acao.words}"?`,
+        message: `¿Realmente desea eliminar la Acción de "Clave: ${acao.words}"?`,
         cancel: {
           label: 'No',
           color: 'primary',

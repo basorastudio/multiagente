@@ -11,7 +11,7 @@
             outlined
             stack-label
             bottom-slots
-            label="Fecha/Hora Agendamiento"
+            label="Fecha/Hora Programada"
             mode="date"
             color="primary"
             format24h
@@ -25,7 +25,7 @@
             outlined
             stack-label
             bottom-slots
-            label="Fecha/Hora Agendamiento"
+            label="Fecha/Hora Programada"
             mode="date"
             color="primary"
             format24h
@@ -74,7 +74,7 @@
             >
               <q-card-section class="text-center ">
                 <p class="text-h4 text-bold text-center"> {{ ticketsAndTimes.qtd_total_atendimentos }} </p>
-                Total Atenciones
+                Total Atendimientos
               </q-card-section>
             </q-card>
           </div>
@@ -203,7 +203,7 @@
     <q-card class="q-my-md q-pa-sm">
       <q-card-section class="q-pa-md">
         <q-table
-          title="Rendimiento Usuarios"
+          title="Rendimiento de Usuarios"
           :data="ticketsPerUsersDetail"
           :columns="TicketsPerUsersDetailColumn"
           row-key="email"
@@ -369,7 +369,7 @@ export default {
           position: 'bottom'
         },
         title: {
-          text: 'Atención por cola'
+          text: 'Atención por fila'
         },
         noData: {
           text: '¡Sin datos aquí!',
@@ -654,11 +654,11 @@ export default {
   },
   watch: {
     '$q.dark.isActive' () {
-      // necesario para cargar los gráficos con la alteración del modo (dark/light)
+      // necessário para carregar os gráficos com a alterçaão do mode (dark/light)
       this.$router.go()
     },
     '$q.screen.width' () {
-      // necesario para cargar los gráficos con la alteración del modo (dark/light)
+      // necessário para carregar os gráficos com a alterçaão do mode (dark/light)
       this.setConfigWidth()
     }
   },
@@ -766,7 +766,7 @@ export default {
         .then(res => {
           this.ticketsEvolutionByPeriod = res.data
           const series = [{
-            name: 'Atenciones',
+            name: 'Atendimentos',
             type: 'column',
             data: []
           }, {

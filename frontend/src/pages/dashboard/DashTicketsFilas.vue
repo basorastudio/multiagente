@@ -27,7 +27,7 @@
           <q-toggle v-if="profile === 'admin'"
             class="q-ml-lg"
             v-model="pesquisaTickets.showAll"
-            label="(Admin) - Visualizar Todos" />
+            label="(Admin) - Ver Todos" />
           <q-separator class="q-mb-md"
             v-if="profile === 'admin'" />
 
@@ -41,7 +41,7 @@
             multiple
             options-dense
             use-chips
-            label="Colas"
+            label="Filas"
             color="primary"
             v-model="pesquisaTickets.queuesIds"
             :options="filas"
@@ -55,7 +55,7 @@
           <q-separator />
           <div class="text-h6 q-mt-md">Tipo de visualización</div>
           <q-option-group :options="optionsVisao"
-            label="Visión"
+            label="Vista"
             type="radio"
             v-model="visao" />
         </q-card-section>
@@ -105,7 +105,7 @@
               <q-item v-if="visao === 'F' || visao === 'FS'"
                 class="text-bold"
                 :class="{
-                  'bg-negative text-white': definirNomeFila(item[0]) === 'Sin Cola'
+                  'bg-negative text-white': definirNomeFila(item[0]) === 'Sem Fila'
                 }">
                 <q-item-section avatar>
                   <q-avatar>
@@ -116,9 +116,9 @@
                   <q-item-label>{{ definirNomeFila(item[0]) }}</q-item-label>
                   <q-item-label caption
                     :class="{
-                      'text-white': definirNomeFila(item[0]) === 'Sin Cola'
+                      'text-white': definirNomeFila(item[0]) === 'Sem Fila'
                     }">
-                    Abiertos: {{ counterStatus(item).open }} | Pendientes: {{ counterStatus(item).pending }} | Total: {{
+                    Abertos: {{ counterStatus(item).open }} | Pendientes: {{ counterStatus(item).pending }} | Total: {{
                         item.length
                     }}
                   </q-item-label>
@@ -168,8 +168,8 @@ export default {
       optionsVisao: [
         { label: 'Por Usuario', value: 'U' },
         { label: 'Por Usuario (Sintético)', value: 'US' },
-        { label: 'Por Colas', value: 'F' },
-        { label: 'Por Colas (Sintético)', value: 'FS' }
+        { label: 'Por Filas', value: 'F' },
+        { label: 'Por Filas (Sintético)', value: 'FS' }
       ],
       visao: 'U',
       pesquisaTickets: {
@@ -258,10 +258,10 @@ export default {
       // mostrar todos
       if (this.pesquisaTickets.showAll) return true
 
-      // no existir colas registradas
+      // não existir filas cadastradas
       if (!this.filas.length) return true
 
-      // verificar si la cola del ticket está filtrada
+      // verificar se a fila do ticket está filtrada
       const isQueue = this.pesquisaTickets.queuesIds.indexOf(q => data.queueId === q)
 
       let isValid = false
@@ -270,12 +270,11 @@ export default {
       }
       return isValid
 
-      // verificar si el usuario tiene acceso a la cola del ticket
+      // verificar se o usuario possui ecesso a fila do ticket
     },
     conectSocketQueues (tenantId, queueId) {
       // socket.on(`${tenantId}:${queueId}:ticket:queue`, data => {
       //   if (!this.verifyIsActionSocket(data.ticket)) return
-
       //   if (data.action === 'update') {
       //     this.updateTicket(data.ticket)
       //   }
@@ -326,7 +325,7 @@ export default {
     },
     definirNomeFila (f) {
       const fila = this.filas.find(fila => fila.id === f.queueId)
-      return fila?.queue || 'Sin Cola'
+      return fila?.queue || 'Sin Fila'
     },
     counterStatus (tickets) {
       const status = {

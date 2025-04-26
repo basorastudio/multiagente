@@ -50,7 +50,7 @@
                   :showSearch="false"
                   :emojisByRow="20"
                   labelSearch="Localizar..."
-                  lang="pt-BR"
+                  lang="es"
                   @select="onInsertSelectEmoji"
                 />
               </q-menu>

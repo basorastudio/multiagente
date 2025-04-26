@@ -70,7 +70,7 @@
                     type="time"
                     v-model="dia.hr1"
                   />
-                  <h6>às</h6>
+                  <h6>hasta</h6>
                   <q-input
                     :disable="dia.type !== 'H'"
                     dense
@@ -95,7 +95,7 @@
                     type="time"
                     v-model="dia.hr3"
                   />
-                  <h6>às</h6>
+                  <h6>hasta</h6>
                   <q-input
                     :disable="dia.type !== 'H'"
                     dense
@@ -150,7 +150,7 @@
                   :showSearch="false"
                   :emojisByRow="20"
                   labelSearch="Localizar..."
-                  lang="pt-BR"
+                  lang="es"
                   @select="onInsertSelectEmoji"
                 />
               </q-menu>

@@ -1,159 +1,157 @@
 <template>
   <div v-if="userProfile === 'admin'">
-<q-card bordered>
-  <q-card-section>
-    <div class="text-h6 q-px-sm">Reporte de Tickets</div>
-  </q-card-section>
-  <q-card-section class="q-pt-none">
-    <fieldset class="rounded-all">
-      <legend class="q-px-sm">Filtros</legend>
-      <div class="row q-gutter-md items-center">
-        <!-- Primeira linha com múltiplos filtros -->
-        <div class="col-xs-12 col-md-3">
-          <q-input
-            outlined
-            rounded
-            dense
-            v-model="searchQuery"
-            label="Buscar por protocolo, nombre, ticket o celular"
-          />
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <q-select
-            outlined
-            rounded
-            dense
-            v-model="statusFilter"
-            :options="optionsStatus"
-            option-value="value"
-            option-label="label"
-            emit-value
-            map-options
-            label="Estado"
-          />
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <DatePick
-            dense
-            rounded
-            v-model="dateStartFilter"
-            label="Fecha Inicial"
-          />
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <DatePick
-            dense
-            rounded
-            v-model="dateEndFilter"
-            label="Fecha Final"
-          />
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <q-select
-            outlined
-            rounded
-            dense
-            v-model="queueFilter"
-            :options="queues"
-            option-value="id"
-            option-label="queue"
-            emit-value
-            map-options
-            label="Cola"
-          />
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <q-select
-            outlined
-            rounded
-            dense
-            v-model="attendantFilter"
-            :options="attendants"
-            option-value="id"
-            option-label="name"
-            emit-value
-            map-options
-            label="Agente"
-          />
-        </div>
-        <!-- Botões de ação -->
-        <div class="col-xs-12 col-md-6 text-center">
-          <q-btn
-            class="q-mr-sm"
-            color="primary"
-            rounded
-            label="Generar"
-            icon="refresh"
-            @click="applyFilters"
-          />
-          <q-btn
-            class="q-mr-sm"
-            color="black"
-            rounded
-            label="Limpiar Filtro"
-            @click="clearFilters"
-          />
-          <q-btn
-            color="warning"
-            rounded
-            label="Excel"
-            @click="exportToXLSX"
-          />
-        </div>
-      </div>
-    </fieldset>
-  </q-card-section>
-</q-card>
+    <q-card bordered>
+      <q-card-section>
+        <div class="text-h6 q-px-sm">Reporte de Tickets</div>
+      </q-card-section>
+      <q-card-section class="q-pt-none">
+        <fieldset class="rounded-all">
+          <legend class="q-px-sm">Filtros</legend>
+          <div class="row q-gutter-md items-center">
+            <!-- Primera línea con múltiples filtros -->
+            <div class="col-xs-12 col-md-3">
+              <q-input
+                outlined
+                rounded
+                dense
+                v-model="searchQuery"
+                label="Buscar por protocolo, nombre, ticket o celular"
+              />
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <q-select
+                outlined
+                rounded
+                dense
+                v-model="statusFilter"
+                :options="optionsStatus"
+                option-value="value"
+                option-label="label"
+                emit-value
+                map-options
+                label="Estado"
+              />
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <DatePick
+                dense
+                rounded
+                v-model="dateStartFilter"
+                label="Fecha Inicial"
+              />
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <DatePick
+                dense
+                rounded
+                v-model="dateEndFilter"
+                label="Fecha Final"
+              />
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <q-select
+                outlined
+                rounded
+                dense
+                v-model="queueFilter"
+                :options="queues"
+                option-value="id"
+                option-label="queue"
+                emit-value
+                map-options
+                label="Cola"
+              />
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <q-select
+                outlined
+                rounded
+                dense
+                v-model="attendantFilter"
+                :options="attendants"
+                option-value="id"
+                option-label="name"
+                emit-value
+                map-options
+                label="Agente"
+              />
+            </div>
+            <!-- Botones de acción -->
+            <div class="col-xs-12 col-md-6 text-center">
+              <q-btn
+                class="q-mr-sm"
+                color="primary"
+                rounded
+                label="Generar"
+                icon="refresh"
+                @click="applyFilters"
+              />
+              <q-btn
+                class="q-mr-sm"
+                color="black"
+                rounded
+                label="Limpiar Filtro"
+                @click="clearFilters"
+              />
+              <q-btn
+                color="warning"
+                rounded
+                label="Excel"
+                @click="exportToXLSX"
+              />
+            </div>
+          </div>
+        </fieldset>
+      </q-card-section>
+    </q-card>
 
     <div class="row">
       <div class="col-xs-12 q-mt-sm">
         <div
           class="tableLarge q-ma-sm q-markup-table q-table__container q-table__card q-table--cell-separator q-table--flat q-table--bordered q-table--no-wrap">
-            <!-- Exibir estado de carregamento -->
-    <div v-if="loading" class="loading">
-      Carregando informações, por favor aguarde...
-    </div>
+          <!-- Mostrar estado de cargamento -->
+          <div v-if="loading" class="loading">
+            Cargando información, por favor espere...
+          </div>
 
-        <!-- Tabela de atendimentos -->
-        <table v-if="!loading" class="styled-table">
-      <thead>
-        <tr>
-          <th>Ticket</th>
-          <th>Status</th>
-          <th>Nome</th>
-          <th>Fila</th>
-          <th>Atendente</th>
-          <th>Horário Criação</th>
-          <th>Horário Finalização</th>
-          <th>Chat</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="ticket in filteredTickets" :key="ticket.id">
-          <td>{{ ticket.id }}</td>
-          <td><span :class="getStatusClass(ticket.status)">{{ ticket.status.toUpperCase() }}</span></td>
-          <td>{{ ticket.name }}</td>
-          <td>{{ ticket.queue }}</td>
-          <td>{{ ticket.username || 'N/A' }}</td>
-          <td>{{ formatDate(ticket.createdAt) }}</td>
-          <td>{{ formatDate(ticket.updatedAt) }}</td>
-          <td><a href="#" @click.prevent="visualizarChat(ticket.id)">VISUALIZAR CHAT</a></td>
-        </tr>
-      </tbody>
-    </table>
+          <!-- Tabla de atenciones -->
+          <table v-if="!loading" class="styled-table">
+            <thead>
+              <tr>
+                <th>Ticket</th>
+                <th>Estado</th>
+                <th>Nombre</th>
+                <th>Cola</th>
+                <th>Atendente</th>
+                <th>Horario Creación</th>
+                <th>Horario Finalización</th>
+                <th>Chat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="ticket in filteredTickets" :key="ticket.id">
+                <td>{{ ticket.id }}</td>
+                <td><span :class="getStatusClass(ticket.status)">{{ ticket.status.toUpperCase() }}</span></td>
+                <td>{{ ticket.name }}</td>
+                <td>{{ ticket.queue }}</td>
+                <td>{{ ticket.username || 'N/A' }}</td>
+                <td>{{ formatDate(ticket.createdAt) }}</td>
+                <td>{{ formatDate(ticket.updatedAt) }}</td>
+                <td><a href="#" @click.prevent="visualizarChat(ticket.id)">VISUALIZAR CHAT</a></td>
+              </tr>
+            </tbody>
+          </table>
 
-    <div v-if="hasMore && !loading" class="pagination">
-      <button @click="loadMoreTickets" class="filter-button">CARREGAR MAIS</button>
-    </div>
-
+          <div v-if="hasMore && !loading" class="pagination">
+            <button @click="loadMoreTickets" class="filter-button">CARGAR MÁS</button>
+          </div>
         </div>
       </div>
     </div>
 
-      <!-- Modal de Chat -->
-      <ChatModal v-if="mostrarModal" :ticketId="String(ticketIdAtual)" @close="fecharChatModal" />
+    <!-- Modal de Chat -->
+    <ChatModal v-if="mostrarModal" :ticketId="String(ticketIdActual)" @close="cerrarChatModal" />
   </div>
-
 </template>
 
 <script>
@@ -167,9 +165,9 @@ export default {
   data () {
     return {
       optionsStatus: [
-        { value: 'open', label: 'Aberto' },
-        { value: 'pending', label: 'Pendente' },
-        { value: 'closed', label: 'Fechado' }
+        { value: 'open', label: 'Abierto' },
+        { value: 'pending', label: 'Pendiente' },
+        { value: 'closed', label: 'Cerrado' }
       ],
       userProfile: 'user',
       contacts: [], // Lista de tickets
@@ -178,7 +176,7 @@ export default {
       dateStartFilter: '',
       dateEndFilter: '',
       queueFilter: '',
-      queues: [], // Lista de filas
+      queues: [], // Lista de colas
       attendantFilter: '',
       attendants: [], // Lista de atendentes
       pageNumber: 1,
@@ -186,28 +184,28 @@ export default {
       hasMore: false,
       loading: false,
       mostrarModal: false,
-      ticketIdAtual: null
+      ticketIdActual: null
     }
   },
   computed: {
     filteredTickets () {
       let tickets = this.contacts
 
-      // Filtro por atendente localmente (comparando o userId com o attendantFilter)
+      // Filtro por atendente localmente (comparando el userId con el attendantFilter)
       if (this.attendantFilter) {
         tickets = tickets.filter(ticket => {
           return ticket.userId === this.attendantFilter
         })
       }
 
-      // Filtro por fila localmente (comparando o queueId com o queueFilter)
+      // Filtro por cola localmente (comparando el queueId con el queueFilter)
       if (this.queueFilter) {
         tickets = tickets.filter(ticket => {
           return ticket.queueId === this.queueFilter
         })
       }
 
-      // Filtro por data localmente (usando o campo 'createdAt')
+      // Filtro por fecha localmente (usando el campo 'createdAt')
       if (this.dateStartFilter && this.dateEndFilter) {
         const startDate = new Date(this.dateStartFilter)
         const endDate = new Date(this.dateEndFilter)
@@ -248,7 +246,7 @@ export default {
           this.hasMore = false
         }
       } catch (error) {
-        console.error('Erro ao consultar tickets:', error)
+        console.error('Error al consultar tickets:', error)
       } finally {
         this.loading = false
       }
@@ -261,7 +259,7 @@ export default {
         const attendantsData = await ListarUsuarios()
         this.attendants = attendantsData.data.users
       } catch (error) {
-        console.error('Erro ao carregar filas e atendentes:', error)
+        console.error('Error al cargar colas y atendentes:', error)
       }
     },
     applyFilters () {
@@ -271,12 +269,12 @@ export default {
     loadMoreTickets () {
       this.pageNumber++
       this.consultarTickets().then(() => {
-        // Espera a consulta de tickets terminar
+        // Espera a la consulta de tickets terminar
         this.$nextTick(() => {
-          // Rola até o final da página após carregar mais tickets
+          // Desplázate hasta el final de la página después de cargar más tickets
           window.scrollTo({
             top: document.documentElement.scrollHeight,
-            behavior: 'auto' // ou 'smooth' para animação suave
+            behavior: 'auto' // o 'smooth' para animación suave
           })
         })
       })
@@ -308,10 +306,10 @@ export default {
       }
     },
     visualizarChat (ticketId) {
-      this.ticketIdAtual = ticketId
+      this.ticketIdActual = ticketId
       this.mostrarModal = true
     },
-    fecharChatModal () {
+    cerrarChatModal () {
       this.mostrarModal = false
     },
     exportToXLSX () {
@@ -325,7 +323,7 @@ export default {
   mounted () {
     this.userProfile = localStorage.getItem('profile')
     this.consultarTickets()
-    this.loadQueuesAndAttendants() // Carregar filas e atendentes ao montar o componente
+    this.loadQueuesAndAttendants() // Cargar colas y atendentes al montar el componente
   },
   components: {
     ChatModal

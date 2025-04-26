@@ -72,7 +72,7 @@
             v-model="campanha.delay"
             input-class="text-right"
             suffix="segundos"
-            label="Retardo"
+            label="Retraso"
             error-message="Obligatorio"
           />
           <q-file
@@ -80,7 +80,7 @@
             rounded
             v-if="!campanha.mediaUrl"
             :loading="loading"
-            label="Medios para composición del mensaje"
+            label="Composición de medios del mensaje"
             ref="PickerFileMessage"
             v-model="arquivos"
             class="col-grow"
@@ -102,7 +102,7 @@
             v-if="campanha.mediaUrl"
             readonly
             rounded
-            label="Medios para composición del mensaje"
+            label="Composición de medios del mensaje"
             :value="cArquivoName"
             class=" col-grow "
             bg-color="blue-grey-1"
@@ -152,7 +152,7 @@
                     :showSearch="false"
                     :emojisByRow="20"
                     labelSearch="Buscar..."
-                    lang="pt-BR"
+                    lang="es"
                     @select="(v) => onInsertSelectEmoji(v, 'message1')"
                   />
                 </q-menu>
@@ -167,7 +167,7 @@
                   'bg-red-1': $v.campanha.message1.$error
                 }"
                 @blur="$v.campanha.message1.$touch"
-                placeholder="Escriba el mensaje"
+                placeholder="Escribe el mensaje"
                 autogrow
                 dense
                 outlined
@@ -223,7 +223,7 @@
                     :showSearch="false"
                     :emojisByRow="20"
                     labelSearch="Buscar..."
-                    lang="pt-BR"
+                    lang="es"
                     @select="(v) => onInsertSelectEmoji(v, 'message2')"
                   />
                 </q-menu>
@@ -234,7 +234,7 @@
                 ref="message2"
                 style="min-height: 12.5vh; max-height: 12.5vh;"
                 class="q-pa-sm bg-white full-width rounded-all"
-                placeholder="Escriba el mensaje"
+                placeholder="Escribe el mensaje"
                 autogrow
                 dense
                 outlined
@@ -270,7 +270,7 @@
             </div>
           </div>
           <div class="row items-center q-pt-none">
-            <label class="text-heading text-bold">3ª Mensagem</label>
+            <label class="text-heading text-bold">3º Mensaje</label>
             <div class="col-xs-3 col-sm-2 col-md-1">
               <q-btn
                 round
@@ -294,7 +294,7 @@
                     :showSearch="false"
                     :emojisByRow="20"
                     labelSearch="Buscar..."
-                    lang="pt-BR"
+                    lang="es"
                     @select="(v) => onInsertSelectEmoji(v, 'message3')"
                   />
                 </q-menu>
@@ -305,7 +305,7 @@
                 ref="message3"
                 style="min-height: 12.5vh; max-height: 12.5vh;"
                 class="q-pa-sm bg-white full-width rounded-all"
-                placeholder="Escriba el mensaje"
+                placeholder="Escribe el mensaje"
                 autogrow
                 dense
                 outlined
@@ -347,7 +347,7 @@
             class="full-width"
           >
             <div class="text-body1 text-bold q-pa-sm full-width text-center bg-grey-3">
-              Visualização
+              Vista previa
             </div>
             <q-card-section class="row justify-center">
               <q-option-group
@@ -385,7 +385,7 @@
           />
           <q-btn
             rounded
-            label="Salvar"
+            label="Guardar"
             color="positive"
             icon="save"
             @click="handleCampanha"
@@ -437,7 +437,7 @@ export default {
     return {
       variaveis: [
         { label: 'Nombre', value: '{{name}}' },
-        { label: 'Saludos', value: '{{greeting}}' }
+        { label: 'Saludo', value: '{{greeting}}' }
       ],
       optRadio: [
         { label: 'Msg.1', value: 'message1' },
@@ -611,7 +611,7 @@ export default {
         message: `¡Ups... Ocurrió un error! <br>
         <ul>
           <li>El archivo debe tener máximo 10MB.</li>
-          <li>Prioriza el envío de imagen o video.</li>
+          <li>Priorice el envío de imagen o video.</li>
         </ul>`,
         type: 'negative',
         progress: true,
@@ -631,7 +631,7 @@ export default {
         })
         const url = window.URL.createObjectURL(
           new Blob([data], { type: headers['content-type'] })
-          )
+        )
         this.urlMedia = url
         this.abrirModalImagem = true
       } catch (error) {
@@ -658,7 +658,7 @@ export default {
       if (this.$v.campanha.$error) {
         this.$q.notify({
           type: 'negative',
-          message: 'Verifique que todos los campos obligatorios estén completados'
+          message: 'Verifique que todos los campos obligatorios estén completos'
         })
         return
       }
@@ -678,7 +678,7 @@ export default {
             progress: true,
             position: 'top',
             textColor: 'black',
-            message: '¡Campaña editada!',
+            message: 'Campaña editada!',
             actions: [{
               icon: 'close',
               round: true,
@@ -692,7 +692,7 @@ export default {
             type: 'positive',
             progress: true,
             position: 'top',
-            message: '¡Campaña creada!',
+            message: 'Campaña creada!',
             actions: [{
               icon: 'close',
               round: true,

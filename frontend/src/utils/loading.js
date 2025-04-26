@@ -30,7 +30,7 @@ loading.show = function (config) {
     } else {
       Loading.show({
         spinner: QSpinnerPuff,
-        message: 'Estamos trabajando...',
+        message: 'Estamos trabalhando...',
         messageColor: 'white',
         spinnerSize: 150,
         spinnerColor: 'white',

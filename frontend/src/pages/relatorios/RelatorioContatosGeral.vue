@@ -169,7 +169,7 @@ export default {
       bl_sintetico: false,
       contatos: [],
       columns: [
-        { name: 'name', label: 'Nome', field: 'name', align: 'left', style: 'width: 300px', format: v => this.replaceEmojis(v) },
+        { name: 'name', label: 'Nombre', field: 'name', align: 'left', style: 'width: 300px', format: v => this.replaceEmojis(v) },
         { name: 'number', label: 'WhatsApp', field: 'number', align: 'center', style: 'width: 300px' },
         { name: 'email', label: 'Email', field: 'email', style: 'width: 500px', align: 'left' }
       ],

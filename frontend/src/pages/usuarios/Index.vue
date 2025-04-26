@@ -119,7 +119,7 @@ export default {
       },
       loading: false,
       columns: [
-        { name: 'name', label: 'Nome', field: 'name', align: 'left' },
+        { name: 'name', label: 'Nombre', field: 'name', align: 'left' },
         { name: 'email', label: 'E-mail', field: 'email', align: 'left' },
         {
           name: 'queues',
@@ -131,7 +131,7 @@ export default {
           style: 'max-width: 400px;'
         },
         { name: 'profile', label: 'Perfil', field: 'profile', align: 'left', format: (v) => this.optionsProfile.find(o => o.value == v).label },
-        { name: 'acoes', label: 'Ações', field: 'acoes', align: 'center' }
+        { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ]
     }
   },
@@ -196,7 +196,7 @@ export default {
     },
     deletarUsuario (usuario) {
       this.$q.dialog({
-        title: `¡Atención!! ¿Desea realmente eliminar al usuario "${usuario.name}"?`,
+        title: `¡Atención! ¿Desea realmente eliminar al usuario "${usuario.name}"?`,
         // message: 'Mensagens antigas não serão apagadas no whatsapp.',
         cancel: {
           label: 'No',

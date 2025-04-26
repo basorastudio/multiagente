@@ -13,20 +13,20 @@ const verifySocketTicketAction = (ticket, action = null) => {
 
   const isAdminShowAll = profile === 'admin' && filtros.showAll
 
-  // Verificar si es admin y si está solicitando mostrar todos
+  // Verificar se é admin e se está solicitando para mostrar todos
   if (isAdminShowAll) {
     // console.log('isAdminShowAll', isAdminShowAll)
     return true
   }
 
   if (!ticket || ticket.status === 'closed') {
-    // console.log('Sin ticket o estado cerrado', !ticket || ticket.status === 'closed')
+    // console.log('Sem ticket ou status closed', !ticket || ticket.status === 'closed')
     return true
   }
 
   // verificar se já é um ticket do usuário
   if (ticket.userId && ticket.userId === usuario.id) {
-    // console.log('Ticket del usuario')
+    // console.log('Ticket do usuário')
     return true
   }
 
@@ -35,19 +35,19 @@ const verifySocketTicketAction = (ticket, action = null) => {
     'delete'
   ]
 
-  // verificar si la acción está en la lista blanca
+  // verifciar se ação está na whitelist
   if (whiteListAction.includes(action)) {
     // console.log('Action WhiteLista', action)
     return true
   }
 
-  // verificar si se está realizando búsqueda
+  // verificar se está fazendo pesquisa
   // if (filtros.searchParam) return false
 
   let isValid = false
 
   // Se o ticket não possuir fila definida, checar o filtro
-  // permite visualizar tickets sin colas definidas es falso.
+  // permite visualizar tickets sem filas definidas é falso.
   if (!ticket.queueId && !filtros.includeNotQueueDefined) {
     // console.log('filtros.includeNotQueueDefined', !filtros.includeNotQueueDefined)
     return false
@@ -59,7 +59,7 @@ const verifySocketTicketAction = (ticket, action = null) => {
     if (isQueueUser !== -1) {
       isValid = true
     } else if (!filtros.includeNotQueueDefined) {
-      // console.log('Usuario no tiene acceso a la cola y !filtros.includeNotQueueDefined')
+      // console.log('Usuario não tem acesso a fila e !filtros.includeNotQueueDefined')
       return false
     }
   }
@@ -70,7 +70,7 @@ const verifySocketTicketAction = (ticket, action = null) => {
     if (isQueue !== -1) {
       isValid = true
     } else {
-      // console.log('colas filtradas y diferentes a la del ticket')
+      // console.log('filas filtradas e diferentes da do ticket')
       return false
     }
   }
@@ -81,7 +81,7 @@ const verifySocketTicketAction = (ticket, action = null) => {
     if (isIncludeNotQueueDefined) {
       isValid = true
     } else {
-      // console.log('ticket sin cola y filtros.includeNotQueueDefined inactivo')
+      // console.log('ticket sem fila e filtros.includeNotQueueDefined inativo')
       return false
     }
   }
@@ -92,16 +92,16 @@ const verifySocketTicketAction = (ticket, action = null) => {
     if (isStatus !== -1) {
       isValid = true
     } else {
-      // console.log('Estado del ticket no está filtrado')
+      // console.log('Status do ticket não está filtrado')
       return false
     }
   }
 
   // verificar se o parametro para não permitir visualizar
-  // tickets asignados a otros usuarios está activo
+  // tickets atribuidos à outros usuários está ativo
   if (isNotViewAssignedTickets()) {
     if (ticket.userId && ticket.userId !== usuario.id) {
-      // console.log('isNotViewAssignedTickets y ticket no es del usuario')
+      // console.log('isNotViewAssignedTickets e ticket não é do usuário')
     } return false
   }
 
@@ -111,7 +111,7 @@ const verifySocketTicketAction = (ticket, action = null) => {
     if (isNotAssignedUser) {
       isValid = true
     } else {
-      // console.log('isNotAssignedUser activo para mostrar solo tickets no asignados'}
+      // console.log('isNotAssignedUser ativo para exibir somente tickets não assinados')
       return false
     }
   }

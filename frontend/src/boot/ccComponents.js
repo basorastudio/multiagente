@@ -5,7 +5,7 @@ import DatePick from 'src/components/cDatePick'
 import cDateTimePick from 'src/components/cDateTimePick'
 
 import { format, parseISO } from 'date-fns'
-import pt from 'date-fns/locale/pt-BR'
+import es from 'date-fns/locale/es'
 import { UpdateConfiguracoesUsuarios } from 'src/service/user'
 
 const formatarValorMoeda = (num, black = false, intl = {}) => {
@@ -60,7 +60,7 @@ const iniciaisString = nombrecompleto => {
 }
 
 const formatarData = (data, formato = 'dd/MM/yyyy') => {
-  return format(parseISO(data), formato, { locale: pt })
+  return format(parseISO(data), formato, { locale: es })
 }
 
 const setConfigsUsuario = ({ isDark }) => {

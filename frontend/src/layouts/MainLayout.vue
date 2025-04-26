@@ -280,13 +280,13 @@ const objMenu = [
   },
 
   {
-    title: 'Atendimentos',
-    caption: 'Lista de atendimientos',
+    title: 'Atenciones',
+    caption: 'Lista de Atenciones',
     icon: 'mdi-forum-outline',
     routeName: 'atendimento'
   },
   {
-    title: 'Contatos',
+    title: 'Contactos',
     caption: 'Lista de contactos',
     icon: 'mdi-card-account-mail',
     routeName: 'contatos'
@@ -301,7 +301,7 @@ const objMenuAdmin = [
     routeName: 'sessoes'
   },
   {
-    title: 'Panel Atendimentos',
+    title: 'Panel Atenciones',
     caption: 'Visión general de los atendimientos',
     icon: 'mdi-view-dashboard-variant',
     routeName: 'painel-atendimentos'
@@ -570,7 +570,7 @@ export default {
     abrirAtendimentoExistente (contato, ticket) {
       this.$q.dialog({
         title: '¡Atención!',
-        message: `${contato} tiene un atendimiento en curso (Atendimiento: ${ticket.id}). ¿Desea abrir el atendimiento?`,
+        message: `${contato} tiene una atención en curso (Atención: ${ticket.id}). ¿Desea abrir la atención?`,
         cancel: {
           label: 'No',
           color: 'primary',

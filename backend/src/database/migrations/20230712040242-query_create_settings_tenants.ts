@@ -2,18 +2,18 @@ import { QueryInterface, QueryTypes } from "sequelize";
 
 module.exports = {
   up: async (queryInterface: QueryInterface) => {
-    // Obtém a lista de tenants existentes no banco de dados
+    // Obtiene la lista de tenants existentes en la base de datos
     const tenants = await queryInterface.sequelize.query(
       'SELECT id FROM "Tenants"',
       { type: QueryTypes.SELECT }
     );
-    
+
     const settingId:any = await queryInterface.sequelize.query(
       'select max(id) mId from "Settings"',
       { type: QueryTypes.SELECT }
     );
 
-    // Loop pelos tenants e insere as novas configurações para cada um
+    // Recorre los tenants e inserta las nuevas configuraciones para cada uno
     await Promise.all(
       tenants.map(async (tenant: any, idx) => {
         const { id } = tenant;
@@ -35,7 +35,7 @@ module.exports = {
           {
             key: "callRejectMessage",
             value:
-              "As chamadas de voz e vídeo estão desabilitas para esse WhatsApp, favor enviar uma mensagem de texto.",
+              "Las llamadas de voz y vídeo están deshabilitadas para este WhatsApp, favor enviar un mensaje de texto.",
             tenantId: id,
             createdAt: new Date(),
             updatedAt: new Date()
@@ -49,14 +49,14 @@ module.exports = {
           }
         })
 
-        // Insere as novas configurações para o tenant
+        // Inserta las nuevas configuraciones para el tenant
         await queryInterface.bulkInsert("Settings", bulk);
       })
     );
   },
 
   down: async (queryInterface: QueryInterface) => {
-    // Remove as configurações inseridas para cada tenant
+    // Elimina las configuraciones insertadas para cada tenant
     await queryInterface.sequelize.query('SELECT id FROM "Tenants"', {
       type: QueryTypes.SELECT
     });

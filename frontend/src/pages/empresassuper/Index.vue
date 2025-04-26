@@ -98,8 +98,8 @@ export default {
         { name: 'id', label: '#', field: 'id', align: 'left' },
         { name: 'status', label: 'Estado', field: 'status', align: 'left', format: val => this.formatStatus(val) },
         { name: 'name', label: 'Nombre', field: 'name', align: 'center' },
-        { name: 'maxUsers', label: 'Límite de Usuarios', field: 'maxUsers', align: 'center' },
-        { name: 'maxConnections', label: 'Límite de Conexiones', field: 'maxConnections', align: 'center' },
+        { name: 'maxUsers', label: 'Límite de Usuario', field: 'maxUsers', align: 'center' },
+        { name: 'maxConnections', label: 'Límite de Conexión', field: 'maxConnections', align: 'center' },
         { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ]
     }
@@ -135,7 +135,7 @@ export default {
     deletarTenant (tenant) {
       this.$q.dialog({
         title: '¡Atención!',
-        message: `¿Desea realmente eliminar la Empresa "${tenant.id}"?`,
+        message: `¿Realmente desea eliminar la Empresa "${tenant.id}"?`,
         cancel: {
           label: 'No',
           color: 'primary',
@@ -159,7 +159,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: `¡Empresa ${tenant.id} eliminada!`,
+              message: `Empresa ${tenant.id} eliminada!`,
               actions: [{
                 icon: 'close',
                 round: true,

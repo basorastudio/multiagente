@@ -550,10 +550,10 @@
                     >
                       <q-item-section>
                         <q-item-label class="text-negative text-bold">
-                          Ops... Sem etiquetas criadas!
+                          ¡Ups! No hay etiquetas creadas.
                         </q-item-label>
                         <q-item-label caption>
-                          Cadastre novas etiquetas na administração de sistemas.
+                          Registre nuevas etiquetas en la administración del sistema.
                         </q-item-label>
                       </q-item-section>
                     </q-item>
@@ -570,7 +570,7 @@
               :key="ticketFocado.id + $uuid()"
             >
               <q-card-section class="text-bold q-pb-none">
-                Carteira
+                Cartera
                 <q-separator />
               </q-card-section>
               <q-card-section class="q-pa-none">
@@ -640,7 +640,7 @@
               :key="ticketFocado.id + $uuid()"
             >
               <q-card-section class="text-bold q-pb-none">
-                Mensagens Agendadas
+                Mensajes Programados
                 <q-separator />
               </q-card-section>
               <q-card-section class="q-pa-none">
@@ -649,7 +649,7 @@
                     <q-item v-for="(message, idx) in ticketFocado.scheduledMessages.filter((msg) => !msg.isDeleted)" :key="idx" clickable>
                       <q-item-section>
                         <q-item-label caption>
-                          <b>Agendado para:</b> {{ $formatarData(message.scheduleDate, 'dd/MM/yyyy HH:mm') }}
+                          <b>Programado para:</b> {{ $formatarData(message.scheduleDate, 'dd/MM/yyyy HH:mm') }}
                           <q-btn
                             flat
                             round
@@ -682,7 +682,7 @@
               :key="ticketFocado.id + $uuid()"
             >
               <q-card-section class="text-bold q-pb-none">
-                Outras Informações
+                Otra Información
               </q-card-section>
               <q-card-section class="q-pa-none">
                 <template v-if="cIsExtraInfo">
@@ -940,7 +940,7 @@ export default {
       }
 
       const notification = new Notification(
-        `Mensagem de ${data.ticket.contact.name}`,
+        `Mensaje de ${data.ticket.contact.name}`,
         options
       )
 
@@ -1053,7 +1053,7 @@ export default {
         this.$router.go({ name: 'login', replace: true })
       } catch (error) {
         this.$notificarErro(
-          'Não foi possível realizar logout',
+          'No fue posible realizar logout',
           error
         )
       }
@@ -1061,26 +1061,26 @@ export default {
     copyContent (content) {
       navigator.clipboard.writeText(content)
         .then(() => {
-          // Copiado com sucesso
-          console.log('Conteúdo copiado: ', content)
+          // Copiado con éxito
+          console.log('Contenido copiado: ', content)
         })
         .catch((error) => {
-          // Ocorreu um erro ao copiar
-          console.error('Erro ao copiar o conteúdo: ', error)
+          // Ocurrió un error al copiar
+          console.error('Error al copiar el contenido: ', error)
         })
     },
     deletarMensagem (mensagem) {
       const data = { ...mensagem }
       this.$q.dialog({
-        title: 'Atenção!! Deseja realmente deletar a mensagem? ',
-        message: 'Mensagens antigas não serão apagadas no cliente.',
+        title: '¡Atención!! ¿Realmente desea eliminar el mensaje? ',
+        message: 'Los mensajes antiguos no se borrarán en el cliente.',
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -1095,7 +1095,7 @@ export default {
           .catch(error => {
             this.loading = false
             console.error(error)
-            this.$notificarErro('Não foi possível apagar a mensagem', error)
+            this.$notificarErro('No fue posible borrar el mensaje', error)
           })
       }).onCancel(() => {
       })
@@ -1114,7 +1114,7 @@ export default {
         this.usuarios = data.users
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Problema ao carregar usuários', error)
+        this.$notificarErro('Problema al cargar usuarios', error)
       }
     },
     setValueMenu () {
@@ -1156,13 +1156,13 @@ export default {
     this.userProfile = localStorage.getItem('profile')
     // this.socketInitial()
 
-    // se existir ticket na url, abrir o ticket.
+    // si existe ticket en la url, abrir el ticket.
     if (this.$route?.params?.ticketId) {
       const ticketId = this.$route?.params?.ticketId
       if (ticketId && this.tickets.length > 0) {
         const ticket = this.tickets.find(t => t.id === +ticketId)
         if (!ticket) return
-        // caso esteja em um tamanho mobile, fechar a drawer dos contatos
+        // en caso de estar en un tamaño móvil, cerrar la drawer de los contactos
         if (this.$q.screen.lt.md && ticket.status !== 'pending') {
           this.$root.$emit('infor-cabecalo-chat:acao-menu')
         }

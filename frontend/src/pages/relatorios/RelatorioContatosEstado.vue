@@ -2,7 +2,7 @@
   <div v-if="userProfile === 'admin'">
     <q-card bordered>
       <q-card-section>
-        <div class="text-h6 q-px-sm"> Reporte de Contactos por Estado </div>
+        <div class="text-h6 q-px-sm"> Relatório de Contatos por Estado </div>
       </q-card-section>
       <q-card-section class="q-pt-none">
         <fieldset class="rounded-all">
@@ -56,7 +56,7 @@
                 class="q-mr-sm"
                 color="primary"
                 rounded
-                label="Generar"
+                label="Gerar"
                 icon="refresh"
                 @click="gerarRelatorio"
               />

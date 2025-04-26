@@ -202,9 +202,7 @@ export const syncContacts = async (
   });
 
   if (!sessoes.length) {
-    throw new AppError(
-      "Não existem sessões ativas para sincronização dos contatos."
-    );
+    throw new AppError("No existen sesiones activas para la sincronización de los contactos.");
   }
 
   await Promise.all(
@@ -219,7 +217,7 @@ export const syncContacts = async (
 
   return res
     .status(200)
-    .json({ message: "Contatos estão sendo sincronizados." });
+    .json({ message: "Los contactos están siendo sincronizados." });
 };
 
 export const upload = async (req: Request, res: Response) => {
@@ -263,34 +261,34 @@ export const exportContacts = async (req: Request, res: Response) => {
     raw: true
   });
 
-  // Cria um novo workbook e worksheet
+  // Crea un nuevo workbook y worksheet
   const workbook = XLSX.utils.book_new();
   const worksheet = XLSX.utils.json_to_sheet(contacts);
 
-  // Adiciona o worksheet ao workbook
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Contatos");
+  // Adiciona el worksheet al workbook
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Contactos");
 
-  // Gera o arquivo Excel no formato .xlsx
+  // Genera el archivo Excel en formato .xlsx
   const excelBuffer = XLSX.write(workbook, {
     bookType: "xlsx",
     type: "buffer"
   });
 
-  // Define o nome do arquivo
-  const fileName = `${uuidV4()}_contatos.xlsx`;
+  // Define el nombre del archivo
+  const fileName = `${uuidV4()}_contactos.xlsx`;
   const filePath = path.join(__dirname, "..", "..", "public", "downloads");
   const file = path.join(filePath, fileName);
 
-  // Cria os diretórios de downloads se eles não existirem
+  // Crea los directorios de descargas si no existen
   if (!fs.existsSync(filePath)) {
     fs.mkdirSync(filePath, { recursive: true });
   }
 
-  // Salva o arquivo no diretório de downloads
+  // Guarda el archivo en el directorio de descargas
   fs.writeFile(file, excelBuffer, err => {
     if (err) {
-      console.error("Erro ao salvar arquivo:", err);
-      return res.status(500).send("Erro ao exportar contatos");
+      console.error("Error al guardar el archivo:", err);
+      return res.status(500).send("Error al exportar contactos");
     }
     const { BACKEND_URL } = process.env;
     const downloadLink = `${BACKEND_URL}:${process.env.PROXY_PORT}/public/downloads/${fileName}`;

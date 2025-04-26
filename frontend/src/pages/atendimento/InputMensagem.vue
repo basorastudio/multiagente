@@ -207,7 +207,7 @@
                     :showSearch="false"
                     :emojisByRow="20"
                     labelSearch="Localizar..."
-                    lang="pt-BR"
+                    lang="es"
                     @select="onInsertSelectEmoji"
                   />
                 </q-menu>
@@ -226,7 +226,7 @@
                 :color="$q.dark.isActive ? 'white' : ''"
               >
                 <q-tooltip content-class=" text-bold">
-                  Enviar arquivo
+                  Enviar archivo
                 </q-tooltip>
               </q-btn>
               <q-btn
@@ -237,12 +237,12 @@
                 @click="visualizarMensagensRapidas = !visualizarMensagensRapidas"
               >
                 <q-tooltip content-class="text-bold">
-                  Mensagens Rápidas
+                  Mensajes Rápidos
                 </q-tooltip>
               </q-btn>
             </template>
           </q-input>
-          <!-- tamanho maximo por arquivo de 10mb -->
+          <!-- tamaño maximo por archivo de 10mb -->
           <q-file
             :loading="loading"
             :disable="cDisableActions"
@@ -277,7 +277,7 @@
             :color="$q.dark.isActive ? 'white' : ''"
           >
             <q-tooltip content-class=" text-bold">
-              Enviar Mensagem
+              Enviar Mensaje
             </q-tooltip>
           </q-btn>
           <q-btn
@@ -290,7 +290,7 @@
             :color="$q.dark.isActive ? 'white' : ''"
           >
             <q-tooltip content-class="text-bold">
-              Enviar Áudio
+              Enviar Audio
             </q-tooltip>
           </q-btn>
         </template>
@@ -387,7 +387,7 @@
           class="text-bold"
           color="positive"
           icon="mdi-send-circle"
-          label="Iniciar o atendimento"
+          label="Iniciar el atendimiento"
           @click="iniciarAtendimento(ticketFocado)"
         />
 
@@ -396,7 +396,7 @@
     <!-- <p
       v-if="!cMostrarEnvioArquivo"
       class="row col text-caption text-blue-grey-10"
-    >Quebra linha/Parágrafo: Shift + Enter ||| Enviar Mensagem: Enter</p> -->
+    >Quebra linha/Parágrafo: Shift + Enter ||| Enviar Mensaje: Enter</p> -->
   </div>
 </template>
 
@@ -483,7 +483,7 @@ export default {
         this.arquivos = [e.clipboardData.files[0]]
         this.abrirModalPreviewImagem = true
         this.urlMediaPreview = {
-          title: `Enviar imagem para ${this.ticketFocado?.contact?.name}`,
+          title: `Enviar imagen para ${this.ticketFocado?.contact?.name}`,
           src: this.openFilePreview(e)
         }
         this.$refs.inputEnvioMensagem.focus()
@@ -571,7 +571,7 @@ export default {
       } catch (error) {
         this.isRecordingAudio = false
         this.loading = false
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
     },
     async handleCancelRecordingAudio () {
@@ -580,12 +580,12 @@ export default {
         this.isRecordingAudio = false
         this.loading = false
       } catch (error) {
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
     },
     prepararUploadMedia () {
       if (!this.arquivos.length) {
-        throw new Error('Não existem arquivos para envio')
+        throw new Error('No existen archivos para enviar')
       }
       const formData = new FormData()
       formData.append('fromMe', true)
@@ -602,7 +602,7 @@ export default {
     },
     prepararMensagemTexto () {
       if (this.textChat.trim() === '') {
-        throw new Error('Mensagem Inexistente')
+        throw new Error('Mensaje Inexistente')
       }
 
       if (this.textChat.trim() && this.textChat.trim().startsWith('/')) {
@@ -613,8 +613,8 @@ export default {
           this.textChat = mensagemRapida.message
         } else {
           const error = this.cMensagensRapidas.length > 1
-            ? 'Várias mensagens rápidas encontradas. Selecione uma ou digite uma chave única da mensagem.'
-            : '/ indica que você deseja enviar uma mensagem rápida, mas nenhuma foi localizada. Cadastre ou apague a / e digite sua mensagem.'
+            ? 'Varios mensajes rápidos encontrados. Seleccione uno o escriba una clave única del mensaje.'
+            : '/ indica que desea enviar un mensaje rápido, pero ninguno fue localizado. Registre o borre la / y escriba su mensaje.'
           this.$notificarErro(error)
           this.loading = false
           throw new Error(error)
@@ -642,7 +642,7 @@ export default {
     },
     async enviarMensagem () {
       if (this.isScheduleDate && !this.scheduleDate) {
-        this.$notificarErro('Para agendar uma mensagem, informe o campo Data/Hora Agendamento.')
+        this.$notificarErro('Para programar un mensaje, informe el campo Fecha/Hora Programación.')
         return
       }
       this.loading = true
@@ -669,7 +669,7 @@ export default {
       } catch (error) {
         this.isRecordingAudio = false
         this.loading = false
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
       this.isRecordingAudio = false
       this.loading = false
@@ -712,7 +712,7 @@ export default {
         }, 800)
       } catch (error) {
         this.loading = false
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
       this.loading = false
     },
@@ -735,16 +735,16 @@ export default {
       let message
 
       if (this.ticketFocado.channel === 'hub_instagram') {
-        message = `Ops... Ocorreu um erro! <br>
+        message = `¡Ups... Ocurrió un error! <br>
     <ul>
-    <li>Cada arquivo deve ter no máximo 8MB.</li>
-    <li>Apenas arquivos nos formatos .jpeg, .png, .ico, .bmp, .webp e .* são aceitos.</li>
+    <li>Cada archivo debe tener un máximo de 8MB.</li>
+    <li>Solo se aceptan archivos en los formatos .jpeg, .png, .ico, .bmp, .webp y .*</li>
     </ul>`
       } else {
-        message = `Ops... Ocorreu um erro! <br>
+        message = `¡Ups... Ocurrió un error! <br>
     <ul>
-    <li>Cada arquivo deve ter no máximo 10MB.</li>
-    <li>Em caso de múltiplos arquivos, o tamanho total (soma de todos) deve ser de até 30MB.</li>
+    <li>Cada archivo debe tener un máximo de 10MB.</li>
+    <li>En caso de múltiples archivos, el tamaño total (suma de todos) debe ser de hasta 30MB.</li>
     </ul>`
       }
       this.$q.notify({
