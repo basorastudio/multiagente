@@ -10,7 +10,7 @@ import { UpdateConfiguracoesUsuarios } from 'src/service/user'
 
 const formatarValorMoeda = (num, black = false, intl = {}) => {
   const config = {
-    language: 'pt-br',
+    language: 'es',
     options: {
       // style: 'currency',
       // currency: 'BRL',

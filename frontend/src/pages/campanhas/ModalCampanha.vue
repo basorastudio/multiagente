@@ -440,9 +440,9 @@ export default {
         { label: 'Saludo', value: '{{greeting}}' }
       ],
       optRadio: [
-        { label: 'Msg.1', value: 'message1' },
-        { label: 'Msg. 2', value: 'message2' },
-        { label: 'Msg. 3', value: 'message3' }
+        { label: 'Msj.1', value: 'message1' },
+        { label: 'Msj.2', value: 'message2' },
+        { label: 'Msj.3', value: 'message3' }
       ],
       messagemPreview: 'message1',
       loading: false,

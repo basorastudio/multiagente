@@ -74,7 +74,7 @@
             >
               <q-card-section class="text-center ">
                 <p class="text-h4 text-bold text-center"> {{ ticketsAndTimes.qtd_total_atendimentos }} </p>
-                Total Atendimientos
+                Atenciones Totales
               </q-card-section>
             </q-card>
           </div>

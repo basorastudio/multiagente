@@ -33,10 +33,10 @@
           :validator="$v.contato.number"
           @blur="$v.contato.number.$touch"
           mask="+#############"
-          placeholder="+DDI DDD 99999 9999"
+          placeholder="+1 829 793 4075"
           fill-mask
           unmasked-value
-          hint="Ingrese número con DDI y DDD"
+          hint="Ingrese número con código de marcación"
           label="Número"
         />
         <c-input
