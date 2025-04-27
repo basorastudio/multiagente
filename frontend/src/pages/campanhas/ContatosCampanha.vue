@@ -144,7 +144,6 @@
                   outlined
                   v-model="pesquisa.ddds"
                   multiple
-                  :options="estadosBR"
                   use-chips
                   option-value="sigla"
                   option-label="nome"
@@ -180,6 +179,9 @@
                     </q-badge>
                   </template>
                 </q-select>
+              </div>
+              <div class="col-xs-12 col-sm-4 grow text-center">
+                <!-- Eliminado filtro Estado(s) -->
               </div>
               <div class="col-xs-12 col-sm-4 grow text-center">
                 <q-select
@@ -365,7 +367,7 @@
 
 <script>
 import { ListarEtiquetas } from 'src/service/etiquetas'
-import { estadoPorDdd, estadosBR } from 'src/utils/constants'
+
 import { RelatorioContatos } from 'src/service/estatisticas'
 import { AdicionarContatosCampanha, DeletarTodosContatosCampanha, ListarContatosCampanha, DeletarContatoCampanha } from 'src/service/campanhas'
 import { format, parseISO, sub } from 'date-fns'
@@ -382,13 +384,10 @@ export default {
       pesquisa: {
         startDate: format(sub(new Date(), { days: 30 }), 'yyyy-MM-dd'),
         endDate: format(new Date(), 'yyyy-MM-dd'),
-        ddds: [],
         tags: [],
         wallets: [],
         searchParam: ''
       },
-      estadoPorDdd,
-      estadosBR,
       contatosCampanha: [],
       filter: null,
       pagination: {
@@ -478,7 +477,9 @@ export default {
       this.contatosCampanha = data
     },
     definirEstadoNumero (numero) {
-      const ddd = numero.substring(2, 4)
+      // Eliminada función definirEstadoNumero
+    },
+    const ddd = numero.substring(2, 4)
       return estadosBR.find(e => e.sigla === estadoPorDdd[ddd])?.nome || ''
     },
     async addContatosCampanha () {

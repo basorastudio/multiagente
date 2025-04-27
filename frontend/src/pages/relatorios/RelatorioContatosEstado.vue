@@ -14,7 +14,11 @@
                 outlined
                 v-model="pesquisa.ddds"
                 multiple
-                :options="estadosBR"
+
+    }
+  ]
+}
+```
                 use-chips
                 option-value="sigla"
                 option-label="nome"
@@ -179,7 +183,6 @@ import ccPrintModelLandscape from './ccPrintModelLandscape'
 import XLSX from 'xlsx'
 import { RelatorioContatos } from 'src/service/estatisticas'
 import { ListarEtiquetas } from 'src/service/etiquetas'
-import { estadoPorDdd, estadosBR } from 'src/utils/constants'
 
 export default {
   name: 'RelatorioContatosEtiquetas',
@@ -195,15 +198,12 @@ export default {
       userProfile: 'user',
       data: null,
       bl_sintetico: false,
-      estadoPorDdd,
-      estadosBR,
       contatos: [],
       etiquetas: [],
       columns: [
         { name: 'name', label: 'Nome', field: 'name', align: 'left', style: 'width: 300px', format: v => this.replaceEmojis(v) },
         { name: 'number', label: 'WhatsApp', field: 'number', align: 'center', style: 'width: 300px' },
-        { name: 'email', label: 'Email', field: 'email', style: 'width: 500px', align: 'left' },
-        { name: 'estado', label: 'Estado', field: 'number', style: 'width: 500px', align: 'left', format: v => this.definirEstadoNumero(v) }
+        { name: 'email', label: 'Email', field: 'email', style: 'width: 500px', align: 'left' }
       ],
       pesquisa: {
         ddds: []

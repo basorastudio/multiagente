@@ -623,7 +623,7 @@
                     >
                       <q-item-section>
                         <q-item-label class="text-negative text-bold">
-                          Ops... Sem carteiras disponíveis!!
+                          Ups... ¡No hay cartera disponibles!
                         </q-item-label>
                       </q-item-section>
                     </q-item>
