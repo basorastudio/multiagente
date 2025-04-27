@@ -136,52 +136,9 @@
                   v-model="pesquisa.endDate"
                 />
               </div>
+              <!-- Eliminado filtro Estado(s) -->
               <div class="col-xs-12 col-sm-4 grow text-center">
-                <q-select
-                  label="Estado(s)"
-                  dense
-                  rounded
-                  outlined
-                  v-model="pesquisa.ddds"
-                  multiple
-                  use-chips
-                  option-value="sigla"
-                  option-label="nome"
-                  emit-value
-                  map-options
-                  dropdown-icon="add"
-                >
-                  <template v-slot:option="{ itemProps, itemEvents, opt, selected, toggleOption }">
-                    <q-item
-                      v-bind="itemProps"
-                      v-on="itemEvents"
-                    >
-                      <q-item-section>
-                        <q-item-label v-html="opt.nome"></q-item-label>
-                      </q-item-section>
-                      <q-item-section side>
-                        <q-checkbox
-                          :value="selected"
-                          @input="toggleOption(opt)"
-                        />
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                  <template v-slot:selected-item="{ opt }">
-                    <q-badge
-                      dense
-                      rounded
-                      color="grey-3"
-                      text-color="primary"
-                      class="q-ma-xs text-body1"
-                      :label="opt.nome"
-                    >
-                    </q-badge>
-                  </template>
-                </q-select>
-              </div>
-              <div class="col-xs-12 col-sm-4 grow text-center">
-                <!-- Eliminado filtro Estado(s) -->
+                <!-- Aquí ya no hay filtro de Estado(s) -->
               </div>
               <div class="col-xs-12 col-sm-4 grow text-center">
                 <q-select
@@ -387,6 +344,7 @@ export default {
         tags: [],
         wallets: [],
         searchParam: ''
+        // Eliminada la propiedad ddds
       },
       contatosCampanha: [],
       filter: null,
