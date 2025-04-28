@@ -173,14 +173,14 @@ export default {
       }
     },
     updateDate (newDate) {
-      let timePart = this.cQDateTimePart || '00:00'
-      let combined = `${newDate} ${timePart}`
+      const timePart = this.cQDateTimePart || '00:00'
+      const combined = `${newDate} ${timePart}`
       this.emitFullDate(combined)
       this.$refs.qDateProxy.hide()
     },
     updateTime (newTime) {
-      let datePart = this.cQDateDatePart || format(new Date(), 'dd/MM/yyyy', { locale: es })
-      let combined = `${datePart} ${newTime}`
+      const datePart = this.cQDateDatePart || format(new Date(), 'dd/MM/yyyy', { locale: es })
+      const combined = `${datePart} ${newTime}`
       this.emitFullDate(combined)
       this.$refs.qTimeProxy.hide()
     },
