@@ -140,7 +140,9 @@ const StartCampaignService = async ({
 
   const timeDelay = campaign.delay ? campaign.delay * 1000 : 20000;
 
-  let dateDelay = zonedTimeToUtc(campaign.start, "America/Santo_Domingo");
+  // Assuming campaign.start is already in UTC from the frontend
+      // let dateDelay = zonedTimeToUtc(campaign.start, "America/Santo_Domingo"); // Removed explicit timezone conversion
+      let dateDelay = new Date(campaign.start); // Use the UTC date directly
   const data = campaignContacts.map((campaignContact: CampaignContacts) => {
     dateDelay = addSeconds(dateDelay, timeDelay / 1000);
     return mountMessageData(campaign, campaignContact, {
