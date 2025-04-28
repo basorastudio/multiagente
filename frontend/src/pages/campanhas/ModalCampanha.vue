@@ -665,6 +665,11 @@ export default {
       try {
         this.loading = true
         const campanha = { ...this.campanha }
+        // Corrección: convertir la fecha de inicio a UTC ISO 8601
+        if (campanha.start) {
+          const localDate = new Date(campanha.start)
+          campanha.start = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString()
+        }
         const medias = new FormData()
         Object.keys(campanha).forEach((key) => {
           medias.append(key, campanha[key])
