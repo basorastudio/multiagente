@@ -196,6 +196,7 @@ export default {
       this.modalCampanha = true
     },
     deletarCampanha (campanha) {
+      // Ahora se permite eliminar campañas en cualquier estado
       this.$q.dialog({
         title: '¡Atención!',
         message: `¿Desea realmente eliminar la Campaña "${campanha.tag}"?`,
