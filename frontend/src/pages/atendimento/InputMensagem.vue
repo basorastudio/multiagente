@@ -549,8 +549,9 @@ export default {
         formData.append('body', filename)
         formData.append('fromMe', true)
         formData.append('id', uid())
-        if (this.isScheduleDate) {
-          formData.append('scheduleDate', this.scheduleDate)
+        if (this.isScheduleDate && this.scheduleDate) {
+          const utcDate = new Date(this.scheduleDate).toISOString()
+          formData.append('scheduleDate', utcDate)
         }
         // await EnviarMensagemTexto(ticketId, formData)
         if (this.ticketFocado.channel.includes('hub')) {
@@ -594,8 +595,9 @@ export default {
         formData.append('medias', media)
         formData.append('body', media.name)
         // formData.append('idFront', uid())
-        if (this.isScheduleDate) {
-          formData.append('scheduleDate', this.scheduleDate)
+        if (this.isScheduleDate && this.scheduleDate) {
+          const utcDate = new Date(this.scheduleDate).toISOString()
+          formData.append('scheduleDate', utcDate)
         }
       })
       return formData
@@ -630,14 +632,15 @@ export default {
         fromMe: true,
         mediaUrl: '',
         body: mensagem,
-        scheduleDate: this.isScheduleDate ? this.scheduleDate : null,
+        scheduleDate: this.isScheduleDate && this.scheduleDate ? new Date(this.scheduleDate).toISOString() : null,
         quotedMsg: this.replyingMessage,
         // idFront: uid()
         id: uid()
       }
-      if (this.isScheduleDate) {
-        message.scheduleDate = this.scheduleDate
-      }
+      // La fecha programada ya se está configurando correctamente arriba basándose en la conversión a cadena ISO
+      // if (this.isScheduleDate) {
+      //   message.scheduleDate = this.scheduleDate // Esto asignaría la cadena de fecha local, no UTC
+      // }
       return message
     },
     async enviarMensagem () {
