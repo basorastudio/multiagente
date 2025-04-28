@@ -196,9 +196,6 @@ export default {
       this.modalCampanha = true
     },
     deletarCampanha (campanha) {
-      if (campanha.status !== 'pending' && campanha.status !== 'canceled' && campanha.contactsCount) {
-        this.$notificarErro('Solo se permite eliminar campañas que estén pendientes o canceladas y no tengan contactos vinculados.')
-      }
       this.$q.dialog({
         title: '¡Atención!',
         message: `¿Desea realmente eliminar la Campaña "${campanha.tag}"?`,
