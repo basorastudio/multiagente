@@ -15,7 +15,7 @@
       v-on="$listeners"
       :error="cError"
       :error-message="cErrorMessage"
-      :ruler="[val => dateIsValid(val) || '¡Fecha inválida!' ]"
+      :rules="[val => dateIsValid(val) || '¡Fecha inválida!']"
     >
       <template v-slot:prepend>
         <q-icon
@@ -28,14 +28,15 @@
             transition-hide="scale"
           >
             <q-date
-              :value="cQDate"
+              :value="cQDateDatePart"
               today-btn
-              mask="DD/MM/YYYY HH:mm"
-              @input="emitDate"
+              mask="DD/MM/YYYY"
+              @input="updateDate"
             />
           </q-popup-proxy>
         </q-icon>
       </template>
+
       <template v-slot:append>
         <q-icon
           name="access_time"
@@ -47,15 +48,15 @@
             transition-hide="scale"
           >
             <q-time
-              :value="cQDate"
-              @input="emitDate"
-              mask="DD/MM/YYYY HH:mm"
+              :value="cQDateTimePart"
+              mask="HH:mm"
               format24h
+              @input="updateTime"
             >
               <div class="row items-center justify-end">
                 <q-btn
                   v-close-popup
-                  label="Close"
+                  label="Cerrar"
                   color="primary"
                   flat
                 />
@@ -64,7 +65,8 @@
           </q-popup-proxy>
         </q-icon>
       </template>
-      <!-- Aceitar Demais Slot's -->
+
+      <!-- Aceptar Demás Slots -->
       <template
         v-for="(_, slot) of $scopedSlots"
         v-slot:[slot]="scope"
@@ -77,11 +79,11 @@
     </q-input>
   </div>
 </template>
+
 <script>
 import { singleErrorExtractorMixin } from 'vuelidate-error-extractor'
 import { format, parse, isValid } from 'date-fns'
 import es from 'date-fns/locale/es'
-// Importación del locale español para date-fns
 
 export default {
   name: 'ccInputDateTime',
@@ -89,7 +91,6 @@ export default {
   inheritAttrs: false,
   data () {
     return {
-      date: null,
       dateSelect: null
     }
   },
@@ -101,78 +102,96 @@ export default {
     },
     error: {
       type: [String, Boolean, Number],
-      default: 'NI' // Não Informada
+      default: 'NI'
     },
     errorMessage: {
       type: [String, Boolean, Number],
-      default: '' // Não Informada
+      default: ''
     },
     classAtrrs: {
       type: String,
-      default: () => ''
+      default: ''
     },
     icon: {
       type: Object,
-      default: () => { }
+      default: () => ({})
     }
   },
   watch: {
     initValue (v) {
-      this.dateFormated(v)
+      this.formatInitialDate(v)
     }
   },
   computed: {
     cValue () {
-      // Formateo de fecha adaptado a locale español
-return this.value ? this.value : this.dateSelect ? format(parse(this.dateSelect, 'dd/MM/yyyy HH:mm', new Date(), { locale: es }), 'yyyy-MM-dd HH:mm', { locale: es }) : null
-    },
-    cQDate () {
-      if (isValid(this.cValue)) {
-        // Formateo consistente con locale español
-return format(this.cValue, 'dd/MM/yyyy HH:mm', { locale: es })
+      if (this.value) {
+        return this.formatDate(this.value, 'dd/MM/yyyy HH:mm')
+      } else if (this.dateSelect) {
+        return this.formatDate(this.dateSelect, 'dd/MM/yyyy HH:mm')
       }
-      // Manejo de fechas con validación y locale español
-return this.cValue ? format(parse(this.cValue, 'yyyy-MM-dd HH:mm', new Date(), { locale: es }), 'dd/MM/yyyy HH:mm', { locale: es }) : format(new Date(), 'dd/MM/yyyy HH:mm', { locale: es })
+      return null
+    },
+    cQDateDatePart () {
+      if (this.cValue) {
+        return this.cValue.split(' ')[0]
+      }
+      return format(new Date(), 'dd/MM/yyyy', { locale: es })
+    },
+    cQDateTimePart () {
+      if (this.cValue) {
+        return this.cValue.split(' ')[1]
+      }
+      return format(new Date(), 'HH:mm', { locale: es })
     },
     cError () {
-      if (this.error == 'NI') {
-        return this.hasErrors
-      }
-      return this.error
+      return this.error === 'NI' ? this.hasErrors : this.error
     },
     cErrorMessage () {
-      if (this.errorMessage == '') {
-        return this.firstErrorMessage
-      }
-      return this.errorMessage
+      return this.errorMessage === '' ? this.firstErrorMessage : this.errorMessage
     },
-    iconElment: {
+    iconElement: {
       cache: false,
       get () {
         const defaultConfig = { name: null, size: '24px', color: '#000' }
-        const data = { ...defaultConfig, ...this.icon }
-        if (!data.name) {
-          return defaultConfig
-        } else {
-          return data
-        }
+        return { ...defaultConfig, ...this.icon }
       }
     }
   },
   methods: {
-    emitDate (d, r, dt) {
-      let date = d
-      if (!date) {
-        const time = format(new Date(), 'HH:mm', { locale: es })
-        date = `${dt.day}/${dt.month}/${dt.year} ${time}`
+    formatDate (date, fmt) {
+      const parsed = typeof date === 'string'
+        ? parse(date, 'yyyy-MM-dd HH:mm', new Date())
+        : date
+      return isValid(parsed) ? format(parsed, fmt, { locale: es }) : ''
+    },
+    emitFullDate (dateStr) {
+      const parsed = parse(dateStr, 'dd/MM/yyyy HH:mm', new Date())
+      if (isValid(parsed)) {
+        const formatted = format(parsed, 'yyyy-MM-dd HH:mm', { locale: es })
+        this.$emit('input', formatted)
+        this.$emit('update:date', dateStr)
       }
-      const parseDate = parse(date, 'dd/MM/yyyy HH:mm', new Date(), { locale: es })
-      this.$emit('input', format(parseDate, 'yyyy-MM-dd HH:mm', { locale: es }))
+    },
+    updateDate (newDate) {
+      let timePart = this.cQDateTimePart || '00:00'
+      let combined = `${newDate} ${timePart}`
+      this.emitFullDate(combined)
       this.$refs.qDateProxy.hide()
+    },
+    updateTime (newTime) {
+      let datePart = this.cQDateDatePart || format(new Date(), 'dd/MM/yyyy', { locale: es })
+      let combined = `${datePart} ${newTime}`
+      this.emitFullDate(combined)
       this.$refs.qTimeProxy.hide()
     },
-    dateIsValid (d) {
-      return this.cValue ? isValid(d) : true
+    dateIsValid (val) {
+      const parsed = parse(val, 'dd/MM/yyyy HH:mm', new Date())
+      return val ? isValid(parsed) : true
+    },
+    formatInitialDate (value) {
+      if (value) {
+        this.dateSelect = value
+      }
     }
   }
 }
