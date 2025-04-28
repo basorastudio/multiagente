@@ -1,5 +1,6 @@
 import { Message as WbotMessage } from "whatsapp-web.js";
 import { fromUnixTime, parse, isWithinInterval } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 // import { getIO } from "../../../libs/socket";
 // import SetTicketMessagesAsRead from "../../../helpers/SetTicketMessagesAsRead";
 // import SendWhatsAppMessage from "../SendWhatsAppMessage";
@@ -24,7 +25,8 @@ const verifyBusinessHours = async (
       tenantId: ticket.tenantId
     });
 
-    const dateMsg = fromUnixTime(msg.timestamp);
+    const dateMsgUTC = fromUnixTime(msg.timestamp);
+    const dateMsg = utcToZonedTime(dateMsgUTC, "America/Santo_Domingo"); // Convert to target timezone
     const businessDay: any = tenant.businessHours.find(
       (d: any) => d.day === dateMsg.getDay()
     );
@@ -39,14 +41,14 @@ const verifyBusinessHours = async (
 
     // verificar se data da mensagem está dendo do primerio período de tempo
     const isHoursFistInterval = isWithinInterval(dateMsg, {
-      start: parse(businessDay.hr1, "HH:mm", new Date()),
-      end: parse(businessDay.hr2, "HH:mm", new Date())
+      start: parse(businessDay.hr1, "HH:mm", dateMsg), // Use zoned date for parsing context
+      end: parse(businessDay.hr2, "HH:mm", dateMsg)
     });
 
     // verificar se data da mensagem está dendo do segundo período de tempo
     const isHoursLastInterval = isWithinInterval(dateMsg, {
-      start: parse(businessDay.hr3, "HH:mm", new Date()),
-      end: parse(businessDay.hr4, "HH:mm", new Date())
+      start: parse(businessDay.hr3, "HH:mm", dateMsg), // Use zoned date for parsing context
+      end: parse(businessDay.hr4, "HH:mm", dateMsg)
     });
 
     // se o tipo for C - Closed significa que o estabelecimento está
