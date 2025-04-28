@@ -328,6 +328,7 @@ import { ListarEtiquetas } from 'src/service/etiquetas'
 import { RelatorioContatos } from 'src/service/estatisticas'
 import { AdicionarContatosCampanha, DeletarTodosContatosCampanha, ListarContatosCampanha, DeletarContatoCampanha } from 'src/service/campanhas'
 import { format, parseISO, sub } from 'date-fns'
+import { es } from 'date-fns/locale' // Importar locale español
 import { ListarUsuarios } from 'src/service/user'
 
 export default {
@@ -339,8 +340,8 @@ export default {
       etiquetas: [],
       usuarios: [],
       pesquisa: {
-        startDate: format(sub(new Date(), { days: 30 }), 'yyyy-MM-dd'),
-        endDate: format(new Date(), 'yyyy-MM-dd'),
+        startDate: format(sub(new Date(), { days: 30 }), 'yyyy-MM-dd', { locale: es }), // Formateo de fecha adaptado a locale español
+        endDate: format(new Date(), 'yyyy-MM-dd', { locale: es }), // Formateo de fecha adaptado a locale español
         tags: [],
         wallets: [],
         searchParam: ''
