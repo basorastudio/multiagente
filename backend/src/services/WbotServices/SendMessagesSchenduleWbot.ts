@@ -10,11 +10,7 @@ import SendMessageSystemProxy from "../../helpers/SendMessageSystemProxy";
 // import SetTicketMessagesAsRead from "../../helpers/SetTicketMessagesAsRead";
 
 const SendMessagesSchenduleWbot = async (): Promise<void> => {
-  const currentDate = new Date(
-    new Date().toLocaleString("en-US", {
-      timeZone: process.env.TIMEZONE || "America/Sao_Paulo"
-    })
-  );
+  const currentDate = new Date(); // Use UTC directly
   const twentyFourHoursAgo = new Date(
     currentDate.getTime() - 24 * 60 * 60 * 1000
   );
@@ -24,8 +20,9 @@ const SendMessagesSchenduleWbot = async (): Promise<void> => {
     messageId: { [Op.is]: null },
     status: "pending",
     scheduleDate: {
-      [Op.lte]: currentDate, // Menor o igual a la fecha actual
-      [Op.gte]: twentyFourHoursAgo
+      [Op.lte]: currentDate // Compare directly with UTC date
+      // [Op.gte]: twentyFourHoursAgo // Removing this condition for now, as the primary goal is to send messages scheduled up to the current time.
+      // If needed, logic to prevent sending very old messages can be added separately.
     }
   };
   const messages = await Message.findAll({
