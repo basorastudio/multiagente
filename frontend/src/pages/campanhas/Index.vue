@@ -122,6 +122,7 @@
 import { CancelarCampanha, DeletarCampanha, IniciarCampanha, ListarCampanhas } from 'src/service/campanhas'
 import ModalCampanha from './ModalCampanha'
 import { format, parseISO, startOfDay } from 'date-fns'
+import { es } from 'date-fns/locale' // Importar locale español
 
 export default {
   name: 'Campanhas',
@@ -143,7 +144,8 @@ export default {
       columns: [
         { name: 'id', label: '#', field: 'id', align: 'left' },
         { name: 'name', label: 'Campaña', field: 'name', align: 'left' },
-        { name: 'start', label: 'Inicio', field: 'start', align: 'center', format: (v) => format(parseISO(v), 'dd/MM/yyyy HH:mm') },
+        // Formateo de fecha adaptado a locale español
+        { name: 'start', label: 'Inicio', field: 'start', align: 'center', format: (v) => format(parseISO(v), 'dd/MM/yyyy HH:mm', { locale: es }) },
         {
           name: 'status',
           label: 'Estado',
@@ -173,7 +175,8 @@ export default {
       this.campanhas = data
     },
     isValidDate (v) {
-      return startOfDay(new Date(parseISO(v))).getTime() >= startOfDay(new Date()).getTime()
+      // Formateo de fecha adaptado a locale español
+      return startOfDay(new Date(parseISO(v, { locale: es }))).getTime() >= startOfDay(new Date()).getTime()
     },
     campanhaCriada (campanha) {
       this.listarCampanhas()
