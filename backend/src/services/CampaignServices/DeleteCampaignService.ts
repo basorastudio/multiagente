@@ -18,9 +18,7 @@ const DeleteCampaignService = async ({
     throw new AppError("ERR_NO_CAMPAIGN_FOUND", 404);
   }
 
-  if (campaign?.status !== "pending" && campaign?.status !== "canceled") {
-    throw new AppError("ERR_NO_UPDATE_CAMPAIGN_NOT_IN_CANCELED_PENDING", 404);
-  }
+  // Eliminada la restricción de estado para permitir borrar cualquier campaña
 
   try {
     await campaign.destroy();
