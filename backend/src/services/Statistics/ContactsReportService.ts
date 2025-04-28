@@ -4,7 +4,6 @@ import Contact from "../../models/Contact";
 import Tag from "../../models/Tag";
 import ContactWallet from "../../models/ContactWallet";
 
-
 interface Request {
   startDate: string;
   endDate: string;
@@ -84,7 +83,6 @@ const ListContactsService = async ({
   if (wallets) {
     includeCondition.push({
       model: ContactWallet,
-      // as: "wallets",
       where: {
         walletId: wallets
       },
@@ -93,7 +91,6 @@ const ListContactsService = async ({
   } else if (profile !== "admin") {
     includeCondition.push({
       model: ContactWallet,
-      // as: "wallet",
       where: {
         walletId: userId
       },
@@ -102,20 +99,10 @@ const ListContactsService = async ({
   }
 
   if (ddds) {
-    let dddsFilter: string[] = [];
-    // eslint-disable-next-line consistent-return
-    ddds.forEach((el: any) => {
-      if (el) {
-        const d = dddsPorEstado.find((ddd: any) => ddd.estado === el)?.ddds;
-        if (d) {
-          dddsFilter = dddsFilter.concat(d);
-        }
-      }
-    });
     where = {
       ...where,
       number: {
-        [Op.or]: dddsFilter.map(ddd => ({ [Op.like]: `55${ddd}%` }))
+        [Op.or]: ddds.map(ddd => ({ [Op.like]: `55${ddd}%` }))
       }
     };
   }
