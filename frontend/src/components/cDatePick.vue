@@ -52,6 +52,7 @@
 import { singleErrorExtractorMixin } from 'vuelidate-error-extractor'
 import { format, parse, isValid } from 'date-fns'
 import es from 'date-fns/locale/es'
+// Importación del locale español para date-fns
 
 export default {
   name: 'ccInputDate',
@@ -93,13 +94,16 @@ export default {
   },
   computed: {
     cValue () {
-      return this.value ? this.value : this.dateSelect ? format(parse(this.dateSelect, 'dd/MM/yyyy', new Date(), { locale: es }), 'yyyy-MM-dd', { locale: es }) : null
+      // Formateo de fecha adaptado a locale español
+return this.value ? this.value : this.dateSelect ? format(parse(this.dateSelect, 'dd/MM/yyyy', new Date(), { locale: es }), 'yyyy-MM-dd', { locale: es }) : null
     },
     cQDate () {
       if (isValid(this.cValue)) {
-        return format(this.cValue, 'dd/MM/yyyy', { locale: es })
+        // Formateo consistente con locale español
+return format(this.cValue, 'dd/MM/yyyy', { locale: es })
       }
-      return this.cValue ? format(parse(this.cValue, 'yyyy-MM-dd', new Date(), { locale: es }), 'dd/MM/yyyy', { locale: es }) : format(new Date(), 'dd/MM/yyyy', { locale: es })
+      // Manejo de fechas con validación y locale español
+return this.cValue ? format(parse(this.cValue, 'yyyy-MM-dd', new Date(), { locale: es }), 'dd/MM/yyyy', { locale: es }) : format(new Date(), 'dd/MM/yyyy', { locale: es })
     },
     cError () {
       if (this.error == 'NI') {
