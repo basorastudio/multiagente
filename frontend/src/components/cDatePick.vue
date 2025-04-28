@@ -13,7 +13,7 @@
       v-on="$listeners"
       :error="cError"
       :error-message="cErrorMessage"
-      :ruler="[val => dateIsValid(val) || '¡Fecha inválida!' ]"
+      :rules="[val => dateIsValid(val) || '¡Fecha inválida!']"
     >
       <template v-slot:append>
         <q-icon
@@ -48,11 +48,11 @@
     </q-input>
   </div>
 </template>
+
 <script>
 import { singleErrorExtractorMixin } from 'vuelidate-error-extractor'
 import { format, parse, isValid } from 'date-fns'
 import es from 'date-fns/locale/es'
-// Importación del locale español para date-fns
 
 export default {
   name: 'ccInputDate',
@@ -72,11 +72,11 @@ export default {
     },
     error: {
       type: [String, Boolean, Number],
-      default: 'NI' // Não Informada
+      default: 'NI'
     },
     errorMessage: {
       type: [String, Boolean, Number],
-      default: '' // Não Informada
+      default: ''
     },
     classAtrrs: {
       type: String,
@@ -94,25 +94,28 @@ export default {
   },
   computed: {
     cValue () {
-      // Formateo de fecha adaptado a locale español
-return this.value ? this.value : this.dateSelect ? format(parse(this.dateSelect, 'dd/MM/yyyy', new Date(), { locale: es }), 'yyyy-MM-dd', { locale: es }) : null
+      return this.value
+        ? this.value
+        : this.dateSelect
+          ? format(parse(this.dateSelect, 'dd/MM/yyyy', new Date(), { locale: es }), 'yyyy-MM-dd', { locale: es })
+          : null
     },
     cQDate () {
       if (isValid(this.cValue)) {
-        // Formateo consistente con locale español
-return format(this.cValue, 'dd/MM/yyyy', { locale: es })
+        return format(this.cValue, 'dd/MM/yyyy', { locale: es })
       }
-      // Manejo de fechas con validación y locale español
-return this.cValue ? format(parse(this.cValue, 'yyyy-MM-dd', new Date(), { locale: es }), 'dd/MM/yyyy', { locale: es }) : format(new Date(), 'dd/MM/yyyy', { locale: es })
+      return this.cValue
+        ? format(parse(this.cValue, 'yyyy-MM-dd', new Date(), { locale: es }), 'dd/MM/yyyy', { locale: es })
+        : format(new Date(), 'dd/MM/yyyy', { locale: es })
     },
     cError () {
-      if (this.error == 'NI') {
+      if (this.error === 'NI') {
         return this.hasErrors
       }
       return this.error
     },
     cErrorMessage () {
-      if (this.errorMessage == '') {
+      if (this.errorMessage === '') {
         return this.firstErrorMessage
       }
       return this.errorMessage
@@ -122,11 +125,7 @@ return this.cValue ? format(parse(this.cValue, 'yyyy-MM-dd', new Date(), { local
       get () {
         const defaultConfig = { name: null, size: '24px', color: '#000' }
         const data = { ...defaultConfig, ...this.icon }
-        if (!data.name) {
-          return defaultConfig
-        } else {
-          return data
-        }
+        return data.name ? data : defaultConfig
       }
     }
   },
