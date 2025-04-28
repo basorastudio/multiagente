@@ -390,7 +390,7 @@ export default {
             return ''
           }
         },
-        { name: 'estado', label: 'Estado', field: 'number', style: 'width: 500px', align: 'left', format: v => this.definirEstadoNumero(v) },
+        // { name: 'estado', label: 'Estado', field: 'number', style: 'width: 500px', align: 'left', format: v => this.definirEstadoNumero(v) }, // Eliminado
         { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ],
       columnsAdd: [
@@ -410,9 +410,8 @@ export default {
             }
             return ''
           }
-        },
-        { name: 'estado', label: 'Estado', field: 'number', style: 'width: 500px', align: 'left', format: v => this.definirEstadoNumero(v) }
-
+        }
+        // { name: 'estado', label: 'Estado', field: 'number', style: 'width: 500px', align: 'left', format: v => this.definirEstadoNumero(v) } // Eliminado
       ],
       contatosAdd: [],
       selected: []
@@ -433,12 +432,6 @@ export default {
     async listarContatosCampanha () {
       const { data } = await ListarContatosCampanha(this.$route.params.campanhaId)
       this.contatosCampanha = data
-    },
-    definirEstadoNumero (numero) {
-      // Eliminada función definirEstadoNumero
-    },
-    const ddd = numero.substring(2, 4)
-      return estadosBR.find(e => e.sigla === estadoPorDdd[ddd])?.nome || ''
     },
     async addContatosCampanha () {
       try {
