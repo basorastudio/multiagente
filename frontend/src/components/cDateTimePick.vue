@@ -80,6 +80,8 @@
 <script>
 import { singleErrorExtractorMixin } from 'vuelidate-error-extractor'
 import { format, parse, isValid } from 'date-fns'
+import es from 'date-fns/locale/es'
+// Importación del locale español para date-fns
 
 export default {
   name: 'ccInputDateTime',
@@ -121,13 +123,16 @@ export default {
   },
   computed: {
     cValue () {
-      return this.value ? this.value : this.dateSelect ? format(parse(this.dateSelect, 'dd/MM/yyyy HH:mm', new Date()), 'yyyy-MM-dd HH:mm') : null
+      // Formateo de fecha adaptado a locale español
+return this.value ? this.value : this.dateSelect ? format(parse(this.dateSelect, 'dd/MM/yyyy HH:mm', new Date(), { locale: es }), 'yyyy-MM-dd HH:mm', { locale: es }) : null
     },
     cQDate () {
       if (isValid(this.cValue)) {
-        return format(this.cValue, 'dd/MM/yyyy HH:mm')
+        // Formateo consistente con locale español
+return format(this.cValue, 'dd/MM/yyyy HH:mm', { locale: es })
       }
-      return this.cValue ? format(parse(this.cValue, 'yyyy-MM-dd HH:mm', new Date()), 'dd/MM/yyyy HH:mm') : format(new Date(), 'dd/MM/yyyy HH:mm')
+      // Manejo de fechas con validación y locale español
+return this.cValue ? format(parse(this.cValue, 'yyyy-MM-dd HH:mm', new Date(), { locale: es }), 'dd/MM/yyyy HH:mm', { locale: es }) : format(new Date(), 'dd/MM/yyyy HH:mm', { locale: es })
     },
     cError () {
       if (this.error == 'NI') {
@@ -158,11 +163,11 @@ export default {
     emitDate (d, r, dt) {
       let date = d
       if (!date) {
-        const time = format(new Date(), 'HH:mm')
+        const time = format(new Date(), 'HH:mm', { locale: es })
         date = `${dt.day}/${dt.month}/${dt.year} ${time}`
       }
-      const parseDate = parse(date, 'dd/MM/yyyy HH:mm', new Date())
-      this.$emit('input', format(parseDate, 'yyyy-MM-dd HH:mm'))
+      const parseDate = parse(date, 'dd/MM/yyyy HH:mm', new Date(), { locale: es })
+      this.$emit('input', format(parseDate, 'yyyy-MM-dd HH:mm', { locale: es }))
       this.$refs.qDateProxy.hide()
       this.$refs.qTimeProxy.hide()
     },
