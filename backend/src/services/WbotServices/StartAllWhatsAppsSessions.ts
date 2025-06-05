@@ -6,6 +6,7 @@ import { StartMessengerBot } from "../MessengerChannelServices/StartMessengerBot
 import { StartTbotSession } from "../TbotServices/StartTbotSession";
 import { StartWaba360 } from "../WABA360/StartWaba360";
 import { StartWhatsAppSession } from "./StartWhatsAppSession";
+import { StartBaileysSession } from "../BaileysServices/StartBaileysSession";
 // import { StartTbotSession } from "../TbotServices/StartTbotSession";
 
 export const StartAllWhatsAppsSessions = async (): Promise<void> => {
@@ -15,7 +16,7 @@ export const StartAllWhatsAppsSessions = async (): Promise<void> => {
         {
           [Op.and]: {
             type: {
-              [Op.in]: ["instagram", "telegram", "waba", "messenger"]
+              [Op.in]: ["instagram", "telegram", "waba", "messenger", "baileys"]
             },
             status: {
               [Op.notIn]: ["DISCONNECTED"]
@@ -36,6 +37,7 @@ export const StartAllWhatsAppsSessions = async (): Promise<void> => {
     }
   });
   const whatsappSessions = whatsapps.filter(w => w.type === "whatsapp");
+  const baileysSessions = whatsapps.filter(w => w.type === "baileys");
   const telegramSessions = whatsapps.filter(
     w => w.type === "telegram" && !!w.tokenTelegram
   );
@@ -49,33 +51,33 @@ export const StartAllWhatsAppsSessions = async (): Promise<void> => {
     });
   }
 
+  if (baileysSessions.length > 0) {
+    baileysSessions.forEach(whatsapp => {
+      StartBaileysSession(whatsapp);
+    });
+  }
+
   if (telegramSessions.length > 0) {
     telegramSessions.forEach(whatsapp => {
       StartTbotSession(whatsapp);
     });
   }
 
-  if (waba360Sessions.length > 0) {
-    waba360Sessions.forEach(channel => {
-      if (channel.tokenAPI && channel.wabaBSP === "360") {
-        StartWaba360(channel);
-      }
+  if (instagramSessions.length > 0) {
+    instagramSessions.forEach(whatsapp => {
+      StartInstaBotSession(whatsapp);
     });
   }
 
-  if (instagramSessions.length > 0) {
-    instagramSessions.forEach(channel => {
-      if (channel.instagramKey) {
-        StartInstaBotSession(channel);
-      }
+  if (waba360Sessions.length > 0) {
+    waba360Sessions.forEach(whatsapp => {
+      StartWaba360(whatsapp);
     });
   }
 
   if (messengerSessions.length > 0) {
-    messengerSessions.forEach(channel => {
-      if (channel.tokenAPI) {
-        StartMessengerBot(channel);
-      }
+    messengerSessions.forEach(whatsapp => {
+      StartMessengerBot(whatsapp);
     });
   }
 };

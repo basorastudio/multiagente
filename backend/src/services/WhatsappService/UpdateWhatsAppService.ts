@@ -13,7 +13,7 @@ interface WhatsappData {
   instagramUser?: string;
   instagramKey?: string;
   isActive?: boolean;
-  type?: "waba" | "instagram" | "telegram" | "whatsapp" | "messenger";
+  type?: "waba" | "instagram" | "telegram" | "whatsapp" | "messenger" | "baileys";
   wabaBSP?: string;
   tokenAPI?: string;
   fbPageId?: string;

@@ -1,8 +1,9 @@
 import { differenceInHours, parseJSON } from "date-fns";
+import { proto } from "@whiskeysockets/baileys";
 import Message from "../models/Message";
 import Ticket from "../models/Ticket";
+import { getBaileys } from "../libs/baileys";
 import { getTbot } from "../libs/tbot";
-// import { getInstaBot } from "../libs/InstaBot";
 import GetWbotMessage from "./GetWbotMessage";
 import AppError from "../errors/AppError";
 import { getIO } from "../libs/socket";
@@ -54,6 +55,23 @@ const DeleteMessageSystem = async (
       throw new AppError("ERROR_NOT_FOUND_MESSAGE");
     }
     await messageToDelete.delete(true);
+  }
+
+  if (ticket.channel === "baileys") {
+    const baileys = getBaileys(ticket.whatsappId);
+    const chatId = `${ticket.contact.number}@s.whatsapp.net`;
+    
+    try {
+      await baileys.sendMessage(chatId, {
+        delete: {
+          remoteJid: chatId,
+          fromMe: true,
+          id: message.messageId
+        }
+      });
+    } catch (err) {
+      throw new AppError("Error deleting Baileys message");
+    }
   }
 
   if (ticket.channel === "telegram") {
