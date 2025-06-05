@@ -295,7 +295,6 @@ export default {
       },
       optionsWhatsappsTypes: [
         { label: 'Whatsapp', value: 'whatsapp' },
-        { label: 'Baileys (MD)', value: 'baileys' },
         { label: 'Telegram', value: 'telegram' },
         { label: 'Hub Notificame', value: 'hub' }
         // { label: 'Instagram', value: 'instagram' }
