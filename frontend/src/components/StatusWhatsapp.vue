@@ -101,21 +101,21 @@
         v-if="cProblemaConexao"
       >
         <span class="q-ml-md text-weight-medium text-center text-caption text-white ">
-          Verifique o celular, a conexão foi perdida.
+          Verifique el celular, la conexión se perdió.
         </span>
         <q-tooltip content-class="bg-light-blue-1 text-black q-pa-sm shadow-4">
           <span class="text-weight-medium"> Alternativas: </span>
           <span class="row col">
-            1 - Tente fechar e abrir novamente o aplicativo do whatsapp no celular;
+            1 - Intente cerrar y abrir nuevamente la aplicación de WhatsApp en el celular;
           </span>
           <span class="row col">
-            2 - Certifique-se de que seu celular esteja conectado à internet e o WhatsApp esteja aberto;
+            2 - Asegúrese de que su celular esté conectado a internet y que WhatsApp esté abierto;
           </span>
           <span class="row col">
-            3 - Recarregue a página do sistema;
+            3 - Recargue la página del sistema;
           </span>
           <span class="row col">
-            4 - Clique no botão 'Desconectar' para obter um novo QR Code.
+            4 - Haga clic en el botón 'Desconectar' para obtener un nuevo código QR.
           </span>
         </q-tooltip>
       </q-icon>
@@ -126,18 +126,18 @@
         size="2.5em"
       >
         <span class="q-ml-md text-weight-medium text-center text-caption text-white ">
-          Necessário ler o QrCode em conexões.
+          Necesario leer el código QR en conexiones.
         </span>
         <q-tooltip content-class="bg-light-blue-1 text-black q-pa-sm shadow-4">
-          <span class="text-weight-medium"> Ação: </span>
+          <span class="text-weight-medium"> Acción: </span>
           <span class="row col">
-            1 - Acesse o menu Conexões;
+            1 - Acceda al menú Conexiones;
           </span>
           <span class="row col">
-            2 - Clique no botão azul "QR Code";
+            2 - Haga clic en el botón azul "Código QR";
           </span>
           <span class="row col">
-            3 - Leia o QrCode gerado com o aplicativo do Whatsapp do celular e aguarde a conexão ser estabelecida.
+            3 - Lea el código QR generado con la aplicación de WhatsApp del celular y espere a que se establezca la conexión.
           </span>
         </q-tooltip>
       </q-icon>
@@ -148,15 +148,15 @@
         size="2.5em"
       >
         <span class="q-ml-md text-weight-medium text-center text-caption text-white ">
-          Verifique o celular e a internet, a conexão foi perdida. Tentando reconectar ao Whatsapp.
+          Verifique el celular y la internet, la conexión se perdió. Intentando reconectar a WhatsApp.
         </span>
         <q-tooltip content-class="bg-light-blue-1 text-black q-pa-sm shadow-4">
-          <span class="text-weight-medium"> Ação: </span>
+          <span class="text-weight-medium"> Acción: </span>
           <span class="row col">
-            1 - Tente fechar e abrir novamente o aplicativo do whatsapp no celular;
+            1 - Intente cerrar y abrir nuevamente la aplicación de WhatsApp en el celular;
           </span>
           <span class="row col">
-            2 - Certifique-se de que seu celular esteja conectado à internet e o WhatsApp esteja aberto;
+            2 - Asegúrese de que su celular esté conectado a internet y que WhatsApp esté abierto;
           </span>
         </q-tooltip>
       </q-icon>
@@ -170,7 +170,7 @@
         </q-avatar>
         <q-menu>
           <q-list style="min-width: 100px">
-            <q-item-label header> Olá! {{ usuario.name }} </q-item-label>
+            <q-item-label header> ¡Hola! {{ usuario.name }} </q-item-label>
             <q-separator />
             <q-item
               clickable
@@ -184,7 +184,7 @@
               v-close-popup
               @click="efetuarLogout"
             >
-              <q-item-section>Sair</q-item-section>
+              <q-item-section>Salir</q-item-section>
             </q-item>
             <q-separator />
 

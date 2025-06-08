@@ -13,7 +13,7 @@
       v-on="$listeners"
       :error="cError"
       :error-message="cErrorMessage"
-      :ruler="[val => dateIsValid(val) || 'Data inválida!' ]"
+      :ruler="[val => dateIsValid(val) || '¡Fecha inválida!' ]"
     >
       <template v-slot:append>
         <q-icon
@@ -35,7 +35,7 @@
         </q-icon>
       </template>
 
-      <!-- Aceitar Demais Slot's -->
+      <!-- Aceptar Demás Slot's -->
       <template
         v-for="(_, slot) of $scopedSlots"
         v-slot:[slot]="scope"
@@ -70,11 +70,11 @@ export default {
     },
     error: {
       type: [String, Boolean, Number],
-      default: 'NI' // Não Informada
+      default: 'NI' // No Informada
     },
     errorMessage: {
       type: [String, Boolean, Number],
-      default: '' // Não Informada
+      default: '' // No Informada
     },
     classAtrrs: {
       type: String,

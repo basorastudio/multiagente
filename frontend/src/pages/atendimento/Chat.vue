@@ -30,11 +30,11 @@
         >
           <div slot="no-results">
             <div v-if="!cMessages.length">
-              Sem resultados :(
+              Sin resultados :(
             </div>
           </div>
           <div slot="no-more">
-            Nada mais a carregar :)
+            Nada más que cargar :)
           </div>
         </infinite-loading>
       </transition>
@@ -74,7 +74,7 @@
             'full-width': $q.screen.xs
           }"
       >
-        Selecione um ticket!
+        ¡Seleccione un ticket!
       </h1>
     </div>
     <div
@@ -158,8 +158,8 @@
         class="text-grey-8"
         v-if="mensagensParaEncaminhar.length > 0"
       >
-        <span class="text-bold text-h5"> {{ mensagensParaEncaminhar.length }} de 10 mensagens</span> selecionadas para
-        serem encaminhadas.
+        <span class="text-bold text-h5"> {{ mensagensParaEncaminhar.length }} de 10 mensajes</span> seleccionados para
+        ser reenviados.
         <q-separator class="bg-grey-4" />
         <q-select
           dense
@@ -180,8 +180,8 @@
           clearable
           option-label="name"
           option-value="id"
-          label="Localize e selecione o contato"
-          hint="Digite no mínimo duas letras para localizar o contato. É possível selecionar apenas 1 contato!"
+          label="Localice y seleccione el contacto"
+          hint="Escriba al menos dos letras para localizar el contacto. ¡Solo se puede seleccionar 1 contacto!"
         >
           <template v-slot:option="scope">
             <q-item
@@ -230,7 +230,7 @@
       <q-card :style="$q.screen.width < 770 ? `min-width: 98vw; max-width: 98vw` : 'min-width: 50vw; max-width: 50vw'">
         <q-card-section>
           <div class="text-h6">
-            Agendamento de Mensagem
+            Programación de Mensaje
             <q-btn
               flat
               class="bg-padrao btn-rounded float-right"
@@ -259,7 +259,7 @@
       <q-card :style="$q.screen.width < 770 ? `min-width: 98vw; max-width: 98vw` : 'min-width: 50vw; max-width: 50vw'">
         <q-card-section>
           <div class="text-h6">
-            Encaminhando Mensagem
+            Reenviando Mensaje
             <q-btn
               flat
               class="bg-padrao btn-rounded float-right"
@@ -296,8 +296,8 @@
             clearable
             option-label="name"
             option-value="id"
-            label="Localize e selecione o contato"
-            hint="Digite no mínimo duas letras para localizar o contato. É possível selecionar apenas 1 contato!"
+            label="Localice y seleccione el contacto"
+            hint="Escriba al menos dos letras para localizar el contacto. ¡Solo se puede seleccionar 1 contacto!"
           >
             <template v-slot:option="scope">
               <q-item
@@ -467,17 +467,17 @@ export default {
     },
     confirmarEncaminhamentoMensagem (data) {
       if (!this.contatoSelecionado.id) {
-        this.$notificarErro('Selecione o contato de destino das mensagens.')
+        this.$notificarErro('Seleccione el contacto de destino de los mensajes.')
         return
       }
       EncaminharMensagem(data, this.contatoSelecionado)
         .then(r => {
-          this.$notificarSucesso(`Mensagem encaminhada para ${this.contatoSelecionado.name} | Número: ${this.contatoSelecionado.number}`)
+          this.$notificarSucesso(`Mensaje reenviado a ${this.contatoSelecionado.name} | Número: ${this.contatoSelecionado.number}`)
           this.mensagensParaEncaminhar = []
           this.ativarMultiEncaminhamento = false
         })
         .catch(e => {
-          this.$notificarErro('Não foi possível encaminhar mensagem. Tente novamente em alguns minutos!', e)
+          this.$notificarErro('No se pudo reenviar el mensaje. ¡Inténtelo de nuevo en unos minutos!', e)
         })
     }
   },

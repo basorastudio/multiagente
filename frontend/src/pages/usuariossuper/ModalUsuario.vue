@@ -7,7 +7,7 @@
   >
     <q-card style="width: 600px">
       <q-card-section>
-        <div class="text-h6">Cadastrar Usuário</div>
+        <div class="text-h6">Registrar Usuario</div>
       </q-card-section>
       <q-card-section class="q-col-gutter-sm">
         <div class="row q-col-gutter-sm">
@@ -33,7 +33,7 @@
               v-model.trim="usuario.name"
               :validator="$v.usuario.name"
               @blur="$v.usuario.name.$touch"
-              label="Nome"
+              label="Nombre"
             />
           </div>
           <div class="col-12">
@@ -54,7 +54,7 @@
               :validator="$v.usuario.password"
               @blur="$v.usuario.password.$touch"
               :type="isPwd ? 'password' : 'text'"
-              label="Senha"
+              label="Contraseña"
             >
               <template v-slot:append>
                 <q-icon
@@ -85,14 +85,14 @@
       <q-card-actions align="right">
         <q-btn
           rounded
-          label="Sair"
+          label="Salir"
           class="q-px-md q-mr-sm"
           color="negative"
           v-close-popup
         />
         <q-btn
           rounded
-          label="Salvar"
+          label="Guardar"
           class="q-px-md"
           color="primary"
           @click="handleUsuario"
@@ -129,7 +129,7 @@ export default {
       isPwd: false,
       optionsProfile: [
         { value: 'admin', label: 'Administrador' },
-        { value: 'user', label: 'Usuário' }
+        { value: 'user', label: 'Usuario' }
       ],
       usuario: {
         name: '',
@@ -206,7 +206,7 @@ export default {
           type: 'warning',
           progress: true,
           position: 'top',
-          message: 'Ops! Verifique os erros...',
+          message: '¡Ups! Verifique los errores...',
           actions: [{
             icon: 'close',
             round: true,
@@ -233,7 +233,7 @@ export default {
             progress: true,
             position: 'top',
             textColor: 'black',
-            message: 'Usuário editado!',
+            message: '¡Usuario editado!',
             actions: [{
               icon: 'close',
               round: true,
@@ -243,13 +243,13 @@ export default {
         } else {
           const { data } = await CriarUsuarioTenant(this.usuario)
           this.$emit('modalUsuario:usuario-criado', data)
-          // Emita um evento global informando que um novo usuário foi criado
+          // Emita un evento global informando que un nuevo usuario fue creado
           this.$root.$emit('usuario-criado', data)
           this.$q.notify({
             type: 'positive',
             progress: true,
             position: 'top',
-            message: 'Usuário criado!',
+            message: '¡Usuario creado!',
             actions: [{
               icon: 'close',
               round: true,
@@ -263,7 +263,7 @@ export default {
         if (error.data.error === 'ERR_USER_LIMIT_USER_CREATION') {
           this.$q.notify({
             type: 'negative',
-            message: 'Limite de usuario atingido.',
+            message: 'Se alcanzó el límite de usuarios.',
             caption: 'ERR_USER_LIMIT_USER_CREATION',
             position: 'top',
             progress: true
@@ -271,7 +271,7 @@ export default {
         } else if (error.data.error === 'ERR_EMAIL_ALREADY_REGISTERED') {
           this.$q.notify({
             type: 'negative',
-            message: 'Este e-mail já está cadastrado.',
+            message: 'Este correo electrónico ya está registrado.',
             caption: 'ERR_EMAIL_ALREADY_REGISTERED',
             position: 'top',
             progress: true
@@ -279,7 +279,7 @@ export default {
         } else {
           this.$q.notify({
             type: 'negative',
-            message: 'Não foi possível criar o usuário.',
+            message: 'No se pudo crear el usuario.',
             caption: 'ERR_UNKNOWN_ERROR',
             position: 'top',
             progress: true

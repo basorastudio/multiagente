@@ -51,7 +51,7 @@
               style="margin-top: 2px !important;"
               :style="$q.screen.width < 500 ? 'max-width: 170px' : ''"
             >
-              <span v-if="Value(cticket.user, 'name')"> Atribuido à: {{ Value(cticket.user, 'name') }} </span>
+              <span v-if="Value(cticket.user, 'name')"> Asignado a: {{ Value(cticket.user, 'name') }} </span>
               <q-skeleton
                 v-else
                 type="text"
@@ -87,7 +87,7 @@
             :disable="cticket.status === 'closed' || cticket.status === 'pending' || cticket.channel !== 'whatsapp' || !cticket.whatsapp?.wavoip || cticket.contact?.isGroup"
           >
             <q-tooltip content-class="bg-grey-9 text-bold">
-              Ligar Wavoip
+              Llamar Wavoip
             </q-tooltip>
           </q-btn>
 
@@ -99,7 +99,7 @@
             :disable="cticket.status == 'closed'"
           >
             <q-tooltip content-class="bg-grey-9 text-bold">
-              Agendamento de mensagem
+              Programación de mensajes
             </q-tooltip>
           </q-btn>
 
@@ -145,8 +145,8 @@
                   />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>Fila</q-item-label>
-                  <q-item-label caption>Retornar aos pendentes</q-item-label>
+                  <q-item-label>Cola</q-item-label>
+                  <q-item-label caption>Regresar a pendientes</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item
@@ -183,7 +183,7 @@
         style="width: 500px"
       >
         <q-card-section>
-          <div class="text-h6">Selecione o destino:</div>
+          <div class="text-h6">Seleccione el destino:</div>
         </q-card-section>
         <q-card-section class="row q-gutter-sm">
           <div class="col-12">
@@ -197,7 +197,7 @@
               map-options
               option-value="id"
               option-label="queue"
-              label="Fila de destino"
+              label="Cola de destino"
               class="full-width"
             />
           </div>
@@ -212,7 +212,7 @@
               map-options
               option-value="id"
               option-label="name"
-              label="Usuário destino"
+              label="Usuario de destino"
               class="full-width"
             />
           </div>
@@ -220,14 +220,14 @@
         <q-card-actions align="right">
           <q-btn
             rounded
-            label="Sair"
+            label="Salir"
             color="negative"
             v-close-popup
             class="q-mr-md"
           />
           <q-btn
             rounded
-            label="Salvar"
+            label="Guardar"
             color="positive"
             @click="confirmarTransferenciaTicket"
           />
@@ -290,7 +290,7 @@ export default {
         this.listarUsuarios()
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Problema ao carregar filas', error)
+        this.$notificarErro('Problema al cargar las colas', error)
       }
     },
     async listarUsuarios () {
@@ -300,7 +300,7 @@ export default {
         this.modalTransferirTicket = true
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Problema ao carregar usuários', error)
+        this.$notificarErro('Problema al cargar los usuarios', error)
       }
     },
     openWavoipCall () {
@@ -322,12 +322,12 @@ export default {
     async confirmarTransferenciaTicket () {
       if (!this.filaSelecionada) return
       // if (!this.usuarioSelecionado) return
-      console.log('usuario selecionado: ' + this.usuarioSelecionado)
-      console.log('usuario atual do ticket: ' + this.ticketFocado.userId)
+      console.log('usuario seleccionado: ' + this.usuarioSelecionado)
+      console.log('usuario actual del ticket: ' + this.ticketFocado.userId)
       if (this.ticketFocado.userId === this.usuarioSelecionado && this.ticketFocado.userId != null) {
         this.$q.notify({
           type: 'info',
-          message: 'Ticket já pertece ao usuário selecionado.',
+          message: 'El ticket ya pertenece al usuario seleccionado.',
           progress: true,
           actions: [{
             icon: 'close',
@@ -340,7 +340,7 @@ export default {
       if (this.ticketFocado.userId === userId && userId === this.usuarioSelecionado) {
         this.$q.notify({
           type: 'info',
-          message: 'Ticket já pertece ao seu usuário',
+          message: 'El ticket ya pertenece a su usuario',
           progress: true,
           actions: [{
             icon: 'close',
@@ -354,7 +354,7 @@ export default {
       if (this.ticketFocado.queueId === this.filaSelecionada && this.ticketFocado.userId === this.usuarioSelecionado) {
         this.$q.notify({
           type: 'info',
-          message: 'Ticket já pertece a esta fila e usuário',
+          message: 'El ticket ya pertenece a esta cola y usuario',
           progress: true,
           actions: [{
             icon: 'close',

@@ -38,15 +38,15 @@ export default {
           console.log('chat:create')
           if (data.payload.ticket.userId !== userId) return
           if (data.payload.fromMe) return
-          const message = new self.Notification('Contato: ' + data.payload.ticket.contact.name, {
-            body: 'Mensagem: ' + data.payload.body,
+          const message = new self.Notification('Contacto: ' + data.payload.ticket.contact.name, {
+            body: 'Mensaje: ' + data.payload.body,
             tag: 'simple-push-demo-notification',
             image: data.payload.ticket.contact.profilePicUrl,
             icon: data.payload.ticket.contact.profilePicUrl
           })
           console.log(message)
-          console.log('enviou msg')
-          // Atualiza notificações de mensagem
+          console.log('envió mensaje')
+          // Actualiza notificaciones de mensaje
           const params = {
             searchParam: '',
             pageNumber: 1,
@@ -59,21 +59,21 @@ export default {
             includeNotQueueDefined: true
             // date: new Date(),
           }
-          console.log('Definiu parametros')
+          console.log('Definió parámetros')
           try {
-            console.log('try')
+            console.log('intento')
             const { data } = await ConsultarTickets(params)
-            console.log('try 1')
+            console.log('intento 1')
             this.countTickets = data.count // count total de tickets no status
-            console.log('try 2')
+            console.log('intento 2')
             // this.ticketsList = data.tickets
             this.$store.commit('UPDATE_NOTIFICATIONS', data)
-            console.log('try 3')
+            console.log('intento 3')
             // this.$store.commit('SET_HAS_MORE', data.hasMore)
             // console.log(this.notifications)
           } catch (err) {
-            console.log('error try')
-            this.$notificarErro('Algum problema', err)
+            console.log('error intento')
+            this.$notificarErro('Algún problema', err)
             console.error(err)
           }
         }
@@ -95,7 +95,7 @@ export default {
           this.$q.notify({
             position: 'top',
             icon: 'mdi-wifi-arrow-up-down',
-            message: `A conexão com o WhatsApp está pronta e o mesmo está habilitado para enviar e receber mensagens. Conexão: ${data.session.name}. Número: ${data.session.number}.`,
+            message: `La conexión con WhatsApp está lista y está habilitado para enviar y recibir mensajes. Conexión: ${data.session.name}. Número: ${data.session.number}.`,
             type: 'positive',
             color: 'primary',
             html: true,
@@ -113,7 +113,7 @@ export default {
 
       socket.on(`${usuario.tenantId}:change_battery`, data => {
         this.$q.notify({
-          message: `Bateria do celular do whatsapp ${data.batteryInfo.sessionName} está com bateria em ${data.batteryInfo.battery}%. Necessário iniciar carregamento.`,
+          message: `La batería del celular de WhatsApp ${data.batteryInfo.sessionName} está en ${data.batteryInfo.battery}%. Es necesario iniciar la carga.`,
           type: 'negative',
           progress: true,
           position: 'top',
@@ -143,15 +143,15 @@ export default {
             this.$store.commit('UPDATE_NOTIFICATIONS_P', data_noti.data)
             verify = data_noti
           } catch (err) {
-            this.$notificarErro('Algum problema', err)
+            this.$notificarErro('Algún problema', err)
             console.error(err)
           }
-          // Faz verificação para se certificar que notificação pertence a fila do usuário
+          // Realiza una verificación para asegurarse de que la notificación pertenece a la cola del usuario
           var pass_noti = false
           verify.data.tickets.forEach((element) => { pass_noti = (element.id == data.payload.id ? true : pass_noti) })
-          // Exibe Notificação
+          // Muestra Notificación
           if (pass_noti) {
-            const message = new self.Notification('Novo cliente pendente', {
+            const message = new self.Notification('Nuevo cliente pendiente', {
               body: 'Cliente: ' + data.payload.contact.name,
               tag: 'simple-push-demo-notification'
             })

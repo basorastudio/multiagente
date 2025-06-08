@@ -27,7 +27,7 @@
         />
       </template>
 
-      <!-- Aceitar Demais Slot's -->
+      <!-- Aceptar Demás Slot's -->
       <template
         v-for="(_, slot) of $scopedSlots"
         v-slot:[slot]="scope"
@@ -59,11 +59,11 @@ export default {
     },
     error: {
       type: [String, Boolean, Number],
-      default: 'NI' // Não Informada
+      default: 'NI' // No Informada
     },
     errorMessage: {
       type: [String, Boolean, Number],
-      default: '' // Não Informada
+      default: '' // No Informada
     },
     icon: {
       type: Object,
@@ -97,7 +97,7 @@ export default {
     }
   },
   methods: {
-    // Methodo para facilitar o retorno para null e não ''
+    // Método para facilitar el retorno a null y no ''
     valorInputSeEmpty ($event) {
       if (!$event.target.value) {
         this.$emit('input', null)

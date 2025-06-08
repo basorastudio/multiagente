@@ -2,14 +2,14 @@
   <div v-if="userProfile === 'admin'">
     <q-card bordered>
       <q-card-section>
-        <div class="text-h6 q-px-sm"> Relatório de Contatos </div>
+        <div class="text-h6 q-px-sm"> Informe de Contactos </div>
       </q-card-section>
       <q-card-section class="q-pt-none">
         <fieldset class="rounded-all">
-          <legend class="q-px-sm">Filtros (Data criação do contato)</legend>
+          <legend class="q-px-sm">Filtros (Fecha creación del contacto)</legend>
           <div class="row q-gutter-md items-end">
             <div class="col-grow">
-              <label>Início</label>
+              <label>Inicio</label>
               <DatePick
                 dense
                 rounded
@@ -29,7 +29,7 @@
                 rounded
                 class="q-mr-sm"
                 color="primary"
-                label="Gerar"
+                label="Generar"
                 icon="refresh"
                 @click="gerarRelatorio"
               />
@@ -99,7 +99,7 @@
     <ccPrintModelLandscape
       id="slotTableRelatorioContatos"
       :imprimirRelatorio="imprimir"
-      title="Relatório de Contatos"
+      title="Informe de Contactos"
       :styleP="`
       table { width: 100%; font-size: 10px; border-spacing: 1; border-collapse: collapse;  }
       #tableReport tr td { border:1px solid #DDD; padding-left: 10px; padding-right: 10px;  }

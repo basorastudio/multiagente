@@ -10,11 +10,11 @@
       class="q-pa-lg"
     >
       <q-card-section>
-        <div class="text-h6">{{ chatFlow.isDuplicate ? 'Duplicar' : chatFlowEdicao.id ? 'Editar': 'Criar' }} Fluxo <span v-if="chatFlow.isDuplicate"> (Nome: {{ chatFlowEdicao.name }}) </span></div>
+        <div class="text-h6">{{ chatFlow.isDuplicate ? 'Duplicar' : chatFlowEdicao.id ? 'Editar': 'Crear' }} Flujo <span v-if="chatFlow.isDuplicate"> (Nombre: {{ chatFlowEdicao.name }}) </span></div>
         <div
           v-if="chatFlow.isDuplicate"
           class="text-subtitle1"
-        > Nome: {{ chatFlowEdicao.name }} </div>
+        > Nombre: {{ chatFlowEdicao.name }} </div>
       </q-card-section>
       <q-card-section>
         <q-input
@@ -23,7 +23,7 @@
           rounded
           dense
           v-model="chatFlow.name"
-          label="Descrição"
+          label="Descripción"
         />
         <div class="row col q-mt-md">
           <q-input
@@ -33,14 +33,14 @@
             dense
             outlined
             v-model="chatFlow.celularTeste"
-            label="Número para Teste"
-            hint="Deixe limpo para que a Auto resposta funcione. Caso contrário, irá funcionar somente para o número informado aqui."
+            label="Número para Prueba"
+            hint="Deje en blanco para que la Respuesta Automática funcione. En caso contrario, funcionará solamente para el número informado aquí."
           />
         </div>
         <div class="row col q-mt-md">
           <q-checkbox
             v-model="chatFlow.isActive"
-            label="Ativo"
+            label="Activo"
           />
         </div>
       </q-card-section>
@@ -57,7 +57,7 @@
         />
         <q-btn
           rounded
-          label="Salvar"
+          label="Guardar"
           color="positive"
           @click="handleAutoresposta"
         />
@@ -95,8 +95,8 @@ export default {
         isActive: true
       }
       // options: [
-      //   { value: 0, label: 'Entrada (Criação do Ticket)' },
-      //   { value: 1, label: 'Encerramento (Resolução Ticket)' }
+      //   { value: 0, label: 'Entrada (Creación del Ticket)' },
+      //   { value: 1, label: 'Cierre (Resolución del Ticket)' }
       // ]
     }
   },
@@ -131,13 +131,13 @@ export default {
     async handleAutoresposta () {
       if (this.chatFlow.id && !this.chatFlow?.isDuplicate) {
         const { data } = await UpdateChatFlow(this.chatFlow)
-        this.$notificarSucesso('Fluxo editado.')
+        this.$notificarSucesso('Flujo editado.')
         this.$emit('chatFlow:editado', data)
       } else {
-        // setar id = null para rotina de duplicação de fluxo
+        // establecer id = null para la rutina de duplicación de flujo
         const flow = { ...getDefaultFlow(), ...this.chatFlow, id: null }
         const { data } = await CriarChatFlow(flow)
-        this.$notificarSucesso('Novo fluxo criado.')
+        this.$notificarSucesso('Nuevo flujo creado.')
         this.$emit('chatFlow:criada', data)
       }
       this.fecharModal()

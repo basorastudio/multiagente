@@ -6,6 +6,4 @@ app.use(express.static(path.join(__dirname, 'dist/pwa')))
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'dist/pwa', 'index.html'))
 })
-app.listen(4444)
-
-
+app.listen(4000)

@@ -6,13 +6,13 @@
         class="full-width"
       >
         <q-card-section class="text-h6 text-bold">
-          Canais
+          Canales
           <div class="absolute-right q-pa-md">
             <q-btn
               rounded
               color="black"
               icon="mdi-plus"
-              label="Adicionar"
+              label="Añadir"
               @click="modalWhatsapp = true"
             />
           </div>
@@ -37,7 +37,7 @@
               </q-avatar>
             </q-item-section>
             <q-item-section>
-              <q-item-label class="text-h6 text-bold">Nome: {{ item.name }}</q-item-label>
+              <q-item-label class="text-h6 text-bold">Nombre: {{ item.name }}</q-item-label>
               <q-item-label class="text-h6 text-caption">
                 {{ item.type }}
               </q-item-label>
@@ -59,7 +59,7 @@
             <template v-if="item.type === 'messenger'">
               <div class="text-body2 text-bold q-mt-sm">
                 <span> Página: </span>
-                {{ item.fbObject && item.fbObject.name || 'Nenhuma página configurada.' }}
+                {{ item.fbObject && item.fbObject.name || 'Ninguna página configurada.' }}
               </div>
             </template>
           </q-card-section>
@@ -85,7 +85,7 @@
               outlined
               dense
               rounded
-              label="Fila"
+              label="Cola"
               v-model="item.queueId"
               :options="listaFila"
               map-options
@@ -106,7 +106,7 @@
                 rounded
                 v-if="item.type == 'whatsapp' && item.status == 'qrcode'"
                 color="blue-5"
-                label="QR Code"
+                label="Código QR"
                 @click="handleOpenQrModal(item, 'btn-qrCode')"
                 icon-right="watch_later"
                 :disable="!isAdmin"
@@ -126,7 +126,7 @@
                   rounded
                   v-if="item.status == 'DISCONNECTED' && item.type == 'whatsapp'"
                   color="blue-5"
-                  label="Novo QR Code"
+                  label="Nuevo Código QR"
                   @click="handleRequestNewQrCode(item, 'btn-qrCode')"
                   icon-right="watch_later"
                   :disable="!isAdmin"
@@ -170,7 +170,7 @@
               class="absolute-bottom-right"
             >
               <q-tooltip>
-                Deletar conexáo
+                Eliminar conexión
               </q-tooltip>
             </q-btn>
           </q-card-actions>
@@ -201,7 +201,7 @@
 import { DeletarWhatsapp, DeleteWhatsappSession, StartWhatsappSession, ListarWhatsapps, RequestNewQrCode, UpdateWhatsapp } from 'src/service/sessoesWhatsapp'
 import { ListarFilas } from 'src/service/filas'
 import { format, parseISO } from 'date-fns'
-import pt from 'date-fns/locale/pt-BR/index'
+import pt from 'date-fns/locale/es/index'
 import ModalQrCode from './ModalQrCode'
 import { mapGetters } from 'vuex'
 import ModalWhatsapp from './ModalWhatsapp'
@@ -236,19 +236,19 @@ export default {
       columns: [
         {
           name: 'name',
-          label: 'Nome',
+          label: 'Nombre',
           field: 'name',
           align: 'left'
         },
         {
           name: 'status',
-          label: 'Status',
+          label: 'Estado',
           field: 'status',
           align: 'center'
         },
         {
           name: 'session',
-          label: 'Sessão',
+          label: 'Sesión',
           field: 'status',
           align: 'center'
         },
@@ -260,20 +260,20 @@ export default {
         },
         {
           name: 'updatedAt',
-          label: 'Última Atualização',
+          label: 'Última Actualización',
           field: 'updatedAt',
           align: 'center',
           format: d => this.formatarData(d, 'dd/MM/yyyy HH:mm')
         },
         {
           name: 'isDefault',
-          label: 'Padrão',
+          label: 'Predeterminado',
           field: 'isDefault',
           align: 'center'
         },
         {
           name: 'acoes',
-          label: 'Ações',
+          label: 'Acciones',
           field: 'acoes',
           align: 'center'
         }
@@ -309,14 +309,14 @@ export default {
     },
     async handleDisconectWhatsSession (whatsAppId) {
       this.$q.dialog({
-        title: 'Atenção!! Deseja realmente desconectar? ',
+        title: '¡Atención! ¿Realmente desea desconectar?',
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -347,7 +347,7 @@ export default {
     },
     async handleRequestNewQrCode (channel, origem) {
       if (channel.type === 'telegram' && !channel.tokenTelegram) {
-        this.$notificarErro('Necessário informar o token para Telegram')
+        this.$notificarErro('Es necesario informar el token para Telegram')
       }
       this.loading = true
       try {
@@ -366,15 +366,15 @@ export default {
     },
     async deleteWhatsapp (whatsapp) {
       this.$q.dialog({
-        title: 'Atenção!! Deseja realmente deletar? ',
-        message: 'Não é uma boa ideia apagar se já tiver gerado atendimentos para esse whatsapp.',
+        title: '¡Atención! ¿Realmente desea eliminar?',
+        message: 'No es una buena idea eliminar si ya ha generado atenciones para este whatsapp.',
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -399,7 +399,7 @@ export default {
           type: 'positive',
           progress: true,
           position: 'top',
-          message: `Whatsapp ${whatsapp.id ? 'editado' : 'criado'} com sucesso!`,
+          message: `Whatsapp ${whatsapp.id ? 'editado' : 'creado'} con éxito!`,
           actions: [{
             icon: 'close',
             round: true,
@@ -412,7 +412,7 @@ export default {
           type: 'error',
           progress: true,
           position: 'top',
-          message: 'Ops! Verifique os erros... O nome da conexão não pode existir na plataforma, é um identificador único.',
+          message: '¡Ups! Verifique los errores... El nombre de la conexión no puede existir en la plataforma, es un identificador único.',
           actions: [{
             icon: 'close',
             round: true,

@@ -2,14 +2,14 @@
   <div v-if="userProfile === 'admin'">
     <q-card bordered>
       <q-card-section>
-        <div class="text-h6 q-px-sm"> Relatório Resumo Atendimentos Usuários </div>
+        <div class="text-h6 q-px-sm"> Informe Resumen de Atenciones de Usuarios </div>
       </q-card-section>
       <q-card-section class="q-pt-none">
         <fieldset class="rounded-all">
-          <legend class="q-px-sm">Filtros (Data Atendimentos)</legend>
+          <legend class="q-px-sm">Filtros (Fecha de Atenciones)</legend>
           <div class="row q-gutter-md items-end">
             <div class="col-grow">
-              <label>Início</label>
+              <label>Inicio</label>
               <DatePick
                 dense
                 rounded
@@ -28,7 +28,7 @@
               <q-btn
                 class="q-mr-sm"
                 color="primary"
-                label="Gerar"
+                label="Generar"
                 icon="refresh"
                 rounded
                 @click="gerarRelatorio"
@@ -99,7 +99,7 @@
     <ccPrintModelLandscape
       id="slotTableRelatorioResumoAtendimentosUsuarios"
       :imprimirRelatorio="imprimir"
-      title="Relatório de Resumo Atendimentos Usuários"
+      title="Informe Resumen de Atenciones de Usuarios"
       :styleP="`
       table { width: 100%; font-size: 10px; border-spacing: 1; border-collapse: collapse;  }
       #tableReport tr td { border:1px solid #DDD; padding-left: 10px; padding-right: 10px;  }
@@ -169,8 +169,8 @@ export default {
       bl_sintetico: false,
       dadosResumo: [],
       columns: [
-        { name: 'name', label: 'Nome', field: 'name', align: 'left', style: 'width: 300px', format: v => !v ? 'Não Informado' : v },
-        { name: 'email', label: 'E-Mail', field: 'email', align: 'left', style: 'width: 300px', format: v => !v ? 'Não Informado' : v },
+        { name: 'name', label: 'Nome', field: 'name', align: 'left', style: 'width: 300px', format: v => !v ? 'No Informado' : v },
+        { name: 'email', label: 'E-Mail', field: 'email', align: 'left', style: 'width: 300px', format: v => !v ? 'No Informado' : v },
         { name: 'qtd_pendentes', label: 'Pendentes', field: 'qtd_pendentes', align: 'center', style: 'width: 300px; text-align: center;' },
         { name: 'qtd_em_atendimento', label: 'Em Atendimento', field: 'qtd_em_atendimento', align: 'center', style: 'width: 300px; text-align: center;' },
         { name: 'qtd_resolvidos', label: 'Resolvidos', field: 'qtd_resolvidos', align: 'center', style: 'width: 300px; text-align: center;' },

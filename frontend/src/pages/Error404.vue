@@ -9,7 +9,7 @@
         class="text-h2 text-white"
         style="opacity:.4"
       >
-        Oooooops... Nada por aqui...
+        Oooooops... Nada por aquí...
       </div>
 
       <q-btn
@@ -17,7 +17,7 @@
         color="white"
         text-color="blue"
         unelevated
-        label="Voltar"
+        label="Volver"
         no-caps
         @click="$router.go(-1)"
       />

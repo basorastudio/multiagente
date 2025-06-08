@@ -24,7 +24,7 @@
         <div
           v-if="mensagem.isDeleted"
           class="text-italic"
-        > Mensagem apagada em {{ formatarData(mensagem.updatedAt, 'dd/MM/yyyy') }}.</div>
+        > Mensaje eliminada en {{ formatarData(mensagem.updatedAt, 'dd/MM/yyyy') }}.</div>
         <div
           v-if="isGroupLabel(mensagem)"
           class="q-mb-sm"
@@ -60,7 +60,7 @@
             download="vCard"
             :href="`data:text/x-vcard;charset=utf-8;base64,${returnCardContato(mensagem.body)}`"
           >
-            Download Contato
+            Descargar Contacto
           </q-btn>
         </template>
         <template v-if="mensagem.mediaType === 'image'">
@@ -113,7 +113,7 @@
                 v-if="mensagem.mediaUrl"
                 content-class="bg-padrao text-grey-9 text-bold"
               >
-                Baixar: {{ mensagem.body }}
+                Descargar: {{ mensagem.body }}
               </q-tooltip>
               <template slot>
                 <div
@@ -191,7 +191,7 @@ export default {
       abrirModalImagem: false,
       urlMedia: '',
 
-      ackIcons: { // Se ACK == 3 ou 4 entao color green
+      ackIcons: { // Si ACK == 3 o 4 entonces color verde
         0: 'mdi-clock-outline',
         1: 'mdi-check',
         2: 'mdi-check-all',

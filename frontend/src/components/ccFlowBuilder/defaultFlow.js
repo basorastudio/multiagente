@@ -3,7 +3,7 @@ const data = {
   nodeList: [
     {
       id: 'start',
-      name: 'Início',
+      name: 'Inicio',
       type: 'start',
       left: '26px',
       top: '100px',
@@ -18,7 +18,7 @@ const data = {
     },
     {
       id: 'configurations',
-      name: 'Configurações',
+      name: 'Configuraciones',
       type: 'configurations',
       left: '340px',
       top: '100px',
@@ -46,7 +46,7 @@ const data = {
     },
     {
       id: 'nodeC',
-      name: 'Boas vindas!',
+      name: '¡Bienvenido!',
       type: 'node',
       left: '26px',
       top: '301px',

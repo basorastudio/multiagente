@@ -20,7 +20,7 @@
           debounce="500"
           v-model="filter"
           clearable
-          placeholder="Localize"
+          placeholder="Localizar"
           @input="filtrarUsuario"
         >
           <template v-slot:prepend>
@@ -35,7 +35,7 @@
             'q-ml-none q-mt-md q-mr-md': $q.screen.width < 500
           }"
           color="primary"
-          label="Adicionar"
+          label="Añadir"
           @click="usuarioSelecionado = {}; modalUsuario = true"
         />
 
@@ -49,7 +49,7 @@
             @click="gerirFilasUsuario(props.row)"
           >
             <q-tooltip>
-              Gestão de Filas do usuário
+              Gestión de Colas del usuario
             </q-tooltip>
           </q-btn>
           <q-btn
@@ -102,7 +102,7 @@ export default {
       modalFilaUsuario: false,
       filas: [],
       optionsProfile: [
-        { value: 'user', label: 'Usuário' },
+        { value: 'user', label: 'Usuario' },
         { value: 'admin', label: 'Administrador' }
       ],
       modalUsuario: false,
@@ -119,11 +119,11 @@ export default {
       },
       loading: false,
       columns: [
-        { name: 'name', label: 'Nome', field: 'name', align: 'left' },
-        { name: 'email', label: 'E-mail', field: 'email', align: 'left' },
+        { name: 'name', label: 'Nombre', field: 'name', align: 'left' },
+        { name: 'email', label: 'Correo electrónico', field: 'email', align: 'left' },
         {
           name: 'queues',
-          label: 'Filas',
+          label: 'Colas',
           field: 'queues',
           align: 'left',
           format: (v) => !v ? '' : v.map(f => f.queue).join(', '),
@@ -131,7 +131,7 @@ export default {
           style: 'max-width: 400px;'
         },
         { name: 'profile', label: 'Perfil', field: 'profile', align: 'left', format: (v) => this.optionsProfile.find(o => o.value == v).label },
-        { name: 'acoes', label: 'Ações', field: 'acoes', align: 'center' }
+        { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ]
     }
   },
@@ -196,15 +196,15 @@ export default {
     },
     deletarUsuario (usuario) {
       this.$q.dialog({
-        title: `Atenção!! Deseja realmente deletar o usuario "${usuario.name}"?`,
-        // message: 'Mensagens antigas não serão apagadas no whatsapp.',
+        title: `¡Atención! ¿Realmente desea eliminar el usuario "${usuario.name}"?`,
+        // message: 'Mensagens antigas No serão apagadas no whatsapp.',
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -218,7 +218,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: `Usuario ${usuario.name} deletado!`,
+              message: `¡Usuario ${usuario.name} eliminado!`,
               actions: [{
                 icon: 'close',
                 round: true,
@@ -228,7 +228,7 @@ export default {
           })
           .catch(error => {
             console.error(error)
-            this.$notificarErro('Não é possível deletar o usuário', error)
+            this.$notificarErro('No es posible eliminar el usuario', error)
           })
         this.loading = false
       })

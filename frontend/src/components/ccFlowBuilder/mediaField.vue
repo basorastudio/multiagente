@@ -12,7 +12,7 @@
           style="display: none"
           :loading="loading"
           rounded
-          label="Mídia composição mensagem"
+          label="Medio composición mensaje"
           ref="PickerFileMessage"
           v-model="file"
           class="col-grow"
@@ -53,8 +53,8 @@
             class="no-scroll hide-scrollbar"
             :src="cMediaUrl"
           >
-            Faça download do PDF
-            <!-- alt : <a href="mensagem.cMediaUrl"></a> -->
+            Descargue el PDF
+            <!-- alt : <a href="mensaje.cMediaUrl"></a> -->
           </iframe>
           <video
             v-if="cMediaUrl && $attrs.element.data.type.indexOf('video') != -1"
@@ -131,7 +131,7 @@
             @click="$refs.PickerFileMessage.pickFiles()"
           >
             <q-tooltip>
-              Substituir Arquivo
+              Reemplazar Archivo
             </q-tooltip>
           </q-btn>
         </div>
@@ -229,10 +229,10 @@ export default {
     onRejectedFiles (rejectedEntries) {
       this.$q.notify({
         html: true,
-        message: `Ops... Ocorreu um erro! <br>
+        message: `Ups... ¡Ocurrió un error! <br>
         <ul>
-          <li>Arquivo deve ter no máximo 5MB.</li>
-          <li>Priorize o envio de imagem ou vídeo.</li>
+          <li>El archivo debe tener como máximo 5MB.</li>
+          <li>Priorice el envío de imágenes o videos.</li>
         </ul>`,
         type: 'negative',
         progress: true,

@@ -10,7 +10,7 @@
       class="q-pa-lg"
     >
       <q-card-section>
-        <div class="text-h6">{{ autoRespostaEdicao.id ? 'Editar': 'Criar' }} Auto Resposta</div>
+        <div class="text-h6">{{ autoRespostaEdicao.id ? 'Editar': 'Crear' }} Respuesta Automática</div>
       </q-card-section>
       <q-card-section>
         <q-input
@@ -18,7 +18,7 @@
           square
           outlined
           v-model="autoResposta.name"
-          label="Descrição"
+          label="Descripción"
         />
         <!-- <div class="row col q-mt-md">
           <q-option-group
@@ -30,7 +30,7 @@
         <div class="row col q-mt-md">
           <q-checkbox
             v-model="autoResposta.isActive"
-            label="Ativo"
+            label="Activo"
           />
         </div>
         <div class="row col q-mt-md">
@@ -40,8 +40,8 @@
             square
             outlined
             v-model="autoResposta.celularTeste"
-            label="Número para Teste"
-            hint="Deixe limpo para que a Auto resposta funcione. Caso contrário, irá funcionar somente para o número informado aqui."
+            label="Número para Prueba"
+            hint="Deje en blanco para que la Respuesta Automática funcione. En caso contrario, funcionará solamente para el número informado aquí."
           />
         </div>
       </q-card-section>
@@ -58,7 +58,7 @@
         />
         <q-btn
           flat
-          label="Salvar"
+          label="Guardar"
           color="primary"
           @click="handleAutoresposta"
         />
@@ -95,8 +95,8 @@ export default {
         isActive: true
       }
       // options: [
-      //   { value: 0, label: 'Entrada (Criação do Ticket)' },
-      //   { value: 1, label: 'Encerramento (Resolução Ticket)' }
+      //   { value: 0, label: 'Entrada (Creación del Ticket)' },
+      //   { value: 1, label: 'Cierre (Resolución del Ticket)' }
       // ]
     }
   },

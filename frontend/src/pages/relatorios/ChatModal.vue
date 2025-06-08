@@ -24,13 +24,13 @@
           >
             <div class="message-meta">
               <strong>
-                {{ mensagem.sendType === 'bot' ? 'Bot' : (mensagem.fromMe ? 'Atendente' : mensagem.from) }}
+                {{ mensagem.sendType === 'bot' ? 'Bot' : (mensagem.fromMe ? 'Agente' : mensagem.from) }}
               </strong>&nbsp;&nbsp;
               <span>{{ formatarData(mensagem.createdAt) }}</span>
             </div>
             <div class="message-body">
               <div v-if="!mensagem.mediaUrl">{{ mensagem.body }}</div>
-              <!-- Verifica se mediaUrl não é null e exibe a imagem -->
+              <!-- Verifica se mediaUrl No é null e exibe a imagem -->
               <div v-if="mensagem.mediaUrl" class="image-container">
                 <img :src="removePort(mensagem.mediaUrl)" alt="Media" class="message-media" />
               </div>
@@ -42,9 +42,9 @@
         </div>
       </q-card-section>
 
-      <!-- Botão de fechar o chat -->
+      <!-- Botão de cerrar o chat -->
       <q-card-actions align="right">
-        <q-btn label="Fechar" color="negative" @click="closeModal" />
+        <q-btn label="Cerrar" color="negative" @click="closeModal" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -89,7 +89,7 @@ export default {
     },
     async carregarMensagens (ticketId, pageNumber = 1) {
       try {
-        // Loop para paginar até que não haja mais páginas (hasMore == false)
+        // Loop para paginar até que No haja mais páginas (hasMore == false)
         while (this.hasMore) {
           const { data } = await LocalizarMensagens({ ticketId: String(ticketId), pageNumber })
 
@@ -106,10 +106,10 @@ export default {
           // Atualizar o estado de hasMore e incrementar o pageNumber
           this.hasMore = data.hasMore
 
-          // Incrementar o pageNumber independentemente de ter encontrado mensagens ou não
+          // Incrementar o pageNumber independentemente de ter encontrado mensagens ou No
           pageNumber++
 
-          // Caso não tenha mais páginas para carregar
+          // Caso No tenha mais páginas para carregar
           if (!this.hasMore) {
             break
           }
@@ -223,7 +223,7 @@ export default {
   margin-bottom: 10px;
 }
 
-/* Ajustes para o botão de fechar */
+/* Ajustes para o botão de cerrar */
 .q-card-actions {
   margin-top: 10px;
 }

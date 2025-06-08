@@ -5,12 +5,12 @@ import DatePick from 'src/components/cDatePick'
 import cDateTimePick from 'src/components/cDateTimePick'
 
 import { format, parseISO } from 'date-fns'
-import pt from 'date-fns/locale/pt-BR'
+import es from 'date-fns/locale/es'
 import { UpdateConfiguracoesUsuarios } from 'src/service/user'
 
 const formatarValorMoeda = (num, black = false, intl = {}) => {
   const config = {
-    language: 'pt-br',
+    language: 'es', // Mantener es para la funcionalidad de Intl.NumberFormat
     options: {
       // style: 'currency',
       // currency: 'BRL',
@@ -48,19 +48,19 @@ const arredodar = (num, places) => {
 }
 
 const iniciaisString = nomecompleto => {
-  nomecompleto = nomecompleto.replace(/\s(de|da|dos|das)\s/g, ' ') // Remove os de,da, dos,das.
-  const iniciais = nomecompleto.match(/\b(\w)/gi) // Iniciais de cada parte do nome.
-  // var nome = nomecompleto.split(' ')[0].toLowerCase() // Primeiro nome.
+  nomecompleto = nomecompleto.replace(/\s(de|da|dos|das)\s/g, ' ') // Elimina los de, da, dos, das.
+  const iniciais = nomecompleto.match(/\b(\w)/gi) // Iniciales de cada parte del nombre.
+  // var nome = nomecompleto.split(' ')[0].toLowerCase() // Primer nombre.
   const sobrenomes = iniciais
     .splice(1, iniciais.length - 1)
     .join('')
-    .toLowerCase() // Iniciais
+    .toLowerCase() // Iniciales
   const iniciaisNome = iniciais + sobrenomes
   return iniciaisNome.toUpperCase()
 }
 
 const formatarData = (data, formato = 'dd/MM/yyyy') => {
-  return format(parseISO(data), formato, { locale: pt })
+  return format(parseISO(data), formato, { locale: es })
 }
 
 const setConfigsUsuario = ({ isDark }) => {
@@ -85,7 +85,7 @@ const setConfigsUsuario = ({ isDark }) => {
     isDark: Dark.isActive
   }
   UpdateConfiguracoesUsuarios(usuario.userId, data)
-    .then(r => console.log('Configurações do usuário atualizadas'))
+    .then(r => console.log('Configuraciones de usuario actualizadas'))
     .catch(e => console.error)
 
   localStorage.setItem('usuario', JSON.stringify({ ...usuario, configs: data }))

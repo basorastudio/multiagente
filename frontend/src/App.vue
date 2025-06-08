@@ -8,7 +8,7 @@ export default {
   name: 'App',
   data () {
     return {
-      IDLE_TIMEOUT: 5, // seconds
+      IDLE_TIMEOUT: 5, // segundos
       idleSecondsCounter: 0
 
     }
@@ -19,7 +19,7 @@ export default {
       // var oPanel = document.getElementById('SecondsUntilExpire')
       // if (oPanel) { oPanel.innerHTML = (this.IDLE_TIMEOUT - this.idleSecondsCounter) + '' }
       if (this.idleSecondsCounter >= this.IDLE_TIMEOUT) {
-        alert('Time expired!')
+        alert('¡Tiempo expirado!')
         // document.location.href = 'logout.html'
       }
     }

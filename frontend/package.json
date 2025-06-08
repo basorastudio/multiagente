@@ -14,7 +14,7 @@
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && npx quasar build -P -m pwa"
   },
   "dependencies": {
-    "@quasar/cli": "^2.4.0",
+    "@quasar/cli": "^2.5.0",
     "@quasar/extras": "^1.16.3",
     "apexcharts": "^3.40.0",
     "axios": "^1.4.0",

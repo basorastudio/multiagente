@@ -5,14 +5,14 @@
         rounded
         color="primary"
         icon="mdi-plus"
-        label="Nova Etapa"
+        label="Nueva Etapa"
         @click="addNode"
       />
       <q-btn
         rounded
         color="positive"
         icon="mdi-content-save-outline"
-        label="Salvar"
+        label="Guardar"
         @click="$emit('saveFlow')"
       />
     </div>
@@ -22,13 +22,13 @@
       class="fit"
     >
       <div class="ef-node-form-header">
-        Configuração Fluxo
+        Configuración Flujo
       </div>
       <div class="q-pa-sm">
         <q-input
           outlined
           rounded
-          label="Nome"
+          label="Nombre"
           v-model="node.name"
           class="q-my-sm"
           :disable="['start', 'configurations'].includes(node.type)"
@@ -47,11 +47,11 @@
           >
             <q-tab
               name="interacoes"
-              label="Interações"
+              label="Interacciones"
             />
             <q-tab
               name="condicoes"
-              label="Condições"
+              label="Condiciones"
             />
 
           </q-tabs>
@@ -76,7 +76,7 @@
                     @click="addMessage"
                   >
                     <q-tooltip content-class="text-bold">
-                      Enviar Mensagem
+                      Enviar Mensaje
                     </q-tooltip>
                   </q-btn>
 
@@ -88,7 +88,7 @@
                     :color="$q.dark.isActive ? 'white' : ''"
                   >
                     <q-tooltip content-class="text-bold">
-                      Enviar documentos, vídeo, aúdio e outros arquivos.
+                      Enviar documentos, video, audio y otros archivos.
                     </q-tooltip>
                   </q-btn>
                 </div>
@@ -176,11 +176,11 @@
                     class="bg-padrao btn-rounded q-mx-xs"
                     :color="$q.dark.isActive ? 'white' : ''"
                     @click="addCondiction"
-                    label="Nova"
+                    label="Nueva"
                     rounded
                   >
                     <q-tooltip content-class="text-bold">
-                      Nova condição
+                      Nueva condición
                     </q-tooltip>
                   </q-btn>
                 </div>
@@ -217,7 +217,7 @@
                           @click="changePosition(node.conditions, idx, idx - 1)"
                         >
                           <q-tooltip>
-                            Reordenar: Aumentar prioridade da regra de condição
+                            Reordenar: Aumentar prioridad de la regla de condición
                           </q-tooltip>
                         </q-btn>
                         <q-btn
@@ -231,7 +231,7 @@
                           @click="changePosition(node.conditions, idx, idx + 1)"
                         >
                           <q-tooltip>
-                            Reordenar: Diminuir prioridade da regra de condição
+                            Reordenar: Disminuir prioridad de la regla de condición
                           </q-tooltip>
                         </q-btn>
                         <q-btn
@@ -252,7 +252,7 @@
                           rounded
                           v-model="condition.type"
                           :options="optionsSe"
-                          label="Se"
+                          label="Si"
                           map-options
                           emit-value
                         />
@@ -260,7 +260,7 @@
                           v-if="condition.type === 'R'"
                           dense
                           rounded
-                          label="Respostas"
+                          label="Respuestas"
                           outlined
                           v-model="condition.condition"
                           use-input
@@ -269,7 +269,7 @@
                           hide-dropdown-icon
                           input-debounce="0"
                           new-value-mode="add-unique"
-                          hint="Digite o valor e aperte enter"
+                          hint="Digite el valor y presione enter"
                         />
                       </q-card-section>
                       <q-separator
@@ -277,7 +277,7 @@
                         spaced
                       />
                       <q-card-section class="q-pa-sm">
-                        <div class="text-bold q-px-sm"> Rotear para: </div>
+                        <div class="text-bold q-px-sm"> Enrutar a: </div>
                         <q-option-group
                           class="text-center"
                           inline
@@ -313,7 +313,7 @@
                               :options="filas"
                               option-label="queue"
                               option-value="id"
-                              label="Fila"
+                              label="Cola"
                               :key="condition.queueId"
                               map-options
                               emit-value
@@ -330,7 +330,7 @@
                               :options="usuarios"
                               option-label="name"
                               option-value="id"
-                              label="Usuário"
+                              label="Usuario"
                               map-options
                               emit-value
                               clearable
@@ -353,7 +353,7 @@
           >
             <q-input
               outlined
-              label="Chave"
+              label="Clave"
               v-model="line.label"
             />
             <q-btn
@@ -364,7 +364,7 @@
               type="primary"
               icon="mdi-content-save"
               @click="saveLine"
-              label="Salvar"
+              label="Guardar"
             />
           </div>
         </div>
@@ -380,10 +380,10 @@
           style="height: 280px;"
         >
           <div class="full-width bg-grey-3 text-bold row col justify-between text-left q-pa-md">
-            Mensagem de saudação (Fila/Usuário)
+            Mensaje de saludo (Cola/Usuario)
             <div class="row text-subtitle2">
-              Quando o bot direcionar o atendimento para uma fila ou usuário,
-              essa mensagem será enviada.
+              Cuando el bot dirija la atención a una cola o usuario,
+              este mensaje será enviado.
             </div>
           </div>
           <q-card-section class="q-pa-sm">
@@ -392,7 +392,7 @@
                 <label
                   class="text-subtitle1 text-bold q-mb-sm"
                   for="inputEnvioMensagem"
-                > Mensagem: </label>
+                > Mensaje: </label>
                 <div class="flex flex-inline full-width items-center">
                   <div
                     class="flex flex-inline text-left"
@@ -419,8 +419,8 @@
                           style="width: 40vw"
                           :showSearch="false"
                           :emojisByRow="20"
-                          labelSearch="Localizar..."
-                          lang="pt-BR"
+                          labelSearch="Buscar..."
+                          lang="es"
                           @select="onInsertSelectEmojiSaudacao"
                         />
                       </q-menu>
@@ -431,7 +431,7 @@
                     id="inputEnvioMensagem"
                     style="min-height: 10vh; max-height: 15vh; flex: auto"
                     class="q-pa-sm bg-white rounded-all"
-                    placeholder="Digite a mensagem"
+                    placeholder="Digite el mensaje"
                     autogrow
                     dense
                     outlined
@@ -449,10 +449,10 @@
           style="height: 300px;"
         >
           <div class="full-width bg-grey-3 text-bold row col justify-between text-left q-pa-md">
-            Se nenhuma resposta esperada for enviada
+            Si no se envía ninguna respuesta esperada
             <div class="row text-subtitle2">
-              Essa exceção será aplicada caso a resposta enviada pelo cliente não corresponda
-              aos valores esperados conforme condições da etapa.
+              Esta excepción se aplicará si la respuesta enviada por el cliente no corresponde
+              a los valores esperados según las condiciones de la etapa.
             </div>
           </div>
           <q-card-section class="q-pa-sm">
@@ -461,7 +461,7 @@
                 <label
                   class="text-subtitle1 text-bold q-mb-sm"
                   for="inputEnvioMensagem"
-                > Mensagem de feedback: </label>
+                > Mensaje de retroalimentación: </label>
                 <div class="flex flex-inline full-width items-center">
                   <div
                     class="flex flex-inline text-left"
@@ -488,8 +488,8 @@
                           style="width: 40vw"
                           :showSearch="false"
                           :emojisByRow="20"
-                          labelSearch="Localizar..."
-                          lang="pt-BR"
+                          labelSearch="Buscar..."
+                          lang="es"
                           @select="onInsertSelectEmojiNotOptionsSelectMessage"
                         />
                       </q-menu>
@@ -500,7 +500,7 @@
                     id="inputEnvioMensagem"
                     style="min-height: 10vh; max-height: 15vh; flex: auto"
                     class="q-pa-sm bg-white rounded-all"
-                    placeholder="Digite a mensagem"
+                    placeholder="Digite el mensaje"
                     autogrow
                     dense
                     outlined
@@ -519,10 +519,10 @@
           style="height: 290px;"
         >
           <div class="full-width bg-grey-3 text-bold text-body1 row col justify-between text-left q-pa-md">
-            Ausência de resposta
+            Ausencia de respuesta
             <div class="row text-subtitle2">
-              Após o tempo determinado, se o cliente não responder,
-              o bot realizará o encaminhamento para a Fila/Usuário informados.
+              Después del tiempo determinado, si el cliente no responde,
+              el bot realizará el enrutamiento a la Cola/Usuario informados.
             </div>
           </div>
           <q-card-section class="q-pa-sm">
@@ -534,7 +534,7 @@
                   mask="###"
                   rounded
                   v-model.number="node.configurations.notResponseMessage.time"
-                  label="Tempo (minutos)"
+                  label="Tiempo (minutos)"
                 />
               </div>
             </div>
@@ -545,8 +545,8 @@
                   inline
                   v-model="node.configurations.notResponseMessage.type"
                   :options="[
-                    { value: 1, label: 'Fila' },
-                    { value: 2, label: 'Usuário' }
+                    { value: 1, label: 'Cola' },
+                    { value: 2, label: 'Usuario' }
                   ]"
                   color="primary"
                 />
@@ -564,7 +564,7 @@
                   :options="filas"
                   option-label="queue"
                   option-value="id"
-                  label="Fila"
+                  label="Cola"
                   map-options
                   emit-value
                   clearable
@@ -579,7 +579,7 @@
                   :options="usuarios"
                   option-label="name"
                   option-value="id"
-                  label="Usuário"
+                  label="Usuario"
                   map-options
                   emit-value
                   clearable
@@ -594,11 +594,11 @@
           style="height: 330px;"
         >
           <div class="full-width bg-grey-3 text-bold text-body1 row col justify-between text-left q-pa-md">
-            Máximo de Tentativas do Bot
+            Máximo de Intentos del Bot
             <div class="row text-subtitle2">
-              Uma vez excedido o número máximo de retentativas de pergunta/resposta,
-              caso o cliente não envie uma respota válida, o bot irá realizar o encaminhamento
-              para a Fila/Usuário configurados.
+              Una vez excedido el número máximo de reintentos de pregunta/respuesta,
+              si el cliente no envía una respuesta válida, el bot realizará el enrutamiento
+              a la Cola/Usuario configurados.
             </div>
           </div>
           <q-card-section class="q-pa-sm">
@@ -610,7 +610,7 @@
                   outlined
                   mask="##"
                   v-model.number="node.configurations.maxRetryBotMessage.number"
-                  label="Número de tentativas"
+                  label="Número de intentos"
                 />
               </div>
             </div>
@@ -621,8 +621,8 @@
                   inline
                   v-model="node.configurations.maxRetryBotMessage.type"
                   :options="[
-                    { value: 1, label: 'Fila' },
-                    { value: 2, label: 'Usuário' }
+                    { value: 1, label: 'Cola' },
+                    { value: 2, label: 'Usuario' }
                   ]"
                   color="primary"
                 />
@@ -640,7 +640,7 @@
                   :options="filas"
                   option-label="queue"
                   option-value="id"
-                  label="Fila"
+                  label="Cola"
                   map-options
                   emit-value
                   clearable
@@ -655,7 +655,7 @@
                   :options="usuarios"
                   option-label="name"
                   option-value="id"
-                  label="Usuário"
+                  label="Usuario"
                   map-options
                   emit-value
                   clearable
@@ -670,12 +670,12 @@
           style="height: 330px;"
         >
           <div class="full-width bg-grey-3 text-bold text-body1 row col justify-between text-left q-pa-md">
-            Auto Distribuir Atendimento
+            Auto Distribuir Atención
             <div class="row text-subtitle2">
-              Não: Desativado. <br />
-              Balancear: Definirá o usuário com base na quantidade de atendimentos de cada usuário da fila. Usuário com
-              menos atendimentos será escolhido.<br />
-              Aleatória: Definirá o usuário de forma aleatória/randômica para os usuários da fila.
+              No: Desactivado. <br />
+              Balancear: Definirá el usuario con base en la cantidad de atenciones de cada usuario de la cola. Usuario con
+              menos atenciones será elegido.<br />
+              Aleatoria: Definirá el usuario de forma aleatoria/randómica para los usuarios de la cola.
             </div>
           </div>
           <q-card-section class="q-pa-sm">
@@ -686,8 +686,8 @@
                   inline
                   v-model="node.configurations.autoDistributeTickets"
                   :options="[
-                    { value: 'N', label: 'Não' },
-                    { value: 'R', label: 'Aleatória' },
+                    { value: 'N', label: 'No' },
+                    { value: 'R', label: 'Aleatoria' },
                     { value: 'B', label: 'Balanceada' }
                   ]"
                   color="primary"
@@ -702,9 +702,9 @@
           style="height: 330px;"
         >
           <div class="full-width bg-grey-3 text-bold text-body1 row col justify-between text-left q-pa-md">
-            Encerrar Atendimento
+            Cerrar Atención
             <div class="row text-subtitle2">
-              Caso o cliente digite algumas das informações esperadas, o atendimento será encerrado.
+              Si el cliente digita alguna de las informaciones esperadas, la atención será cerrada.
             </div>
           </div>
           <q-card-section class="q-pa-sm">
@@ -712,7 +712,7 @@
               <div class="col">
                 <q-select
                   dense
-                  label="Parâmetros"
+                  label="Parámetros"
                   outlined
                   rounded
                   v-model="node.configurations.answerCloseTicket"
@@ -722,7 +722,7 @@
                   hide-dropdown-icon
                   input-debounce="0"
                   new-value-mode="add-unique"
-                  hint="Digite o valor e aperte enter"
+                  hint="Digite el valor y presione enter"
                 />
               </div>
             </div>
@@ -738,16 +738,16 @@
       >
         <q-card class="full-width q-my-sm">
           <div class="full-width bg-grey-3 text-bold row col justify-between text-left q-pa-md">
-            Etapa representa o contato inicial.
+            Etapa representa el contacto inicial.
             <div class="row text-subtitle2">
-              - Caso seja o primeiro contato do cliente, o sistema
-              salvará automaticamente na agenda as informações do cliente.
+              - Si es el primer contacto del cliente, el sistema
+              guardará automáticamente en la agenda la información del cliente.
             </div>
             <div class="row text-subtitle2">
-              - O Bot irá interagir nos atendimentos iniciados pelos clientes.
+              - El Bot interactuará en las atenciones iniciadas por los clientes.
             </div>
             <div class="row text-subtitle2">
-              - O Bot irá parar de interagir caso o atendimento seja assumido por um usuário.
+              - El Bot dejará de interactuar si la atención es asumida por un usuario.
             </div>
           </div>
         </q-card>
@@ -789,12 +789,12 @@ export default {
       elements: [],
       optionsAcao: [
         { value: 0, label: 'Etapa' },
-        { value: 1, label: 'Fila' },
-        { value: 2, label: 'Usuário' }
+        { value: 1, label: 'Cola' },
+        { value: 2, label: 'Usuario' }
       ],
       optionsSe: [
-        { label: 'Qualquer resposta', value: 'US' },
-        { label: 'Respostas', value: 'R' }
+        { label: 'Cualquier respuesta', value: 'US' },
+        { label: 'Respuestas', value: 'R' }
       ],
       type: 'node',
       node: {},
@@ -802,16 +802,16 @@ export default {
       data: {},
       stateList: [{
         state: 'success',
-        label: '成功'
+        label: 'Éxito'
       }, {
         state: 'warning',
-        label: '警告'
+        label: 'Advertencia'
       }, {
         state: 'error',
-        label: '错误'
+        label: 'Error'
       }, {
         state: 'running',
-        label: '运行中'
+        label: 'En ejecución'
       }]
     }
   },
@@ -855,7 +855,7 @@ export default {
       const nodeMenu = {
         id: this.gerarUID(),
         nodeId: this.gerarUID(),
-        name: 'Nova etapa',
+        name: 'Nueva etapa',
         type: 'node',
         left: '100px',
         top: '40px',
@@ -874,15 +874,15 @@ export default {
     },
     removeConditionItem (condition, idx) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar a condição (${idx + 1})?`,
+        title: '¡¡Atención!!',
+        message: `¿Realmente desea eliminar la condición (${idx + 1})?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -941,15 +941,15 @@ export default {
     },
     removeItem (el, idx) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar o elemento (${idx})?`,
+        title: '¡¡Atención!!',
+        message: `¿Realmente desea eliminar el elemento (${idx})?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -992,7 +992,7 @@ export default {
     }
   },
   mounted () {
-    console.log('node_form montou', this.node)
+    console.log('node_form montado', this.node)
   }
 }
 </script>

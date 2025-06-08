@@ -92,7 +92,7 @@
               size="1.8em"
               class="q-mb-sm">
               <q-tooltip>
-                Atendimento Resolvido
+                Atención Resuelta
               </q-tooltip>
             </q-icon>
             <q-icon
@@ -102,14 +102,14 @@
               size="1.8em"
               class="q-mb-sm">
               <q-tooltip>
-                ChatBot atendendo
+                ChatBot atendiendo
               </q-tooltip>
             </q-icon>
           </span>
         </q-item-label>
         <q-item-label class="row col items-center justify-between"
           caption>
-          Usuário: {{ ticket.username }}
+          Usuario: {{ ticket.username }}
           <q-chip :color="$q.dark.isActive ? 'blue-9' : 'blue-2'"
             dense
             square
@@ -156,7 +156,7 @@
 
 <script>
 import { formatDistance, parseJSON } from 'date-fns'
-import pt from 'date-fns/locale/pt-BR'
+import pt from 'date-fns/locale/es' // Mantener pt o cambiar a es según preferencia para date-fns
 import mixinAtualizarStatusTicket from './mixinAtualizarStatusTicket'
 import { outlinedAccountCircle } from '@quasar/extras/material-icons-outlined'
 
@@ -168,14 +168,14 @@ export default {
       outlinedAccountCircle,
       recalcularHora: 1,
       statusAbreviado: {
-        open: 'A',
-        pending: 'P',
-        closed: 'R'
+        open: 'A', // Abierto
+        pending: 'P', // Pendiente
+        closed: 'R' // Resuelto
       },
       status: {
-        open: 'Aberto',
-        pending: 'Pendente',
-        closed: 'Resolvido'
+        open: 'Abierto',
+        pending: 'Pendiente',
+        closed: 'Resuelto'
       },
       color: {
         open: 'primary',
@@ -221,10 +221,11 @@ export default {
       if (timestamp) {
         data = new Date(Number(timestamp))
       }
-      return formatDistance(data, new Date(), { locale: pt })
+      return formatDistance(data, new Date(), { locale: pt }) // Mantener pt o cambiar a es
     },
     abrirChatContato (ticket) {
-      // caso esteja em um tamanho mobile, fechar a drawer dos contatos
+      // caso esteja em um tamanho mobile, cerrar a drawer dos contatos
+      // si está en un tamaño móvil, cerrar el drawer de los contactos
       if (this.$q.screen.lt.md && ticket.status !== 'pending') {
         this.$root.$emit('infor-cabecalo-chat:acao-menu')
       }

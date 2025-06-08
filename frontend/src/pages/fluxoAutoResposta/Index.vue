@@ -18,7 +18,7 @@
             flat
             bordered
             class="my-sticky-dynamic q-ma-lg"
-            title="Auto Resposta"
+            title="Respuesta Automática"
             hide-bottom
             :data="listaAutoResposta"
             :columns="columns"
@@ -31,7 +31,7 @@
               <q-btn
                 class="q-ml-md"
                 color="primary"
-                label="Adicionar"
+                label="Agregar"
                 @click="autoRespostaSelecionado = {}; modalAutoResposta = true"
               />
             </template>
@@ -110,7 +110,7 @@
                         class="q-ml-md"
                         color="primary"
                         outline
-                        label="Nova Etapa"
+                        label="Nueva Etapa"
                         @click="novaEtapa(props.row)"
                       />
                     </template>
@@ -175,7 +175,7 @@
                             flat
                             bordered
                             class="my-sticky-dynamic"
-                            title="Ações"
+                            title="Acciones"
                             :data="etapas.row.stepsReplyAction"
                             :columns="columnsAcoes"
                             :loading="loading"
@@ -189,7 +189,7 @@
                                 class="q-ml-md"
                                 color="black"
                                 glossy
-                                label="Nova Ação"
+                                label="Nueva Acción"
                                 outline
                                 @click="criarAcaoEtapa(props.row, etapas.row)"
                               />
@@ -202,9 +202,9 @@
                                   class="q-mr-sm"
                                 >
                                   <q-tooltip content-class="bg-light-blue-1 text-black q-pa-sm shadow-4">
-                                    <span class="text-weight-medium"> Mensagem de retorno: </span>
+                                    <span class="text-weight-medium"> Mensaje de retorno: </span>
                                     <span class="row col">
-                                      {{ acao.row.replyDefinition || 'Sem mensagem de retorno' }}
+                                      {{ acao.row.replyDefinition || 'Sin mensaje de retorno' }}
                                     </span>
                                   </q-tooltip>
 
@@ -227,7 +227,7 @@
                             <!-- <template :props="acao">
                             <q-tr v-show="acao.row.replyDefinition">
                               <q-td colspan="100%">
-                                Mensagem: acao.row.replyDefinition
+                                Mensaje: acao.row.replyDefinition
                               </q-td>
                             </q-tr>
                           </template> -->
@@ -303,17 +303,17 @@ export default {
       acaoEtapaEdicao: {},
       autoReply: {},
       tipoAutoResposta: [
-        { value: '0', label: 'Entrada (Criação do Ticket)' },
-        { value: '1', label: 'Encerramento (Resolução Ticket)' }
+        { value: '0', label: 'Entrada (Creación de Ticket)' },
+        { value: '1', label: 'Cierre (Resolución de Ticket)' }
       ],
       // tipoEtapa: [
-      //   { value: '1', label: 'Menu' },
-      //   { value: '2', label: 'Redirecionamento' }
+      //   { value: '1', label: 'Menú' },
+      //   { value: '2', label: 'Redireccionamiento' }
       // ],
       acaoEtapa: [
         { value: '0', label: 'Próxima Etapa' },
-        { value: '1', label: 'Encaminhar para Fila' },
-        { value: '2', label: 'Ecaminhar para Usuário' }
+        { value: '1', label: 'Reenviar a Cola' },
+        { value: '2', label: 'Reenviar a Usuario' }
       ],
       pagination: {
         rowsPerPage: 40,
@@ -328,7 +328,7 @@ export default {
       loading: false,
       columns: [
         { name: 'expand', label: '', field: 'expand', align: 'left' },
-        { name: 'name', label: 'Nome', field: 'name', align: 'left' },
+        { name: 'name', label: 'Nombre', field: 'name', align: 'left' },
         {
           name: 'action',
           label: 'Tipo',
@@ -336,30 +336,30 @@ export default {
           align: 'left',
           format: (v) => this.tipoAutoResposta.find(a => a.value == v).label || ''
         },
-        { name: 'isActive', label: 'Status', field: 'isActive', align: 'center', format: (v) => v === true ? 'Ativo' : 'Inativo' },
-        { name: 'celularTeste', label: 'Celular Teste', field: 'celularTeste', align: 'center' },
+        { name: 'isActive', label: 'Estado', field: 'isActive', align: 'center', format: (v) => v === true ? 'Activo' : 'Inactivo' },
+        { name: 'celularTeste', label: 'Celular de Prueba', field: 'celularTeste', align: 'center' },
         { name: 'acoes', label: '', field: 'acoes', align: 'center' }
       ],
       columnsEtapas: [
         { name: 'expand', label: '', field: 'expand', align: 'left' },
         { name: 'id', label: 'ID', field: 'id', align: 'center', sortable: true, sort: (a, b, rowA, rowB) => parseInt(a, 10) - parseInt(b, 10) },
-        { name: 'reply', label: 'Mensagem', field: 'reply', align: 'left', classes: 'ellipsis', style: 'max-width: 400px;' },
-        { name: 'initialStep', label: 'Etapa Inicial', sortable: true, field: 'initialStep', align: 'left', format: v => v ? 'Sim' : '' },
+        { name: 'reply', label: 'Mensaje', field: 'reply', align: 'left', classes: 'ellipsis', style: 'max-width: 400px;' },
+        { name: 'initialStep', label: 'Etapa Inicial', sortable: true, field: 'initialStep', align: 'left', format: v => v ? 'Sí' : '' },
         { name: 'acoes', label: '', field: 'acoes', align: 'center' }
       ],
       columnsAcoes: [
-        { name: 'words', label: 'Chave', field: 'words', align: 'left' },
-        { name: 'action', label: 'Ação', field: 'action', align: 'left', format: (v) => this.acaoEtapa.find(a => a.value == v).label },
+        { name: 'words', label: 'Clave', field: 'words', align: 'left' },
+        { name: 'action', label: 'Acción', field: 'action', align: 'left', format: (v) => this.acaoEtapa.find(a => a.value == v).label },
         {
           name: 'queueId',
-          label: 'Fila Destino',
+          label: 'Cola Destino',
           field: 'queueId',
           align: 'center',
           format: (v) => v ? this.filas.find(f => f.id === v).queue : ''
         },
-        { name: 'userIdDestination', label: 'Usuário Destino', field: 'userIdDestination', align: 'center', format: (v) => v ? this.usuarios.find(u => u.id === v).name : '' },
+        { name: 'userIdDestination', label: 'Usuario Destino', field: 'userIdDestination', align: 'center', format: (v) => v ? this.usuarios.find(u => u.id === v).name : '' },
         { name: 'nextStepId', label: 'ID Etapa destino', field: 'nextStepId', align: 'center' },
-        { name: 'acoes', label: 'Ações', field: 'acoes', align: 'center' }
+        { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ],
       listaAutoResposta: [],
       filas: [],
@@ -393,15 +393,15 @@ export default {
     },
     async deletarAutoResposta (autoResposta) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar a Auto Resposta "${autoResposta.name}"?`,
+        title: '¡¡Atención!!',
+        message: `¿Desea realmente eliminar la Respuesta Automática "${autoResposta.name}"?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -417,7 +417,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: `Auto Resposta ${autoResposta.name} deletada!`,
+              message: `Respuesta Automática ${autoResposta.name} eliminada!`,
               actions: [{
                 icon: 'close',
                 round: true,
@@ -427,7 +427,7 @@ export default {
           })
           .catch(error => {
             console.error(error)
-            this.$notificarErro('Não é possível deletar o Chatbot', error)
+            this.$notificarErro('No es posible eliminar el Chatbot', error)
           })
         this.loading = false
       })
@@ -474,15 +474,15 @@ export default {
         idAutoReply: autoResposta.id
       }
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar a Etapa "ID: ${etapa.id}"?`,
+        title: '¡¡Atención!!',
+        message: `¿Desea realmente eliminar la Etapa "ID: ${etapa.id}"?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -504,7 +504,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: `Etapa ${etapa.id} deletada!`,
+              message: `Etapa ${etapa.id} eliminada!`,
               actions: [{
                 icon: 'close',
                 round: true,
@@ -514,7 +514,7 @@ export default {
           })
           .catch(error => {
             console.error(error)
-            this.$notificarErro('Não é possível deletar a etapa', error)
+            this.$notificarErro('No es posible eliminar la etapa', error)
           })
         this.loading = false
       })
@@ -534,15 +534,15 @@ export default {
       this.autoReply = autoReply
       this.etapaAutoRespostaEdicao = etapa
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar a Ação de "Chave: ${acao.words}"?`,
+        title: '¡¡Atención!!',
+        message: `¿Desea realmente eliminar la Acción de "Clave: ${acao.words}"?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -568,7 +568,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: `Ação Etapa ${etapa.id} deletada!`,
+              message: `Acción Etapa ${etapa.id} eliminada!`,
               actions: [{
                 icon: 'close',
                 round: true,
@@ -578,7 +578,7 @@ export default {
           })
           .catch(error => {
             console.error(error)
-            this.$notificarErro('Não é possível deletar a ação da etapa', error)
+            this.$notificarErro('No es posible eliminar la acción de la etapa', error)
           })
         this.loading = false
       })

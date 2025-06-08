@@ -11,9 +11,9 @@
     >
       <q-card-section>
         <div class="text-caption">
-          Auto Resposta: {{ autoReply.name }}
+          Respuesta Automática: {{ autoReply.name }}
         </div>
-        <div class="text-h6">{{ etapaAutoRespostaEdicao.id ? 'Editar': 'Criar' }} Etapa {{ etapaAutoRespostaEdicao.id  ? `(ID: ${etapaAutoRespostaEdicao.id})` : '' }}</div>
+        <div class="text-h6">{{ etapaAutoRespostaEdicao.id ? 'Editar': 'Crear' }} Etapa {{ etapaAutoRespostaEdicao.id  ? `(ID: ${etapaAutoRespostaEdicao.id})` : '' }}</div>
       </q-card-section>
       <q-card-section class="q-pa-none">
         <div class="row items-center">
@@ -39,8 +39,8 @@
                   style="width: 40vw"
                   :showSearch="false"
                   :emojisByRow="20"
-                  labelSearch="Localizar..."
-                  lang="pt-BR"
+                  labelSearch="Buscar..."
+                  lang="es"
                   @select="onInsertSelectEmoji"
                 />
               </q-menu>
@@ -48,12 +48,12 @@
 
           </div>
           <div class="col-xs-8 col-sm-10 col-md-11 q-pl-sm">
-            <label class="text-caption">Mensagem da Etapa:</label>
+            <label class="text-caption">Mensaje de Etapa:</label>
             <textarea
               ref="inputEnvioMensagem"
               style="min-height: 15vh; max-height: 15vh;"
               class="q-pa-sm bg-white full-width"
-              placeholder="Digita sua mensagem"
+              placeholder="Escribe tu mensaje"
               autogrow
               dense
               outlined
@@ -82,7 +82,7 @@
         />
         <q-btn
           flat
-          label="Salvar"
+          label="Guardar"
           color="primary"
           @click="handleEtapaAutoresposta"
         />
@@ -178,9 +178,9 @@ export default {
             round: true,
             color: 'white'
           }],
-          message: `Cada Auto Resposta poderá ter apenas uma etapa inicial. A etapa de "ID: ${isInitialExists.id}" está indicada como a etapa inicial. Caso deseje alterar, precisa primerio editar a etapa ("ID: ${isInitialExists.id}") para que não seja a etapa inicial.`
+          message: `Cada Respuesta Automática podrá tener solo una etapa inicial. La etapa de "ID: ${isInitialExists.id}" está indicada como la etapa inicial. Si desea cambiar, primero debe editar la etapa ("ID: ${isInitialExists.id}") para que no sea la etapa inicial.`
         })
-        throw new Error('Etapa Inicial na Auto Resposta já existente')
+        throw new Error('Etapa Inicial en la Respuesta Automática ya existente')
       }
     },
     async handleEtapaAutoresposta () {
@@ -199,7 +199,7 @@ export default {
             progress: true,
             position: 'top',
             textColor: 'black',
-            message: 'Etapa editada!',
+            message: '¡Etapa editada!',
             actions: [{
               icon: 'close',
               round: true,
@@ -213,7 +213,7 @@ export default {
             type: 'positive',
             progress: true,
             position: 'top',
-            message: 'Etapa criada!',
+            message: '¡Etapa creada!',
             actions: [{
               icon: 'close',
               round: true,

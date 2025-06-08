@@ -50,7 +50,7 @@ Router.beforeEach((to, from, next) => {
   if (!token) {
     if (whiteListName.indexOf(to.name) == -1) {
       if (to.fullPath !== '/login' && !to.query.tokenSetup) {
-        Notify.create({ message: 'Necessário realizar login', position: 'top' })
+        Notify.create({ message: 'Necesitas inciar sessión', position: 'top' })
         next({ name: 'login' })
       } else {
         next()

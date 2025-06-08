@@ -1,7 +1,7 @@
 <template>
   <div class="audio-container">
     <div class="message-content">
-      <!-- Foto do lado esquerdo (para mensagens enviadas por mim) -->
+      <!-- Foto del lado izquierdo (para mensajes enviados por mí) -->
       <div class="photo-container left" v-if="fromMe">
         <q-avatar size="40px">
           <img
@@ -22,7 +22,7 @@
           color="positive"
           class="mic-icon"
         />
-        <!-- Botão de aceleração em cima da foto -->
+        <!-- Botón de aceleración en cima de la foto -->
         <div class="rate-selector photo-top" @click.stop="toggleRate">
           {{ formatRate(audioRate) }}x
         </div>
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <!-- Foto do lado direito (para mensagens recebidas) -->
+      <!-- Foto del lado derecho (para mensajes recibidos) -->
       <div class="photo-container right" v-if="!fromMe">
         <q-avatar size="40px">
           <img
@@ -72,7 +72,7 @@
           color="positive"
           class="mic-icon"
         />
-        <!-- Botão de aceleração em cima da foto -->
+        <!-- Botón de aceleración en cima de la foto -->
         <div class="rate-selector photo-top" @click.stop="toggleRate">
           {{ formatRate(audioRate) }}x
         </div>
@@ -89,7 +89,7 @@
       @pause="handlePause"
       @ended="handleEnded"
     >
-      Seu navegador não suporta o elemento de áudio.
+      Su navegador no soporta el elemento de audio.
     </audio>
   </div>
 </template>
@@ -152,7 +152,7 @@ export default {
           this.$set(this.contact, 'profilePicUrl', profilePicUrl)
         }
       } catch (error) {
-        console.error('Erro ao carregar foto de perfil:', error)
+        console.error('Error al cargar la foto de perfil:', error)
       }
     },
     formatRate (rate) {
@@ -214,9 +214,9 @@ export default {
       }
     },
     initWaveSurfer () {
-      // Garantir que o contêiner do waveform existe
+      // Asegurar que el contenedor del waveform exista
       if (!this.$refs.waveformRef) {
-        console.error('Contêiner waveform não encontrado')
+        console.error('Contenedor waveform no encontrado')
         return
       }
 
@@ -263,7 +263,7 @@ export default {
     }
   },
   async mounted () {
-    // Usar setTimeout para garantir que o componente está completamente renderizado
+    // Usar setTimeout para asegurar que el componente esté completamente renderizado
     setTimeout(() => {
       this.initWaveSurfer()
     }, 100)
@@ -283,10 +283,10 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 8px;
-  margin-bottom: 0; /* Ajustado para 0 para eliminar espaço extra */
-  border-radius: 0; /* Removido para se integrar com q-chat-message */
-  background-color: transparent; /* Transparente para usar o bg do q-chat-message */
-  width: 100%; /* Usar toda a largura disponível */
+  margin-bottom: 0; /* Ajustado a 0 para eliminar espacio extra */
+  border-radius: 0; /* Removido para integrarse con q-chat-message */
+  background-color: transparent; /* Transparente para usar el bg de q-chat-message */
+  width: 100%; /* Usar todo el ancho disponible */
   position: relative;
   box-sizing: border-box;
 }
@@ -394,6 +394,6 @@ export default {
   margin: 0;
   padding: 0;
   z-index: 1;
-  min-width: 150px; /* Garantir largura mínima para o waveform */
+  min-width: 150px; /* Asegurar ancho mínimo para el waveform */
 }
 </style>

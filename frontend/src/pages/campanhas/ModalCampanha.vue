@@ -10,9 +10,9 @@
       style="min-width: 70vw;"
     >
       <q-card-section class="q-pa-none q-px-md">
-        <div class="text-h6 text-bold">{{ campanhaEdicao.id ? 'Editar' : 'Criar' }} Campanha</div>
+        <div class="text-h6 text-bold">{{ campanhaEdicao.id ? 'Editar' : 'Crear' }} Campaña</div>
         <div class="row">
-          As mensagens sempre serão enviadas em horário comercial e dias úteis.
+          Los mensajes siempre se enviarán en horario comercial y días hábiles.
         </div>
       </q-card-section>
       <q-card-section class="q-pb-none">
@@ -23,10 +23,10 @@
             rounded
             style="width: 500px"
             v-model="campanha.name"
-            label="Nome da Campanha"
+            label="Nombre de la Campaña"
             @blur="$v.campanha.name.$touch"
             :error="$v.campanha.name.$error"
-            error-message="Obrigatório"
+            error-message="Obligatorio"
           />
           <q-datetime-picker
             style="width: 200px"
@@ -36,14 +36,14 @@
             outlined
             stack-label
             bottom-slots
-            label="Data/Hora início"
+            label="Fecha/Hora inicio"
             mode="datetime"
             color="primary"
             format24h
             v-model="campanha.start"
             @blur="$v.campanha.start.$touch"
             :error="$v.campanha.start.$error"
-            error-message="Não pode ser inferior ao dia atual"
+            error-message="No puede ser inferior al día actual"
           />
           <q-select
             rounded
@@ -61,7 +61,7 @@
             input-style="width: 280px; max-width: 280px;"
             @blur="$v.campanha.sessionId.$touch"
             :error="$v.campanha.sessionId.$error"
-            error-message="Obrigatório"
+            error-message="Obligatorio"
             style="width: 250px"
           />
           <q-input
@@ -73,14 +73,14 @@
             input-class="text-right"
             suffix="segundos"
             label="Delay"
-            error-message="Obrigatório"
+            error-message="Obligatorio"
           />
           <q-file
             dense
             rounded
             v-if="!campanha.mediaUrl"
             :loading="loading"
-            label="Mídia composição mensagem"
+            label="Multimedia composición mensaje"
             ref="PickerFileMessage"
             v-model="arquivos"
             class="col-grow"
@@ -102,7 +102,7 @@
             v-if="campanha.mediaUrl"
             readonly
             rounded
-            label="Mídia composição mensagem"
+            label="Multimedia composición mensaje"
             :value="cArquivoName"
             class=" col-grow "
             bg-color="blue-grey-1"
@@ -128,7 +128,7 @@
       <q-card-section class="row q-pt-sm q-gutter-sm justify-center">
         <div style="min-width: 400px;">
           <div class="row items-center q-pt-none">
-            <label class="text-heading text-bold">1ª Mensagem</label>
+            <label class="text-heading text-bold">1er Mensaje</label>
             <div class="col-xs-3 col-sm-2 col-md-1">
               <q-btn
                 round
@@ -151,8 +151,8 @@
                     style="width: 40vw"
                     :showSearch="false"
                     :emojisByRow="20"
-                    labelSearch="Localizar..."
-                    lang="pt-BR"
+                    labelSearch="Buscar..."
+                    lang="es-ES"
                     @select="(v) => onInsertSelectEmoji(v, 'message1')"
                   />
                 </q-menu>
@@ -167,7 +167,7 @@
                   'bg-red-1': $v.campanha.message1.$error
                 }"
                 @blur="$v.campanha.message1.$touch"
-                placeholder="Digite a mensagem"
+                placeholder="Escriba el mensaje"
                 autogrow
                 dense
                 outlined
@@ -180,7 +180,7 @@
                 <q-icon size="2em"
                   name="mdi-variable" />
                 <q-tooltip>
-                  Variáveis
+                  Variables
                 </q-tooltip>
                 <q-menu touch-position>
                   <q-list dense
@@ -199,7 +199,7 @@
             </div>
           </div>
           <div class="row items-center q-pt-none">
-            <label class="text-heading text-bold">2ª Mensagem</label>
+            <label class="text-heading text-bold">2º Mensaje</label>
             <div class="col-xs-3 col-sm-2 col-md-1">
               <q-btn
                 round
@@ -222,8 +222,8 @@
                     style="width: 40vw"
                     :showSearch="false"
                     :emojisByRow="20"
-                    labelSearch="Localizar..."
-                    lang="pt-BR"
+                    labelSearch="Buscar..."
+                    lang="es-ES"
                     @select="(v) => onInsertSelectEmoji(v, 'message2')"
                   />
                 </q-menu>
@@ -234,7 +234,7 @@
                 ref="message2"
                 style="min-height: 12.5vh; max-height: 12.5vh;"
                 class="q-pa-sm bg-white full-width rounded-all"
-                placeholder="Digite a mensagem"
+                placeholder="Escriba el mensaje"
                 autogrow
                 dense
                 outlined
@@ -251,7 +251,7 @@
                 <q-icon size="2em"
                   name="mdi-variable" />
                 <q-tooltip>
-                  Variáveis
+                  Variables
                 </q-tooltip>
                 <q-menu touch-position>
                   <q-list dense
@@ -270,7 +270,7 @@
             </div>
           </div>
           <div class="row items-center q-pt-none">
-            <label class="text-heading text-bold">3ª Mensagem</label>
+            <label class="text-heading text-bold">3er Mensaje</label>
             <div class="col-xs-3 col-sm-2 col-md-1">
               <q-btn
                 round
@@ -293,8 +293,8 @@
                     style="width: 40vw"
                     :showSearch="false"
                     :emojisByRow="20"
-                    labelSearch="Localizar..."
-                    lang="pt-BR"
+                    labelSearch="Buscar..."
+                    lang="es-ES"
                     @select="(v) => onInsertSelectEmoji(v, 'message3')"
                   />
                 </q-menu>
@@ -305,7 +305,7 @@
                 ref="message3"
                 style="min-height: 12.5vh; max-height: 12.5vh;"
                 class="q-pa-sm bg-white full-width rounded-all"
-                placeholder="Digite a mensagem"
+                placeholder="Escriba el mensaje"
                 autogrow
                 dense
                 outlined
@@ -322,7 +322,7 @@
                 <q-icon size="2em"
                   name="mdi-variable" />
                 <q-tooltip>
-                  Variáveis
+                  Variables
                 </q-tooltip>
                 <q-menu touch-position>
                   <q-list dense
@@ -347,7 +347,7 @@
             class="full-width"
           >
             <div class="text-body1 text-bold q-pa-sm full-width text-center bg-grey-3">
-              Visualização
+              Visualización
             </div>
             <q-card-section class="row justify-center">
               <q-option-group
@@ -385,7 +385,7 @@
           />
           <q-btn
             rounded
-            label="Salvar"
+            label="Guardar"
             color="positive"
             icon="save"
             @click="handleCampanha"
@@ -436,8 +436,8 @@ export default {
   data () {
     return {
       variaveis: [
-        { label: 'Nome', value: '{{name}}' },
-        { label: 'Saudação', value: '{{greeting}}' }
+        { label: 'Nombre', value: '{{name}}' },
+        { label: 'Saludo', value: '{{greeting}}' }
       ],
       optRadio: [
         { label: 'Msg.1', value: 'message1' },
@@ -608,10 +608,10 @@ export default {
     onRejectedFiles (rejectedEntries) {
       this.$q.notify({
         html: true,
-        message: `Ops... Ocorreu um erro! <br>
+        message: `Ops... Ocurrió un error! <br>
         <ul>
-          <li>Arquivo deve ter no máximo 10MB.</li>
-          <li>Priorize o envio de imagem ou vídeo.</li>
+          <li>El archivo debe tener un máximo de 10MB.</li>
+          <li>Priorice el envío de imagen o video.</li>
         </ul>`,
         type: 'negative',
         progress: true,
@@ -635,7 +635,7 @@ export default {
         this.urlMedia = url
         this.abrirModalImagem = true
       } catch (error) {
-        this.$notificarErro('Algum problema ao carregar a imagem', error)
+        this.$notificarErro('Algún problema al cargar la imagen', error)
       }
       this.loading = false
     },
@@ -643,14 +643,14 @@ export default {
       if (this.campanha.message1 === this.campanha.message2 || this.campanha.message1 === this.campanha.message3 || this.campanha.message2 === this.campanha.message3) {
         this.$q.notify({
           type: 'negative',
-          message: 'As mensagens não podem ser iguais'
+          message: 'Los mensajes no pueden ser iguales'
         })
         return
       }
       if (this.campanha.delay < 61) {
         this.$q.notify({
           type: 'negative',
-          message: 'O campo delay deve ser no mínimo 61'
+          message: 'El campo delay debe ser como mínimo 61'
         })
         return
       }
@@ -658,7 +658,7 @@ export default {
       if (this.$v.campanha.$error) {
         this.$q.notify({
           type: 'negative',
-          message: 'Verifique se todas os campos obrigatórios estão preenchidos '
+          message: 'Verifique si todos los campos obligatorios están llenos '
         })
         return
       }
@@ -678,7 +678,7 @@ export default {
             progress: true,
             position: 'top',
             textColor: 'black',
-            message: 'Campanha editada!',
+            message: 'Campaña editada!',
             actions: [{
               icon: 'close',
               round: true,
@@ -692,7 +692,7 @@ export default {
             type: 'positive',
             progress: true,
             position: 'top',
-            message: 'Campanha criada!',
+            message: 'Campaña creada!',
             actions: [{
               icon: 'close',
               round: true,
@@ -704,7 +704,7 @@ export default {
         this.fecharModal()
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Algum problema ao criar campanha', error)
+        this.$notificarErro('Algún problema al crear campaña', error)
       }
     }
   }

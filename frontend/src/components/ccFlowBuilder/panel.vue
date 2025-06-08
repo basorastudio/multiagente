@@ -222,7 +222,7 @@ export default {
           progress: true,
           position: 'top',
           timeout: 2500,
-          message: 'Não é possível conectar o elemento a si mesmo.',
+          message: 'No é possível conectar o elemento a si mesmo.',
           actions: [{
             icon: 'close',
             round: true,
@@ -353,12 +353,12 @@ export default {
           title: 'Atenção!!',
           message: 'Deseja realmente deletar a linha selecionada?',
           cancel: {
-            label: 'Não',
+            label: 'No',
             color: 'primary',
             push: true
           },
           ok: {
-            label: 'Sim',
+            label: 'Sí',
             color: 'negative',
             push: true
           },
@@ -458,12 +458,12 @@ export default {
         title: 'Atenção!!',
         message: `Deseja realmente deletar o elemento (${node.name})?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -549,12 +549,12 @@ export default {
         title: 'Oi!!',
         message: 'Confirma o download?',
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },

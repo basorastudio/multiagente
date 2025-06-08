@@ -9,7 +9,7 @@
       style="width: 500px"
       class="q-pa-lg"
     >
-      <div class="text-h6">{{ filaEdicao.id ? 'Editar': 'Criar' }} Fila</div>
+      <div class="text-h6">{{ filaEdicao.id ? 'Editar': 'Crear' }} Fila</div>
       <q-card-section>
         <q-input
           class="row col"
@@ -17,11 +17,11 @@
           outlined
           dense
           v-model="fila.queue"
-          label="Nome da Fila"
+          label="Nombre de la Fila"
         />
         <q-checkbox
           v-model="fila.isActive"
-          label="Ativo"
+          label="Activo"
         />
       </q-card-section>
       <q-card-actions
@@ -37,7 +37,7 @@
         />
         <q-btn
           rounded
-          label="Salvar"
+          label="Guardar"
           color="positive"
           @click="handleFila"
         />
@@ -103,7 +103,7 @@ export default {
             progress: true,
             position: 'top',
             textColor: 'black',
-            message: 'Etapa editada!',
+            message: '¡Etapa editada!',
             actions: [{
               icon: 'close',
               round: true,
@@ -117,7 +117,7 @@ export default {
             type: 'positive',
             progress: true,
             position: 'top',
-            message: 'Fila criada!',
+            message: '¡Fila creada!',
             actions: [{
               icon: 'close',
               round: true,
@@ -129,7 +129,7 @@ export default {
         this.fecharModal()
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
     }
   }

@@ -3,21 +3,21 @@ import VuelidateErrorExtractor from 'vuelidate-error-extractor'
 
 import linkify from 'vue-linkify'
 
-/* We need messages for validation */
+/* Necesitamos mensajes para la validación */
 const messages = {
-  required: '{attribute} é obrigatório',
-  email: '{attribute} é inválido.',
-  minValue: '{attribute} deve ser maior que {min}',
-  minLength: '{attribute} deve possui no mínimo {min} carateres',
-  maxLength: '{attribute} deve possui no máximo {min} carateres',
-  validaData: 'Data inválida'
+  required: '{attribute} es obligatorio',
+  email: '{attribute} es inválido.',
+  minValue: '{attribute} debe ser mayor que {min}',
+  minLength: '{attribute} debe tener al menos {min} caracteres',
+  maxLength: '{attribute} debe tener como máximo {min} caracteres',
+  validaData: 'Fecha inválida'
 }
 
 const mapNames = {
   email: 'E-mail',
-  name: 'Nome',
-  nome: 'Nome',
-  username: 'Usuário'
+  name: 'Nombre',
+  nome: 'Nombre',
+  username: 'Usuario'
 }
 
 export default ({

@@ -63,7 +63,7 @@
                 v-close-popup
                 @click="efetuarLogout"
               >
-                <q-item-section>Sair</q-item-section>
+                <q-item-section>Salir</q-item-section>
               </q-item>
               <q-separator />
 
@@ -77,7 +77,7 @@
             @click="() => $router.push({ name: 'home-dashboard' })"
           >
             <q-tooltip content-class="bg-padrao text-grey-9 text-bold">
-              Retornar ao menu
+              Volver al menú
             </q-tooltip>
           </q-btn>
         </q-toolbar>
@@ -104,7 +104,7 @@
                 style="min-width: 350px; max-width: 350px"
               >
                 <div class="q-ma-sm">
-                  <div class="text-h6 q-mb-md">Filtros Avançados</div>
+                  <div class="text-h6 q-mb-md">Filtros Avanzados</div>
                   <q-toggle
                     v-if="profile === 'admin'"
                     class="q-ml-lg"
@@ -158,7 +158,7 @@
                           />
                         </q-item-section>
                         <q-item-section>
-                          <q-item-label>Abertos</q-item-label>
+                          <q-item-label>Abiertos</q-item-label>
                         </q-item-section>
                       </q-item>
                       <q-item
@@ -175,7 +175,7 @@
                           />
                         </q-item-section>
                         <q-item-section>
-                          <q-item-label>Pendentes</q-item-label>
+                          <q-item-label>Pendientes</q-item-label>
                         </q-item-section>
                       </q-item>
                       <q-item
@@ -192,19 +192,19 @@
                           />
                         </q-item-section>
                         <q-item-section>
-                          <q-item-label>Resolvidos</q-item-label>
+                          <q-item-label>Resueltos</q-item-label>
                         </q-item-section>
                       </q-item>
                     </q-list>
                     <q-separator class="q-mb-md" />
                     <q-toggle
                       v-model="pesquisaTickets.withUnreadMessages"
-                      label="Somente Tickets com mensagens não lidas"
+                      label="Solo Tickets con mensajes no leídos"
                       @input="debounce(BuscarTicketFiltro(), 700)"
                     />
                     <q-toggle
                       v-model="pesquisaTickets.isNotAssignedUser"
-                      label="Somente Tickets não atribuidos (sem usuário definido)"
+                      label="Solo Tickets no asignados (sin usuario definido)"
                       @input="debounce(BuscarTicketFiltro(), 700)"
                     />
                   </div>
@@ -216,7 +216,7 @@
                   <q-btn
                     class="float-right q-my-md"
                     color="negative"
-                    label="Fechar"
+                    label="Cerrar"
                     push
                     rounded
                     v-close-popup
@@ -225,7 +225,7 @@
               </div>
             </q-menu>
             <q-tooltip content-class="bg-padrao text-grey-9 text-bold">
-              Filtro Avançado
+              Filtro Avanzado
             </q-tooltip>
           </q-btn>
           <q-input
@@ -249,7 +249,7 @@
             @click="$q.screen.lt.md ? modalNovoTicket = true : $router.push({ name: 'chat-contatos' })"
           >
             <q-tooltip content-class="bg-padrao text-grey-9 text-bold">
-              Contatos
+              Contactos
             </q-tooltip>
           </q-btn>
           <q-separator class="absolute-bottom" />
@@ -265,15 +265,15 @@
             <div class="tab-container">
               <q-tabs v-model="selectedTab" class="tab-scroll">
                 <q-tab name="open" v-if="openTickets.length > 0">
-                  Abertos
+                  Abiertos
                   <q-badge v-if="openTickets.length > 0" color="red" textColor="white">{{ openTickets.length }}</q-badge>
                 </q-tab>
                 <q-tab name="pending" v-if="pendingTickets.length > 0">
-                  Pendentes
+                  Pendientes
                   <q-badge v-if="pendingTickets.length > 0" color="red" textColor="white">{{ pendingTickets.length }}</q-badge>
                 </q-tab>
                 <q-tab name="closed" v-if="closedTickets.length > 0">
-                  Fechados
+                  Cerrados
                   <q-badge v-if="closedTickets.length > 0" color="red" textColor="white">{{ closedTickets.length }}</q-badge>
                 </q-tab>
                 <q-tab name="group" v-if="groupTickets.length > 0">
@@ -324,7 +324,7 @@
               />
             </div>
             <div class="row col justify-center q-my-sm text-white">
-              Carregando...
+              Cargando...
             </div>
           </div>
         </q-scroll-area>
@@ -346,7 +346,7 @@
             @input="$setConfigsUsuario({ isDark: !$q.dark.isActive })"
           >
             <q-tooltip content-class="text-body1">
-              {{ $q.dark.isActive ? 'Desativar' : 'Ativar' }} Modo Escuro (Dark Mode)
+              {{ $q.dark.isActive ? 'Desactivar' : 'Activar' }} Modo Oscuro (Dark Mode)
             </q-tooltip>
           </q-toggle>
           <div class="flex flex-inline q-pt-xs">
@@ -401,7 +401,7 @@
           style="height:60px;"
         >
           <span class="q-ml-md text-h6">
-            Dados Contato
+            Datos del Contacto
           </span>
         </div>
         <q-separator />
@@ -462,7 +462,7 @@
                   class="q-mt-sm bg-padrao btn-rounded"
                   flat
                   icon="edit"
-                  label="Editar Contato"
+                  label="Editar Contacto"
                   @click="editContact(ticketFocado.contact.id)"
                 />
               </q-card-section>
@@ -478,7 +478,7 @@
                   flat
                   class="bg-padrao btn-rounded"
                   :color="!$q.dark.isActive ? 'grey-9' : 'white'"
-                  label="Logs"
+                  label="Registros"
                   icon="mdi-timeline-text-outline"
                   @click="abrirModalLogs"
                 />
@@ -550,10 +550,10 @@
                     >
                       <q-item-section>
                         <q-item-label class="text-negative text-bold">
-                          Ops... Sem etiquetas criadas!
+                          Ops... Sin etiquetas creadas!
                         </q-item-label>
                         <q-item-label caption>
-                          Cadastre novas etiquetas na administração de sistemas.
+                          Registre nuevas etiquetas en la administración del sistema.
                         </q-item-label>
                       </q-item-section>
                     </q-item>
@@ -570,7 +570,7 @@
               :key="ticketFocado.id + $uuid()"
             >
               <q-card-section class="text-bold q-pb-none">
-                Carteira
+                Cartera
                 <q-separator />
               </q-card-section>
               <q-card-section class="q-pa-none">
@@ -623,7 +623,7 @@
                     >
                       <q-item-section>
                         <q-item-label class="text-negative text-bold">
-                          Ops... Sem carteiras disponíveis!!
+                          Ops... Sin carteras disponibles!!
                         </q-item-label>
                       </q-item-section>
                     </q-item>
@@ -640,7 +640,7 @@
               :key="ticketFocado.id + $uuid()"
             >
               <q-card-section class="text-bold q-pb-none">
-                Mensagens Agendadas
+                Mensajes Programados
                 <q-separator />
               </q-card-section>
               <q-card-section class="q-pa-none">
@@ -649,7 +649,7 @@
                     <q-item v-for="(message, idx) in ticketFocado.scheduledMessages.filter((msg) => !msg.isDeleted)" :key="idx" clickable>
                       <q-item-section>
                         <q-item-label caption>
-                          <b>Agendado para:</b> {{ $formatarData(message.scheduleDate, 'dd/MM/yyyy HH:mm') }}
+                          <b>Programado para:</b> {{ $formatarData(message.scheduleDate, 'dd/MM/yyyy HH:mm') }}
                           <q-btn
                             flat
                             round
@@ -682,7 +682,7 @@
               :key="ticketFocado.id + $uuid()"
             >
               <q-card-section class="text-bold q-pb-none">
-                Outras Informações
+                Otra Información
               </q-card-section>
               <q-card-section class="q-pa-none">
                 <template v-if="cIsExtraInfo">
@@ -726,7 +726,7 @@
       >
         <q-card style="width: 400px">
           <q-card-section :class="{ 'bg-grey-2': !$q.dark.isActive, 'bg-primary': $q.dark.isActive }">
-            <div class="text-h6">Logs Ticket: {{ ticketFocado.id }}
+            <div class="text-h6">Registros del Ticket: {{ ticketFocado.id }}
               <q-btn
                 icon="close"
                 color="negative"
@@ -940,7 +940,7 @@ export default {
       }
 
       const notification = new Notification(
-        `Mensagem de ${data.ticket.contact.name}`,
+        `Mensaje de ${data.ticket.contact.name}`,
         options
       )
 
@@ -987,7 +987,7 @@ export default {
         this.$store.commit('LOAD_TICKETS', data.tickets)
         this.$store.commit('SET_HAS_MORE', data.hasMore)
       } catch (err) {
-        this.$notificarErro('Algum problema', err)
+        this.$notificarErro('Algún problema', err)
         console.error(err)
       }
       // return () => clearTimeout(delayDebounceFn)
@@ -1053,7 +1053,7 @@ export default {
         this.$router.go({ name: 'login', replace: true })
       } catch (error) {
         this.$notificarErro(
-          'Não foi possível realizar logout',
+          'No se pudo cerrar sesión',
           error
         )
       }
@@ -1062,25 +1062,25 @@ export default {
       navigator.clipboard.writeText(content)
         .then(() => {
           // Copiado com sucesso
-          console.log('Conteúdo copiado: ', content)
+          console.log('Contenido copiado: ', content)
         })
         .catch((error) => {
           // Ocorreu um erro ao copiar
-          console.error('Erro ao copiar o conteúdo: ', error)
+          console.error('Error al copiar el contenido: ', error)
         })
     },
     deletarMensagem (mensagem) {
       const data = { ...mensagem }
       this.$q.dialog({
-        title: 'Atenção!! Deseja realmente deletar a mensagem? ',
-        message: 'Mensagens antigas não serão apagadas no cliente.',
+        title: '¡Atención! ¿Realmente desea eliminar el mensaje? ',
+        message: 'Los mensajes antiguos no se eliminarán en el cliente.',
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -1095,7 +1095,7 @@ export default {
           .catch(error => {
             this.loading = false
             console.error(error)
-            this.$notificarErro('Não foi possível apagar a mensagem', error)
+            this.$notificarErro('No se pudo eliminar el mensaje', error)
           })
       }).onCancel(() => {
       })
@@ -1114,7 +1114,7 @@ export default {
         this.usuarios = data.users
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Problema ao carregar usuários', error)
+        this.$notificarErro('Problema al cargar usuarios', error)
       }
     },
     setValueMenu () {
@@ -1156,13 +1156,13 @@ export default {
     this.userProfile = localStorage.getItem('profile')
     // this.socketInitial()
 
-    // se existir ticket na url, abrir o ticket.
+    // si existe un ticket en la URL, abrir el ticket.
     if (this.$route?.params?.ticketId) {
       const ticketId = this.$route?.params?.ticketId
       if (ticketId && this.tickets.length > 0) {
         const ticket = this.tickets.find(t => t.id === +ticketId)
         if (!ticket) return
-        // caso esteja em um tamanho mobile, fechar a drawer dos contatos
+        // si está en un tamaño móvil, cerrar el panel lateral de contactos
         if (this.$q.screen.lt.md && ticket.status !== 'pending') {
           this.$root.$emit('infor-cabecalo-chat:acao-menu')
         }

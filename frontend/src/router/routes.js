@@ -1,4 +1,3 @@
-
 const routes = [
   {
     path: '/',
@@ -60,11 +59,6 @@ const routes = [
         component: () => import('pages/relatorios/RelatorioContatosEtiquetas')
       },
       {
-        path: 'contatos-por-estado',
-        name: 'contatos-por-estado',
-        component: () => import('pages/relatorios/RelatorioContatosEstado')
-      },
-      {
         path: 'relatorio-tickets',
         name: 'relatorio-tickets',
         component: () => import('pages/relatorios/RelatorioTickets')
@@ -103,8 +97,8 @@ const routes = [
     ]
   },
 
-  // Always leave this as last one,
-  // but you can also remove it
+  // Dejar siempre esta como la última,
+  // pero también puedes eliminarla
   {
     path: '*',
     component: () => import('pages/Error404.vue')

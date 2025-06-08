@@ -7,7 +7,7 @@
         class="full-width"
       >
         <q-card-section class="text-h6 text-bold">
-          Canais
+          Canales
           <q-space />
         </q-card-section>
       </q-card>
@@ -30,7 +30,7 @@
               </q-avatar>
             </q-item-section>
             <q-item-section>
-              <q-item-label class="text-h6 text-bold">Nome: {{ item.name }}</q-item-label>
+              <q-item-label class="text-h6 text-bold">Nombre: {{ item.name }}</q-item-label>
               <q-item-label class="text-h6 text-caption">
                 {{ item.type }}
               </q-item-label>
@@ -70,7 +70,7 @@
 <script>
 import { AdminListarChannels } from 'src/service/channels'
 import { format, parseISO } from 'date-fns'
-import pt from 'date-fns/locale/pt-BR/index'
+import pt from 'date-fns/locale/es/index'
 import { mapGetters } from 'vuex'
 import ItemStatusChannel from './ItemStatusChannel'
 import { AdminListarEmpresas } from 'src/service/empresas'
@@ -97,19 +97,19 @@ export default {
       columns: [
         {
           name: 'name',
-          label: 'Nome',
+          label: 'Nombre',
           field: 'name',
           align: 'left'
         },
         {
           name: 'status',
-          label: 'Status',
+          label: 'Estado',
           field: 'status',
           align: 'center'
         },
         {
           name: 'session',
-          label: 'Sessão',
+          label: 'Sesión',
           field: 'status',
           align: 'center'
         },
@@ -121,20 +121,20 @@ export default {
         },
         {
           name: 'updatedAt',
-          label: 'Última Atualização',
+          label: 'Última Actualización',
           field: 'updatedAt',
           align: 'center',
           format: d => this.formatarData(d, 'dd/MM/yyyy HH:mm')
         },
         {
           name: 'isDefault',
-          label: 'Padrão',
+          label: 'Predeterminado',
           field: 'isDefault',
           align: 'center'
         },
         {
           name: 'acoes',
-          label: 'Ações',
+          label: 'Acciones',
           field: 'acoes',
           align: 'center'
         }

@@ -11,11 +11,11 @@
     >
       <q-card-section>
         <div class="text-h6">
-          {{ contactId ? 'Editar Contato' : 'Adicionar Contato'  }}
+          {{ contactId ? 'Editar Contacto' : 'Añadir Contacto'  }}
         </div>
       </q-card-section>
       <q-card-section class="q-pa-sm q-pl-md text-bold">
-        Dados Contato
+        Datos del Contacto
       </q-card-section>
       <q-card-section class="q-pa-sm q-pl-md row q-col-gutter-md">
         <c-input
@@ -24,7 +24,7 @@
           v-model="contato.name"
           :validator="$v.contato.name"
           @blur="$v.contato.name.$touch"
-          label="Nome"
+          label="Nombre"
         />
         <c-input
           class="col-12"
@@ -36,7 +36,7 @@
           placeholder="+DDI DDD 99999 9999"
           fill-mask
           unmasked-value
-          hint="Informe número com DDI e DDD"
+          hint="Informe el número con DDI y DDD"
           label="Número"
         />
         <c-input
@@ -51,7 +51,7 @@
         />
       </q-card-section>
       <q-card-section class="q-pa-sm q-pl-md text-bold">
-        Informações adicionais
+        Información adicional
       </q-card-section>
       <q-card-section class="q-pa-sm q-pl-md row q-col-gutter-md justify-center">
         <template v-for="(extraInfo, index) in contato.extraInfo">
@@ -65,14 +65,14 @@
               dense
               rounded
               v-model="extraInfo.name"
-              label="Descrição"
+              label="Descripción"
             />
             <q-input
               class="col-5"
               outlined
               dense
               rounded
-              label="Informação"
+              label="Información"
               v-model="extraInfo.value"
             />
             <div class="col q-pt-md">
@@ -93,7 +93,7 @@
             color="primary"
             outline
             rounded
-            label="Adicionar Informação"
+            label="Añadir Información"
             @click="contato.extraInfo.push({name: null, value: null})"
           />
         </div>
@@ -104,7 +104,7 @@
       >
         <q-btn
           rounded
-          label="Sair"
+          label="Salir"
           color="negative"
           v-close-popup
           class="q-px-md "
@@ -112,7 +112,7 @@
         <q-btn
           class="q-ml-lg q-px-md"
           rounded
-          label="Salvar"
+          label="Guardar"
           color="positive"
           @click="saveContact"
         />
@@ -168,7 +168,7 @@ export default {
         }
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
     },
     removeExtraInfo (index) {
@@ -183,7 +183,7 @@ export default {
           type: 'warning',
           progress: true,
           position: 'top',
-          message: 'Ops! Verifique os erros...',
+          message: '¡Ups! Verifique los errores...',
           actions: [{
             icon: 'close',
             round: true,
@@ -206,7 +206,7 @@ export default {
             progress: true,
             position: 'top',
             textColor: 'black',
-            message: 'Contato editado!',
+            message: '¡Contacto editado!',
             actions: [{
               icon: 'close',
               round: true,
@@ -219,7 +219,7 @@ export default {
             type: 'positive',
             progress: true,
             position: 'top',
-            message: 'Contato criado!',
+            message: '¡Contacto creado!',
             actions: [{
               icon: 'close',
               round: true,
@@ -231,7 +231,7 @@ export default {
         this.$emit('update:modalContato', false)
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Ocorreu um erro ao criar o contato', error)
+        this.$notificarErro('Ocurrió un error al crear el contacto', error)
       }
     },
     async listarUsuarios () {
@@ -240,7 +240,7 @@ export default {
         this.usuarios = data.users
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Problema ao carregar usuários', error)
+        this.$notificarErro('Problema al cargar usuarios', error)
       }
     }
 

@@ -19,7 +19,7 @@
         <q-btn
           rounded
           color="primary"
-          label="Adicionar"
+          label="Añadir"
           @click="tenantEdicao = {}; modalTenant = true"
         />
       </template>
@@ -96,11 +96,11 @@ export default {
       loading: false,
       columns: [
         { name: 'id', label: '#', field: 'id', align: 'left' },
-        { name: 'status', label: 'Status', field: 'status', align: 'left', format: val => this.formatStatus(val) },
-        { name: 'name', label: 'Nome', field: 'name', align: 'center' },
-        { name: 'maxUsers', label: 'Limite de Usuário', field: 'maxUsers', align: 'center' },
-        { name: 'maxConnections', label: 'Limite de Conexão', field: 'maxConnections', align: 'center' },
-        { name: 'acoes', label: 'Ações', field: 'acoes', align: 'center' }
+        { name: 'status', label: 'Estado', field: 'status', align: 'left', format: val => this.formatStatus(val) },
+        { name: 'name', label: 'Nombre', field: 'name', align: 'center' },
+        { name: 'maxUsers', label: 'Límite de Usuario', field: 'maxUsers', align: 'center' },
+        { name: 'maxConnections', label: 'Límite de Conexión', field: 'maxConnections', align: 'center' },
+        { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ]
     }
   },
@@ -109,7 +109,7 @@ export default {
       return row.status === 'active' ? 'bg-active' : 'bg-inactive'
     },
     formatStatus (value) {
-      return value === 'active' ? 'Ativo' : 'Inativo'
+      return value === 'active' ? 'Activo' : 'Inactivo'
     },
     async listarTenants () {
       const { data } = await ListarTenants()
@@ -134,15 +134,15 @@ export default {
     },
     deletarTenant (tenant) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar a Empresa "${tenant.id}"?`,
+        title: '¡¡Atención!!',
+        message: `¿Desea realmente eliminar la Empresa "${tenant.id}"?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -159,7 +159,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: `Empresa ${tenant.id} deletada!`,
+              message: `Empresa ${tenant.id} eliminada!`,
               actions: [{
                 icon: 'close',
                 round: true,

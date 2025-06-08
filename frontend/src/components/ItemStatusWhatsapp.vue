@@ -15,7 +15,7 @@
     </q-item-section>
     <q-item-section>
       <q-item-label lines="1">
-        Nome: {{ wbot.name }}
+        Nombre: {{ wbot.name }}
       </q-item-label>
       <q-item-label
         caption
@@ -59,50 +59,50 @@ export default {
         PAIRING: {
           color: 'info',
           icon: 'mdi-cellphone-wireles',
-          status: 'Emparelhando',
-          description: 'Emparelhando sessão Whatsapp.'
+          status: 'Emparejando',
+          description: 'Emparejando sesión de Whatsapp.'
         },
         TIMEOUT: {
           color: 'warning',
           icon: 'mdi-timer-outline',
           status: 'Timeout',
-          description: 'As tentativas de conexão falharam. Verifique a internet no celular.'
+          description: 'Los intentos de conexión fallaron. Verifique la conexión a internet en el celular.'
         },
         DISCONNECTED: {
           color: 'negative',
           icon: 'mdi-wifi-strength-1-alert',
           status: 'Desconectado',
-          description: 'Verifique se o celular do Whatsapp possui conexão com internet.'
+          description: 'Verifique si el celular del Whatsapp tiene conexión a internet.'
         },
         qrcode: {
           color: 'positive',
           icon: 'mdi-qrcode-scan',
-          status: 'Qr Code',
-          description: 'Necessário Ler o Qr Code'
+          status: 'Código Qr',
+          description: 'Es necesario leer el Código Qr'
         },
         DESTROYED: {
           color: 'primary',
           icon: 'mdi-close-network-outline',
-          status: 'Inativo',
-          description: 'Necessário iniciar a conexão com o Whatsapp e Ler o Qr Code.'
+          status: 'Inactivo',
+          description: 'Es necesario iniciar la conexión con Whatsapp y leer el Código Qr.'
         },
         CONFLICT: {
           color: 'warning',
           icon: 'mdi-equal',
-          status: 'Conflito',
-          description: 'Whatsapp Web sendo utilizado.'
+          status: 'Conflicto',
+          description: 'Whatsapp Web está siendo utilizado.'
         },
         OPENING: {
           color: 'black',
           icon: 'mdi-connection',
           status: 'Conectando',
-          description: 'Iniciando conexão com o Whatsapp.'
+          description: 'Iniciando conexión con Whatsapp.'
         },
         CONNECTED: {
           color: 'green-8',
           icon: 'mdi-wifi-arrow-up-down',
           status: 'Conectado',
-          description: 'Conexão estabelecida com sucesso!'
+          description: '¡Conexión establecida con éxito!'
         }
       }
     }

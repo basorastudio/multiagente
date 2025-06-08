@@ -17,7 +17,7 @@
       <template v-slot:top-right>
         <q-btn
           color="primary"
-          label="Adicionar"
+          label="Añadir"
           rounded
           @click="etiquetaEdicao = {}; modalEtiqueta = true"
         />
@@ -90,9 +90,9 @@ export default {
       columns: [
         { name: 'id', label: '#', field: 'id', align: 'left' },
         { name: 'tag', label: 'Etiqueta', field: 'tag', align: 'left' },
-        { name: 'color', label: 'Cor', field: 'color', align: 'center' },
-        { name: 'isActive', label: 'Ativo', field: 'isActive', align: 'center' },
-        { name: 'acoes', label: 'Ações', field: 'acoes', align: 'center' }
+        { name: 'color', label: 'Color', field: 'color', align: 'center' },
+        { name: 'isActive', label: 'Activo', field: 'isActive', align: 'center' },
+        { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ]
     }
   },
@@ -120,15 +120,15 @@ export default {
     },
     deletarEtiqueta (etiqueta) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar a Etiqueta "${etiqueta.tag}"?`,
+        title: '¡¡Atención!!',
+        message: `¿Realmente desea eliminar la Etiqueta "${etiqueta.tag}"?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -145,7 +145,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: `Etiqueta ${etiqueta.tag} deletada!`,
+              message: `¡Etiqueta ${etiqueta.tag} eliminada!`,
               actions: [{
                 icon: 'close',
                 round: true,

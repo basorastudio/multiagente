@@ -32,7 +32,7 @@
                   :showSearch="false"
                   :emojisByRow="20"
                   labelSearch="Localizar..."
-                  lang="pt-BR"
+                  lang="es"
                   @select="onInsertSelectEmoji"
                 />
               </q-menu>
@@ -42,7 +42,7 @@
             ref="inputEnvioMensagem"
             style="min-height: 10vh; max-height: 15vh; flex: auto"
             class="q-pa-sm bg-white"
-            placeholder="Digite a mensagem"
+            placeholder="Escriba el mensaje"
             autogrow
             dense
             outlined
@@ -62,10 +62,10 @@
             input-debounce="0"
             new-value-mode="add-unique"
             class="full-width"
-            label="Opções"
+            label="Opciones"
             filled
             dense
-            hint="Opções serão tratados como Lista/Botões ou texto simples dependendo do suporte do canal de destino."
+            hint="Las opciones se tratarán como Lista/Botones o texto sin formato según la compatibilidad del canal de destino."
           />
 
         </div>
@@ -84,20 +84,20 @@ export default {
     onInsertSelectEmoji (emoji) {
       const self = this
       var tArea = this.$refs.inputEnvioMensagem
-      // get cursor's position:
+      // obtener la posición del cursor:
       var startPos = tArea.selectionStart,
         endPos = tArea.selectionEnd,
         cursorPos = startPos,
         tmpStr = tArea.value
-      // filter:
+      // filtrar:
       if (!emoji.data) {
         return
       }
-      // insert:
+      // insertar:
       self.txtContent = this.$attrs.element.data.message
       self.txtContent = tmpStr.substring(0, startPos) + emoji.data + tmpStr.substring(endPos, tmpStr.length)
       this.$attrs.element.data.message = self.txtContent
-      // move cursor:
+      // mover el cursor:
       setTimeout(() => {
         tArea.selectionStart = tArea.selectionEnd = cursorPos + emoji.data.length
       }, 10)

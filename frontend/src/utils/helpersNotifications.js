@@ -4,7 +4,7 @@ import Errors from 'src/utils/errors'
 export const notificarErro = (msg, error = null) => {
   let erro = ''
   if (error) {
-    erro = error?.data?.error || error?.data?.msg || error?.data?.message || error?.response?.data.error || 'Não identificado'
+    erro = error?.data?.error || error?.data?.msg || error?.data?.message || error?.response?.data.error || 'No identificado'
   }
   const findErro = Errors.find(e => e.error == erro)
   let message = ''

@@ -24,7 +24,7 @@
           debounce="500"
           v-model="filter"
           clearable
-          placeholder="Localize"
+          placeholder="Localizar"
           @input="filtrarUsuario"
         >
           <template v-slot:prepend>
@@ -38,7 +38,7 @@
             'q-ml-none q-mt-md q-mr-md': $q.screen.width < 500
           }"
           color="primary"
-          label="Adicionar"
+          label="Añadir"
           @click="usuarioSelecionado = {}; modalUsuario = true"
           />
 
@@ -86,7 +86,7 @@ export default {
       usuarioSelecionado: {},
       filas: [],
       optionsProfile: [
-        { value: 'user', label: 'Usuário' },
+        { value: 'user', label: 'Usuario' },
         { value: 'admin', label: 'Administrador' },
         { value: 'super', label: 'Super' }
       ],
@@ -107,10 +107,10 @@ export default {
       columns: [
         { name: 'tenantId', label: 'Empresa', field: 'tenant', align: 'left', format: v => `${v.id} - ${v.name}` },
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
-        { name: 'name', label: 'Nome', field: 'name', align: 'left' },
+        { name: 'name', label: 'Nombre', field: 'name', align: 'left' },
         { name: 'email', label: 'E-mail', field: 'email', align: 'left' },
         { name: 'profile', label: 'Perfil', field: 'profile', align: 'left', format: (v) => this.optionsProfile.find(o => o.value == v).label },
-        { name: 'acoes', label: 'Ações', field: 'acoes', align: 'center' }
+        { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ]
     }
   },
@@ -176,9 +176,9 @@ export default {
   async mounted () {
     await this.listarUsuarios()
     this.userProfile = localStorage.getItem('profile')
-    // Ouça o evento 'usuario-editado'
+    // Escuche el evento 'usuario-editado'
     this.$root.$on('usuario-editado', () => {
-      // Atualize a página aqui
+      // Actualice la página aquí
       this.listarUsuarios()
     })
   }

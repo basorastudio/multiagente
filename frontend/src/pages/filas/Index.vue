@@ -17,7 +17,7 @@
       <template v-slot:top-right>
         <q-btn
           color="primary"
-          label="Adicionar"
+          label="Añadir"
           rounded
           @click="filaEdicao = {}; modalFila = true"
         />
@@ -80,8 +80,8 @@ export default {
       columns: [
         { name: 'id', label: '#', field: 'id', align: 'left' },
         { name: 'queue', label: 'Fila', field: 'queue', align: 'left' },
-        { name: 'isActive', label: 'Ativo', field: 'isActive', align: 'center' },
-        { name: 'acoes', label: 'Ações', field: 'acoes', align: 'center' }
+        { name: 'isActive', label: 'Activo', field: 'isActive', align: 'center' },
+        { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
       ]
     }
   },
@@ -109,15 +109,15 @@ export default {
     },
     deletarFila (fila) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar a Fila "${fila.queue}"?`,
+        title: '¡¡Atención!!',
+        message: `¿Realmente desea eliminar la Fila "${fila.queue}"?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -134,7 +134,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: `Fila ${fila.queue} deletada!`,
+              message: `¡Fila ${fila.queue} eliminada!`,
               actions: [{
                 icon: 'close',
                 round: true,

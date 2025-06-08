@@ -46,7 +46,7 @@ const verifySocketTicketAction = (ticket, action = null) => {
 
   let isValid = false
 
-  // Se o ticket não possuir fila definida, checar o filtro
+  // Se o ticket No possuir fila definida, checar o filtro
   // permite visualizar tickets sem filas definidas é falso.
   if (!ticket.queueId && !filtros.includeNotQueueDefined) {
     // console.log('filtros.includeNotQueueDefined', !filtros.includeNotQueueDefined)
@@ -59,7 +59,7 @@ const verifySocketTicketAction = (ticket, action = null) => {
     if (isQueueUser !== -1) {
       isValid = true
     } else if (!filtros.includeNotQueueDefined) {
-      // console.log('Usuario não tem acesso a fila e !filtros.includeNotQueueDefined')
+      // console.log('Usuario No tem acesso a fila e !filtros.includeNotQueueDefined')
       return false
     }
   }
@@ -92,26 +92,26 @@ const verifySocketTicketAction = (ticket, action = null) => {
     if (isStatus !== -1) {
       isValid = true
     } else {
-      // console.log('Status do ticket não está filtrado')
+      // console.log('Status do ticket No está filtrado')
       return false
     }
   }
 
-  // verificar se o parametro para não permitir visualizar
+  // verificar se o parametro para No permitir visualizar
   // tickets atribuidos à outros usuários está ativo
   if (isNotViewAssignedTickets()) {
     if (ticket.userId && ticket.userId !== usuario.id) {
-      // console.log('isNotViewAssignedTickets e ticket não é do usuário')
+      // console.log('isNotViewAssignedTickets e ticket No é do usuário')
     } return false
   }
 
-  // verificar se filtro somente tickets não assinados (isNotAssingned) ativo
+  // verificar se filtro somente tickets No assinados (isNotAssingned) ativo
   if (filtros.isNotAssignedUser) {
     const isNotAssignedUser = filtros.isNotAssignedUser && !ticket.userId
     if (isNotAssignedUser) {
       isValid = true
     } else {
-      // console.log('isNotAssignedUser ativo para exibir somente tickets não assinados')
+      // console.log('isNotAssignedUser ativo para exibir somente tickets No assinados')
       return false
     }
   }

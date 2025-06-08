@@ -1,7 +1,7 @@
 <template>
   <div v-if="parsedContact.name" class="contact-card">
     <div v-if="parsedContact.photo">
-      <img :src="'data:image/jpeg;base64,' + parsedContact.photo" alt="Contact Photo" />
+      <img :src="'data:image/jpeg;base64,' + parsedContact.photo" alt="Foto de Contacto" />
     </div>
     <div>
       <h3>{{ parsedContact.name }}</h3>

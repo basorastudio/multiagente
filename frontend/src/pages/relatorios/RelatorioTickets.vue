@@ -2,20 +2,20 @@
   <div v-if="userProfile === 'admin'">
 <q-card bordered>
   <q-card-section>
-    <div class="text-h6 q-px-sm">Relatório Tickets</div>
+    <div class="text-h6 q-px-sm">Informe de Tickets</div>
   </q-card-section>
   <q-card-section class="q-pt-none">
     <fieldset class="rounded-all">
       <legend class="q-px-sm">Filtros</legend>
       <div class="row q-gutter-md items-center">
-        <!-- Primeira linha com múltiplos filtros -->
+        <!-- Primera línea con múltiples filtros -->
         <div class="col-xs-12 col-md-3">
           <q-input
             outlined
             rounded
             dense
             v-model="searchQuery"
-            label="Buscar por protocolo, nome, ticket ou celular"
+            label="Buscar por protocolo, nombre, ticket o celular"
           />
         </div>
         <div class="col-xs-6 col-md-3">
@@ -29,7 +29,7 @@
             option-label="label"
             emit-value
             map-options
-            label="Status"
+            label="Estado"
           />
         </div>
         <div class="col-xs-6 col-md-3">
@@ -37,7 +37,7 @@
             dense
             rounded
             v-model="dateStartFilter"
-            label="Data Inicial"
+            label="Fecha Inicial"
           />
         </div>
         <div class="col-xs-6 col-md-3">
@@ -45,7 +45,7 @@
             dense
             rounded
             v-model="dateEndFilter"
-            label="Data Final"
+            label="Fecha Final"
           />
         </div>
         <div class="col-xs-6 col-md-3">
@@ -59,7 +59,7 @@
             option-label="queue"
             emit-value
             map-options
-            label="Fila"
+            label="Cola"
           />
         </div>
         <div class="col-xs-6 col-md-3">
@@ -73,16 +73,16 @@
             option-label="name"
             emit-value
             map-options
-            label="Atendente"
+            label="Agente"
           />
         </div>
-        <!-- Botões de ação -->
+        <!-- Botones de acción -->
         <div class="col-xs-12 col-md-6 text-center">
           <q-btn
             class="q-mr-sm"
             color="primary"
             rounded
-            label="Gerar"
+            label="Generar"
             icon="refresh"
             @click="applyFilters"
           />
@@ -90,7 +90,7 @@
             class="q-mr-sm"
             color="black"
             rounded
-            label="Limpar Filtro"
+            label="Limpiar Filtro"
             @click="clearFilters"
           />
           <q-btn
@@ -109,22 +109,22 @@
       <div class="col-xs-12 q-mt-sm">
         <div
           class="tableLarge q-ma-sm q-markup-table q-table__container q-table__card q-table--cell-separator q-table--flat q-table--bordered q-table--no-wrap">
-            <!-- Exibir estado de carregamento -->
+            <!-- Mostrar estado de carga -->
     <div v-if="loading" class="loading">
-      Carregando informações, por favor aguarde...
+      Cargando información, por favor espere...
     </div>
 
-        <!-- Tabela de atendimentos -->
+        <!-- Tabla de atenciones -->
         <table v-if="!loading" class="styled-table">
       <thead>
         <tr>
           <th>Ticket</th>
-          <th>Status</th>
-          <th>Nome</th>
-          <th>Fila</th>
-          <th>Atendente</th>
-          <th>Horário Criação</th>
-          <th>Horário Finalização</th>
+          <th>Estado</th>
+          <th>Nombre</th>
+          <th>Cola</th>
+          <th>Agente</th>
+          <th>Horario Creación</th>
+          <th>Horario Finalización</th>
           <th>Chat</th>
         </tr>
       </thead>
@@ -143,7 +143,7 @@
     </table>
 
     <div v-if="hasMore && !loading" class="pagination">
-      <button @click="loadMoreTickets" class="filter-button">CARREGAR MAIS</button>
+      <button @click="loadMoreTickets" class="filter-button">CARGAR MÁS</button>
     </div>
 
         </div>
@@ -167,9 +167,9 @@ export default {
   data () {
     return {
       optionsStatus: [
-        { value: 'open', label: 'Aberto' },
-        { value: 'pending', label: 'Pendente' },
-        { value: 'closed', label: 'Fechado' }
+        { value: 'open', label: 'Abierto' },
+        { value: 'pending', label: 'Pendiente' },
+        { value: 'closed', label: 'Cerrado' }
       ],
       userProfile: 'user',
       contacts: [], // Lista de tickets
@@ -178,7 +178,7 @@ export default {
       dateStartFilter: '',
       dateEndFilter: '',
       queueFilter: '',
-      queues: [], // Lista de filas
+      queues: [], // Lista de colas
       attendantFilter: '',
       attendants: [], // Lista de atendentes
       pageNumber: 1,

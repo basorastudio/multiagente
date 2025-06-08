@@ -1,5 +1,5 @@
 import { format, parseISO, parseJSON } from 'date-fns'
-import pt from 'date-fns/locale/pt-BR'
+import es from 'date-fns/locale/es'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -18,7 +18,7 @@ export default {
       }, 200)
     },
     dataInWords (date) {
-      return format(parseJSON(date), 'HH:mm', { locale: pt })
+      return format(parseJSON(date), 'HH:mm', { locale: es })
     },
     farmatarMensagemWhatsapp (body) {
       if (!body) return
@@ -39,7 +39,7 @@ export default {
           }
         }
         // eslint-disable-next-line no-unused-expressions
-        (indices.length % 2) ? indices.pop() : null
+        (indices.length % 2) ? indices.pop() : null // Remueve el último índice si es impar, es decir, un comodín de apertura sin cierre.
         var e = 0
         indices.forEach(function (v, i) {
           var t = (i % 2) ? clTag : opTag
@@ -56,7 +56,7 @@ export default {
       return format
     },
     formatarData (data, formato = 'dd/MM/yyyy') {
-      return format(parseISO(data), formato, { locale: pt })
+      return format(parseISO(data), formato, { locale: es })
     }
   }
 }

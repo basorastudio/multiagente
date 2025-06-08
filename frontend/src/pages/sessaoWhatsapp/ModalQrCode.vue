@@ -5,7 +5,7 @@
     <q-card style="bg-white">
       <q-card-section>
         <div class="text-h6 text-primary">
-          Leia o QrCode para iniciar a sessão
+          Lea el Código QR para iniciar la sesión
           <q-btn round
             class="q-ml-md"
             color="negative"
@@ -20,17 +20,17 @@
           :size="300"
           level="H" />
         <span v-else>
-          Aguardando o Qr Code
+          Esperando el Código QR
         </span>
       </q-card-section>
       <q-card-section>
-        <div class="row">Caso tenha problema com a leitura, solicite um novo Qr Code </div>
+        <div class="row">Si tiene problemas con la lectura, solicite un nuevo Código QR </div>
         <div class="row col-12 justify-center">
           <q-btn color="primary"
             glossy
             ripple
             outline
-            label="Novo QR Code"
+            label="Nuevo Código QR"
             @click="solicitarQrCode"
             icon="watch_later" />
         </div>

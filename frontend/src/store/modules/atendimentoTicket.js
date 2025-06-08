@@ -79,8 +79,8 @@ const checkTicketFilter = (ticket) => {
     return true
   }
 
-  // Não visualizar tickets ainda com o Chatbot
-  // desde que ainda não exista usuário ou fila definida
+  // No visualizar tickets ainda com o Chatbot
+  // desde que ainda No exista usuário ou fila definida
   if (NotViewTicketsChatBot() && ticket.autoReplyId) {
     if (!ticket?.userId && !ticket.queueId) {
       console.log('NotViewTicketsChatBot e o ticket está sem usuário e fila definida')
@@ -88,7 +88,7 @@ const checkTicketFilter = (ticket) => {
     }
   }
 
-  // Se o ticket não possuir fila definida, checar o filtro
+  // Se o ticket No possuir fila definida, checar o filtro
   // permite visualizar tickets sem filas definidas é falso.
   // if (isQueuesTenantExists && !ticket.queueId && !filtros.includeNotQueueDefined) {
   //   console.log('filtros.includeNotQueueDefined', ticket.queueId, !filtros.includeNotQueueDefined)
@@ -104,7 +104,7 @@ const checkTicketFilter = (ticket) => {
       console.log('Fila do ticket liberada para o Usuario', ticket.queueId)
       isValid = true
     } else {
-      console.log('Usuario não tem acesso a fila', ticket.queueId)
+      console.log('Usuario No tem acesso a fila', ticket.queueId)
       return false
     }
   }
@@ -125,24 +125,24 @@ const checkTicketFilter = (ticket) => {
       console.log('Ticket da carteira do usuário')
       return true
     }
-    console.log('DirectTicketsToWallets: Ticket não pertence à carteira do usuário', ticket)
+    console.log('DirectTicketsToWallets: Ticket No pertence à carteira do usuário', ticket)
     return false
   }
 
-  // verificar se o parametro para não permitir visualizar
+  // verificar se o parametro para No permitir visualizar
   // tickets atribuidos à outros usuários está ativo
   if (isNotViewAssignedTickets() && (ticket?.userId || userId) !== userId) {
-    console.log('isNotViewAssignedTickets e ticket não é do usuário', ticket?.userId, userId)
-    // se usuário não estiver atribuido, permitir visualizar
+    console.log('isNotViewAssignedTickets e ticket No é do usuário', ticket?.userId, userId)
+    // se usuário No estiver atribuido, permitir visualizar
     if (!ticket?.userId) {
       return true
     }
     return false
   }
 
-  // verificar se filtro somente tickets não assinados (isNotAssingned) ativo
+  // verificar se filtro somente tickets No assinados (isNotAssingned) ativo
   if (filtros.isNotAssignedUser) {
-    console.log('isNotAssignedUser ativo para exibir somente tickets não assinados', filtros.isNotAssignedUser, !ticket.userId)
+    console.log('isNotAssignedUser ativo para exibir somente tickets No assinados', filtros.isNotAssignedUser, !ticket.userId)
     return filtros.isNotAssignedUser && !ticket.userId
   }
 
@@ -312,7 +312,7 @@ const atendimentoTicket = {
     },
     // OK
     UPDATE_MESSAGES (state, payload) {
-      // Se ticket não for o focado, não atualizar.
+      // Se ticket No for o focado, No atualizar.
       if (state.ticketFocado.id === payload.ticket.id) {
         const messageIndex = state.mensagens.findIndex(m => m.id === payload.id)
         const mensagens = [...state.mensagens]
@@ -345,7 +345,7 @@ const atendimentoTicket = {
     },
     // OK
     UPDATE_MESSAGE_STATUS (state, payload) {
-      // Se ticket não for o focado, não atualizar.
+      // Se ticket No for o focado, No atualizar.
       if (state.ticketFocado.id != payload.ticket.id) {
         return
       }
@@ -365,7 +365,7 @@ const atendimentoTicket = {
       }
     },
     UPDATE_MESSAGE (state, payload) {
-      // Se ticket não for o focado, não atualizar.
+      // Se ticket No for o focado, No atualizar.
       if (state.ticketFocado.id != payload.ticketId) {
         return
       }
@@ -434,7 +434,7 @@ const atendimentoTicket = {
         } else {
           Notify.create({
             type: 'negative',
-            message: `Ops... Ocorreu um problema não identificado. ${JSON.stringify(error)}`,
+            message: `Ops... Ocorreu um problema No identificado. ${JSON.stringify(error)}`,
             progress: true,
             position: 'top'
           })

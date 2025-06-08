@@ -15,7 +15,7 @@
       v-on="$listeners"
       :error="cError"
       :error-message="cErrorMessage"
-      :ruler="[val => dateIsValid(val) || 'Data inválida!' ]"
+      :ruler="[val => dateIsValid(val) || '¡Fecha inválida!' ]"
     >
       <template v-slot:prepend>
         <q-icon
@@ -55,7 +55,7 @@
               <div class="row items-center justify-end">
                 <q-btn
                   v-close-popup
-                  label="Close"
+                  label="Cerrar"
                   color="primary"
                   flat
                 />
@@ -64,7 +64,7 @@
           </q-popup-proxy>
         </q-icon>
       </template>
-      <!-- Aceitar Demais Slot's -->
+      <!-- Aceptar Demás Slot's -->
       <template
         v-for="(_, slot) of $scopedSlots"
         v-slot:[slot]="scope"
@@ -99,11 +99,11 @@ export default {
     },
     error: {
       type: [String, Boolean, Number],
-      default: 'NI' // Não Informada
+      default: 'NI' // No Informada
     },
     errorMessage: {
       type: [String, Boolean, Number],
-      default: '' // Não Informada
+      default: '' // No Informada
     },
     classAtrrs: {
       type: String,

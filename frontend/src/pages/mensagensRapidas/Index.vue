@@ -6,7 +6,7 @@
       square
       hide-bottom
       class="my-sticky-dynamic q-ma-lg"
-      title="Mensagens Rápidas"
+      title="Mensajes Rápidos"
       :data="mensagensRapidas"
       :columns="columns"
       :loading="loading"
@@ -17,7 +17,7 @@
       <template v-slot:top-right>
         <q-btn
           color="primary"
-          label="Adicionar"
+          label="Añadir"
           rounded
           @click="mensagemRapidaEmEdicao = {}; modalMensagemRapida = true"
         />
@@ -71,9 +71,9 @@ export default {
       mensagemRapidaEmEdicao: {},
       columns: [
         { name: 'id', label: '#', field: 'id', align: 'left' },
-        { name: 'key', label: 'Chave', field: 'key', align: 'left' },
-        { name: 'message', label: 'Mensagem', field: 'message', align: 'left' },
-        { name: 'acoes', label: 'Ações', field: 'acoes', align: 'center' }
+        { name: 'key', label: 'Clave', field: 'key', align: 'left' },
+        { name: 'message', label: 'Mensaje', field: 'message', align: 'left' },
+        { name: 'acoes', label: 'Acciones', field: 'acoes', align: 'center' }
 
       ],
       pagination: {
@@ -105,15 +105,15 @@ export default {
     },
     deletarMensagem (mensagem) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `Deseja realmente deletar a mensagem de chave "${mensagem.key}"?`,
+        title: '¡¡Atención!!',
+        message: `¿Realmente desea eliminar el mensaje con clave "${mensagem.key}"?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -130,7 +130,7 @@ export default {
               type: 'positive',
               progress: true,
               position: 'top',
-              message: 'Mensagem deletada!',
+              message: '¡Mensaje eliminado!',
               actions: [{
                 icon: 'close',
                 round: true,

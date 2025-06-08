@@ -9,7 +9,7 @@
       style="width: 500px"
     >
       <q-card-section>
-        <div class="text-h6">Criar Ticket</div>
+        <div class="text-h6">Crear Ticket</div>
       </q-card-section>
       <q-card-section>
         <q-select
@@ -29,8 +29,8 @@
           fill-input
           option-label="name"
           option-value="id"
-          label="Localizar Contato"
-          hint="Digite no mínimo duas letras para localizar o contato."
+          label="Localizar Contacto"
+          hint="Escriba al menos dos letras para localizar el contacto."
         >
           <template v-slot:before-options>
             <q-btn
@@ -41,7 +41,7 @@
               class="full-width no-border-radius"
               outline
               icon="add"
-              label="Adicionar Contato"
+              label="Añadir Contacto"
               @click="modalContato = true"
             />
 
@@ -65,13 +65,13 @@
         class="q-pr-md"
       >
         <q-btn
-          label="Sair"
+          label="Salir"
           color="negative"
           v-close-popup
           class="q-px-md q-mr-lg"
         />
         <q-btn
-          label="Salvar"
+          label="Guardar"
           class="q-px-md "
           color="primary"
           @click="criarTicket"
@@ -154,7 +154,7 @@ export default {
         await this.$store.commit('SET_HAS_MORE', true)
         await this.$store.dispatch('AbrirChatMensagens', ticket)
         this.$q.notify({
-          message: `Atendimento Iniciado || ${ticket.contact.name} - Ticket: ${ticket.id}`,
+          message: `Atención Iniciada || ${ticket.contact.name} - Ticket: ${ticket.id}`,
           type: 'positive',
           progress: true,
           position: 'top',
@@ -170,7 +170,7 @@ export default {
         }
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Ocorreu um erro ao iniciar o atendimento!', error)
+        this.$notificarErro('¡Ocurrió un error al iniciar la atención!', error)
       }
       this.loading = false
     }

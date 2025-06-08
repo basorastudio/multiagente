@@ -2,7 +2,7 @@
   <div v-if="userProfile === 'admin'">
     <q-card bordered>
       <q-card-section>
-        <div class="text-h6 q-px-sm"> Relatório de Contatos por Etiquetas </div>
+        <div class="text-h6 q-px-sm"> Informe de Contactos por Etiquetas </div>
       </q-card-section>
       <q-card-section class="q-pt-none">
         <fieldset class="rounded-all">
@@ -62,7 +62,7 @@
                 class="q-mr-sm"
                 color="primary"
                 rounded
-                label="Gerar"
+                label="Generar"
                 icon="refresh"
                 @click="gerarRelatorio"
               />
@@ -132,7 +132,7 @@
     <ccPrintModelLandscape
       id="slotTableRelatorioContatos"
       :imprimirRelatorio="imprimir"
-      title="Relatório de Contatos por Etiquetas"
+      title="Informe de Contactos por Etiquetas"
       :styleP="`
       table { width: 100%; font-size: 10px; border-spacing: 1; border-collapse: collapse;  }
       #tableReport tr td { border:1px solid #DDD; padding-left: 10px; padding-right: 10px;  }

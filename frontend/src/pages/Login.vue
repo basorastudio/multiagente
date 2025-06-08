@@ -22,8 +22,8 @@
             <q-separator spaced />
           </q-card-section>
           <q-card-section class="text-primary">
-            <div class="text-h6">Bem vindo!</div>
-            <div class="text-caption text-grey">Faça login...</div>
+            <div class="text-h6">¡Bienvenido!</div>
+            <div class="text-caption text-grey">Inicia sesión...</div>
           </q-card-section>
 
           <q-card-section>
@@ -32,10 +32,10 @@
               clearable
               rounded
               v-model="form.email"
-              placeholder="meu@email.com"
+              placeholder="mi@email.com"
               @blur="$v.form.email.$touch"
               :error="$v.form.email.$error"
-              error-message="Deve ser um e-mail válido."
+              error-message="Debe ser un correo electrónico válido."
               outlined
               @keypress.enter="fazerLogin"
             >
@@ -83,7 +83,7 @@
             >
               Login
               <span slot="loading">
-                <q-spinner-puff class="on-left" />Logando...
+                <q-spinner-puff class="on-left" />Iniciando sesión...
               </span>
             </q-btn>
           </q-card-actions>
@@ -93,7 +93,7 @@
             no-caps
             dense
             class="q-px-sm"
-            label="Esqueci a senha"
+            label="Olvidé mi contraseña"
             @click="modalEsqueciSenha=true"
           /> -->
 
@@ -134,14 +134,14 @@ export default {
     fazerLogin () {
       this.$v.form.$touch()
       if (this.$v.form.$error) {
-        this.$q.notify('Informe usuário e senha corretamente.')
+        this.$q.notify('Informa el usuario y la contraseña correctamente.')
         return
       }
       this.loading = true
       this.$store.dispatch('UserLogin', this.form)
         .then(data => {
           // if (Object.keys(this.contasCliente).length == 1) {
-          //   // logar direto
+          //   // iniciar sesión directamente
           // }
           this.loading = false
           // .params = { modalEscolhaUnidadeNegocio: true }

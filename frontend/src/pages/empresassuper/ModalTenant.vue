@@ -10,12 +10,12 @@
       class="q-pa-lg"
     >
       <q-card-section>
-        <div class="text-h6">{{ tenantEdicao.id ? 'Editar': 'Criar' }} Tenant</div>
+        <div class="text-h6">{{ tenantEdicao.id ? 'Editar': 'Crear' }} Tenant</div>
       </q-card-section>
       <q-card-section>
         <q-toggle
           v-model="toggleStatus"
-          :label="toggleStatus ? 'Ativo' : 'Inativo'"
+          :label="toggleStatus ? 'Activo' : 'Inactivo'"
           color="primary"
         />
         <q-input
@@ -23,7 +23,7 @@
           square
           outlined
           v-model="tenant.name"
-          label="Nome"
+          label="Nombre"
         />
         <q-input
           class="row col"
@@ -31,7 +31,7 @@
           outlined
           type="number"
           v-model="tenant.maxUsers"
-          label="Usuários"
+          label="Usuarios"
         />
         <q-input
           class="row col"
@@ -39,7 +39,7 @@
           outlined
           type="number"
           v-model="tenant.maxConnections"
-          label="Conexões"
+          label="Conexiones"
         />
       </q-card-section>
       <q-card-actions
@@ -55,7 +55,7 @@
         />
         <q-btn
           flat
-          label="Salvar"
+          label="Guardar"
           color="primary"
           @click="validateAndHandleTenant"
         />
@@ -135,7 +135,7 @@ export default {
             progress: true,
             position: 'top',
             textColor: 'black',
-            message: 'Empresa editada!',
+            message: '¡Empresa editada!',
             actions: [{
               icon: 'close',
               round: true,
@@ -149,7 +149,7 @@ export default {
             type: 'positive',
             progress: true,
             position: 'top',
-            message: 'Empresa criada!',
+            message: '¡Empresa creada!',
             actions: [{
               icon: 'close',
               round: true,
@@ -161,7 +161,7 @@ export default {
         this.fecharModal()
       } catch (error) {
         console.error(error)
-        this.$notificarErro('Ocorreu um erro ao criar a Empresa', error)
+        this.$notificarErro('Ocurrió un error al crear la Empresa', error)
       }
     },
     validateAndHandleTenant () {
@@ -172,7 +172,7 @@ export default {
           type: 'negative',
           progress: true,
           position: 'top',
-          message: 'Preencha todos os campos obrigatórios!',
+          message: '¡Rellene todos los campos obligatorios!',
           actions: [{
             icon: 'close',
             round: true,

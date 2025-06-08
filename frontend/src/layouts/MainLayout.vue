@@ -15,7 +15,7 @@
           aria-label="Menu"
           icon="menu"
         >
-          <q-tooltip>Menu</q-tooltip>
+          <q-tooltip>Menú</q-tooltip>
         </q-btn>
 
         <q-btn
@@ -57,7 +57,7 @@
 
                 <q-item v-if="(parseInt(notifications.count) + parseInt(notifications_p.count)) == 0">
                   <q-item-section style="cursor: pointer;">
-                    Nada de novo por aqui!
+                    ¡Nada nuevo por aquí!
                   </q-item-section>
                 </q-item>
                 <q-item v-if="parseInt(notifications_p.count) > 0">
@@ -78,7 +78,7 @@
                     @click="() => $router.push({ name: 'atendimento' })"
                     style="cursor: pointer;"
                   >
-                    Clientes pendentes na fila
+                    Clientes pendientes en la cola
                   </q-item-section>
                 </q-item>
                 <q-item
@@ -102,13 +102,13 @@
                     <q-list>
                       <q-item style="text-align:center; font-size: 17px; font-weight: bold; min-height: 0">{{ ticket.name
                       }}</q-item>
-                      <q-item style="min-height: 0; padding-top: 0"><b>Mensagem: </b> {{ ticket.lastMessage }}</q-item>
+                      <q-item style="min-height: 0; padding-top: 0"><b>Mensaje: </b> {{ ticket.lastMessage }}</q-item>
                     </q-list>
                   </q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
-            <q-tooltip>Notificações</q-tooltip>
+            <q-tooltip>Notificaciones</q-tooltip>
           </q-btn>
           <q-avatar
             :color="usuario.status === 'offline' ? 'negative' : 'positive'"
@@ -119,7 +119,7 @@
             class="q-ml-lg"
           >
             <q-tooltip>
-              {{ usuario.status === 'offline' ? 'Usuário Offiline' : 'Usuário Online' }}
+              {{ usuario.status === 'offline' ? 'Usuario Offline' : 'Usuario Online' }}
             </q-tooltip>
           </q-avatar>
           </div>
@@ -133,7 +133,7 @@
             </q-avatar>
             <q-menu>
               <q-list style="min-width: 100px">
-                <q-item-label header> Olá! <b> {{ username }} </b> </q-item-label>
+                <q-item-label header> ¡Hola! <b> {{ username }} </b> </q-item-label>
 
                 <cStatusUsuario
                   @update:usuario="atualizarUsuario"
@@ -151,7 +151,7 @@
                   v-close-popup
                   @click="efetuarLogout"
                 >
-                  <q-item-section>Sair</q-item-section>
+                  <q-item-section>Salir</q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item>
@@ -163,7 +163,7 @@
               </q-list>
             </q-menu>
 
-            <q-tooltip>Usuário</q-tooltip>
+            <q-tooltip>Usuario</q-tooltip>
           </q-btn>
         </div>
       </q-toolbar>
@@ -228,7 +228,7 @@
           @input="$setConfigsUsuario({ isDark: !$q.dark.isActive })"
         >
           <q-tooltip content-class="text-body1 hide-scrollbar">
-            {{ $q.dark.isActive ? 'Desativar' : 'Ativar' }} Modo Escuro (Dark Mode)
+            {{ $q.dark.isActive ? 'Desactivar' : 'Activar' }} Modo Oscuro (Dark Mode)
           </q-tooltip>
         </q-toggle>
       </div>
@@ -280,14 +280,14 @@ const objMenu = [
   },
 
   {
-    title: 'Atendimentos',
-    caption: 'Lista de atendimentos',
+    title: 'Atenciones',
+    caption: 'Lista de atenciones',
     icon: 'mdi-forum-outline',
     routeName: 'atendimento'
   },
   {
-    title: 'Contatos',
-    caption: 'Lista de contatos',
+    title: 'Contactos',
+    caption: 'Lista de contactos',
     icon: 'mdi-card-account-mail',
     routeName: 'contatos'
   }
@@ -295,74 +295,74 @@ const objMenu = [
 
 const objMenuAdmin = [
   {
-    title: 'Canais',
-    caption: 'Canais de Comunicação',
+    title: 'Canales',
+    caption: 'Canales de Comunicación',
     icon: 'mdi-cellphone-wireless',
     routeName: 'sessoes'
   },
   {
-    title: 'Painel Atendimentos',
-    caption: 'Visão geral dos atendimentos',
+    title: 'Panel de Atenciones',
+    caption: 'Visión general de las atenciones',
     icon: 'mdi-view-dashboard-variant',
     routeName: 'painel-atendimentos'
   },
   {
-    title: 'Relatórios',
-    caption: 'Relatórios gerais',
+    title: 'Informes',
+    caption: 'Informes generales',
     icon: 'mdi-file-chart',
     routeName: 'relatorios'
   },
   {
     title: 'Usuarios',
-    caption: 'Admin de usuários',
+    caption: 'Admin de usuarios',
     icon: 'mdi-account-group',
     routeName: 'usuarios'
   },
   {
-    title: 'Filas',
-    caption: 'Cadastro de Filas',
+    title: 'Colas',
+    caption: 'Registro de Colas',
     icon: 'mdi-arrow-decision-outline',
     routeName: 'filas'
   },
   {
-    title: 'Mensagens Rápidas',
-    caption: 'Mensagens pré-definidas',
+    title: 'Mensajes Rápidos',
+    caption: 'Mensajes predefinidos',
     icon: 'mdi-reply-all-outline',
     routeName: 'mensagens-rapidas'
   },
   {
     title: 'Chatbot',
-    caption: 'Robô de atendimento',
+    caption: 'Robot de atención',
     icon: 'mdi-robot',
     routeName: 'chat-flow'
   },
   {
     title: 'Etiquetas',
-    caption: 'Cadastro de etiquetas',
+    caption: 'Registro de etiquetas',
     icon: 'mdi-tag-text',
     routeName: 'etiquetas'
   },
   {
-    title: 'Horário de Atendimento',
-    caption: 'Horário de funcionamento',
+    title: 'Horario de Atención',
+    caption: 'Horario de funcionamiento',
     icon: 'mdi-calendar-clock',
     routeName: 'horarioAtendimento'
   },
   {
-    title: 'Configurações',
-    caption: 'Configurações gerais',
+    title: 'Configuraciones',
+    caption: 'Configuraciones generales',
     icon: 'mdi-cog',
     routeName: 'configuracoes'
   },
   {
-    title: 'Campanha',
-    caption: 'Campanhas de envio',
+    title: 'Campaña',
+    caption: 'Campañas de envío',
     icon: 'mdi-message-bookmark-outline',
     routeName: 'campanhas'
   },
   {
     title: 'API',
-    caption: 'Integração sistemas externos',
+    caption: 'Integración sistemas externos',
     icon: 'mdi-call-split',
     routeName: 'api-service'
   }
@@ -371,19 +371,19 @@ const objMenuAdmin = [
 const superMenu = [
   {
     title: 'Empresas',
-    caption: 'Admin das Empresas',
+    caption: 'Admin de las Empresas',
     icon: 'mdi-office-building',
     routeName: 'empresassuper'
   },
   {
     title: 'Usuarios',
-    caption: 'Admin de usuários',
+    caption: 'Admin de usuarios',
     icon: 'mdi-account-group',
     routeName: 'usuariossuper'
   },
   {
-    title: 'Canais',
-    caption: 'Canais de Comunicação',
+    title: 'Canales',
+    caption: 'Canales de Comunicación',
     icon: 'mdi-cellphone-wireless',
     routeName: 'sessaosuper'
   }
@@ -466,7 +466,7 @@ export default {
       }
 
       const notification = new Notification(
-        `Mensagem de ${contact.name}`,
+        `Mensaje de ${contact.name}`,
         options
       )
 
@@ -477,7 +477,7 @@ export default {
         this.$router.push({ name: 'atendimento' })
       }
       this.$nextTick(() => {
-        // utilizar refs do layout
+        // utilizar refs del layout
         this.$refs.audioNotification.play()
       })
     },
@@ -497,7 +497,7 @@ export default {
 
         this.$router.go({ name: 'login', replace: true })
       } catch (error) {
-        this.$notificarErro('Não foi possível realizar logout', error)
+        this.$notificarErro('No fue posible realizar logout', error)
       }
     },
     async listarConfiguracoes () {
@@ -532,10 +532,10 @@ export default {
       }
       try {
         const { data } = await ConsultarTickets(params)
-        this.countTickets = data.count // count total de tickets no status
+        this.countTickets = data.count // count total de tickets en el estado
         this.$store.commit('UPDATE_NOTIFICATIONS', data)
       } catch (err) {
-        this.$notificarErro('Algum problema', err)
+        this.$notificarErro('Algún problema', err)
         console.error(err)
       }
       const params2 = {
@@ -551,15 +551,15 @@ export default {
       }
       try {
         const { data } = await ConsultarTickets(params2)
-        this.countTickets = data.count // count total de tickets no status
+        this.countTickets = data.count // count total de tickets en el estado
         this.$store.commit('UPDATE_NOTIFICATIONS_P', data)
       } catch (err) {
-        this.$notificarErro('Algum problema', err)
+        this.$notificarErro('Algún problema', err)
         console.error(err)
       }
     },
     abrirChatContato (ticket) {
-      // caso esteja em um tamanho mobile, fechar a drawer dos contatos
+      // si está en tamaño móvil, cerrar el drawer de contactos
       if (this.$q.screen.lt.md && ticket.status !== 'pending') {
         this.$root.$emit('infor-cabecalo-chat:acao-menu')
       }
@@ -569,15 +569,15 @@ export default {
     },
     abrirAtendimentoExistente (contato, ticket) {
       this.$q.dialog({
-        title: 'Atenção!!',
-        message: `${contato} possui um atendimento em curso (Atendimento: ${ticket.id}). Deseja abrir o atendimento?`,
+        title: '¡¡Atención!!',
+        message: `${contato} tiene una atención en curso (Atención: ${ticket.id}). ¿Desea abrir la atención?`,
         cancel: {
-          label: 'Não',
+          label: 'No',
           color: 'primary',
           push: true
         },
         ok: {
-          label: 'Sim',
+          label: 'Sí',
           color: 'negative',
           push: true
         },
@@ -587,7 +587,7 @@ export default {
           this.abrirChatContato(ticket)
         } catch (error) {
           this.$notificarErro(
-            'Não foi possível atualizar o token',
+            'No fue posible actualizar el token',
             error
           )
         }

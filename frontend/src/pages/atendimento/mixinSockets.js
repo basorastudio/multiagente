@@ -81,7 +81,7 @@ export default {
             }
             this.$store.commit('UPDATE_MESSAGES', data.payload)
             this.scrollToBottom()
-            // Atualiza notificações de mensagem
+            // Actualiza notificaciones de mensaje
             const params = {
               searchParam: '',
               pageNumber: 1,
@@ -94,21 +94,21 @@ export default {
               includeNotQueueDefined: true
               // date: new Date(),
             }
-            console.log('Definiu parametros')
+            console.log('Definió parámetros')
             try {
-              console.log('try')
+              console.log('intentar')
               const { data } = await ConsultarTickets(params)
-              console.log('try 1')
+              console.log('intentar 1')
               this.countTickets = data.count // count total de tickets no status
-              console.log('try 2')
+              console.log('intentar 2')
               // this.ticketsList = data.tickets
               this.$store.commit('UPDATE_NOTIFICATIONS', data)
-              console.log('try 3')
+              console.log('intentar 3')
               // this.$store.commit('SET_HAS_MORE', data.hasMore)
               // console.log(this.notifications)
             } catch (err) {
-              console.log('error try')
-              this.$notificarErro('Algum problema', err)
+              console.log('error al intentar')
+              this.$notificarErro('Algún problema', err)
               console.error(err)
             }
           }
@@ -129,7 +129,7 @@ export default {
           var verify = []
           if (data.type === 'notification:new') {
             // console.log(data)
-            // Atualiza notificações de mensagem
+            // Actualiza notificaciones de mensaje
             // var data_noti = []
             const params = {
               searchParam: '',
@@ -148,15 +148,15 @@ export default {
               this.$store.commit('UPDATE_NOTIFICATIONS_P', data_noti.data)
               verify = data_noti
             } catch (err) {
-              this.$notificarErro('Algum problema', err)
+              this.$notificarErro('Algún problema', err)
               console.error(err)
             }
-            // Faz verificação para se certificar que notificação pertence a fila do usuário
+            // Realiza verificación para asegurarse de que la notificación pertenece a la cola del usuario
             var pass_noti = false
             verify.data.tickets.forEach((element) => { pass_noti = (element.id == data.payload.id ? true : pass_noti) })
-            // Exibe Notificação
+            // Muestra Notificación
             if (pass_noti) {
-              const message = new self.Notification('Novo cliente pendente', {
+              const message = new self.Notification('Nuevo cliente pendiente', {
                 body: 'Cliente: ' + data.payload.contact.name,
                 tag: 'simple-push-demo-notification'
               })

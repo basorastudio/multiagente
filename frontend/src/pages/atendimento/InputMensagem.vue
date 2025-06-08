@@ -29,8 +29,8 @@
           >
             <q-item>
               <q-item-section>
-                <q-item-label class="text-negative text-bold">Ops... Nada por aqui!</q-item-label>
-                <q-item-label caption>Cadastre suas mensagens na administração de sistema.</q-item-label>
+                <q-item-label class="text-negative text-bold">¡Ups... Nada por aquí!</q-item-label>
+                <q-item-label caption>Registre sus mensajes en la administración del sistema.</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -80,7 +80,7 @@
             outlined
             stack-label
             bottom-slots
-            label="Data/Hora Agendamento"
+            label="Fecha/Hora Programación"
             mode="datetime"
             color="primary"
             v-model="scheduleDate"
@@ -100,7 +100,7 @@
             :color="$q.dark.isActive ? 'white' : ''"
           >
             <q-tooltip content-class="text-bold">
-              Enviar arquivo
+              Enviar archivo
             </q-tooltip>
           </q-btn>
           <q-btn
@@ -124,8 +124,8 @@
                 style="width: 40vw"
                 :showSearch="false"
                 :emojisByRow="20"
-                labelSearch="Localizar..."
-                lang="pt-BR"
+                labelSearch="Buscar..."
+                lang="es"
                 @select="onInsertSelectEmoji"
               />
             </q-menu>
@@ -141,7 +141,7 @@
             :color="$q.dark.isActive ? 'white' : ''"
           >
             <q-tooltip content-class="text-bold">
-              Enviar link para videoconferencia
+              Enviar enlace para videoconferencia
             </q-tooltip>
           </q-btn>
           <q-toggle
@@ -154,7 +154,7 @@
             type="toggle"
           >
             <q-tooltip>
-              {{ sign ? 'Desativar' : 'Ativar' }} Assinatura
+              {{ sign ? 'Desactivar' : 'Activar' }} Firma
             </q-tooltip>
           </q-toggle>
           <q-input
@@ -169,7 +169,7 @@
             class="col-grow q-mx-xs text-grey-10 inputEnvioMensagem"
             bg-color="grey-2"
             color="grey-7"
-            placeholder="Digita sua mensagem"
+            placeholder="Escribe tu mensaje"
             input-style="max-height: 30vh"
             autogrow
             rounded
@@ -180,7 +180,7 @@
             @paste="handleInputPaste"
           >
             <!-- <template v-slot:hint>
-          "Quebra linha: Shift + Enter"
+          "Salto de línea: Shift + Enter"
         </template> -->
             <template
               v-slot:prepend
@@ -206,8 +206,8 @@
                     style="width: 40vw"
                     :showSearch="false"
                     :emojisByRow="20"
-                    labelSearch="Localizar..."
-                    lang="pt-BR"
+                    labelSearch="Buscar..."
+                    lang="es"
                     @select="onInsertSelectEmoji"
                   />
                 </q-menu>
@@ -226,7 +226,7 @@
                 :color="$q.dark.isActive ? 'white' : ''"
               >
                 <q-tooltip content-class=" text-bold">
-                  Enviar arquivo
+                  Enviar archivo
                 </q-tooltip>
               </q-btn>
               <q-btn
@@ -237,12 +237,12 @@
                 @click="visualizarMensagensRapidas = !visualizarMensagensRapidas"
               >
                 <q-tooltip content-class="text-bold">
-                  Mensagens Rápidas
+                  Mensajes Rápidos
                 </q-tooltip>
               </q-btn>
             </template>
           </q-input>
-          <!-- tamanho maximo por arquivo de 10mb -->
+          <!-- tamaño máximo por archivo de 10mb -->
           <q-file
             :loading="loading"
             :disable="cDisableActions"
@@ -263,7 +263,7 @@
             :max-files="5"
             :max-file-size="ticketFocado.channel === 'hub_instagram' ? 8388608 : 15485760"
             :max-total-size="ticketFocado.channel === 'hub_instagram' ? 8388608 : 15485760"
-            :accept="ticketFocado.channel === 'hub_instagram' ? '.jpeg, .png, .ico, .bmp, .webp, .*' : '.txt, .xml, .jpg, .png, image/jpeg, .pdf, .doc, .docx, .mp4, .ogg, .mp3, .xls, .xlsx, .jpeg, .rar, .zip, .ppt, .pptx, image/*'"
+            :accept="ticketFocado.channel === 'hub_instagram' ? '.jpeg, .png, .ico, .bmp, .webp, .*': '.txt, .xml, .jpg, .png, image/jpeg, .pdf, .doc, .docx, .mp4, .ogg, .mp3, .xls, .xlsx, .jpeg, .rar, .zip, .ppt, .pptx, image/*'"
             @rejected="onRejectedFiles"
           />
           <q-btn
@@ -277,7 +277,7 @@
             :color="$q.dark.isActive ? 'white' : ''"
           >
             <q-tooltip content-class=" text-bold">
-              Enviar Mensagem
+              Enviar Mensaje
             </q-tooltip>
           </q-btn>
           <q-btn
@@ -290,7 +290,7 @@
             :color="$q.dark.isActive ? 'white' : ''"
           >
             <q-tooltip content-class="text-bold">
-              Enviar Áudio
+              Enviar Audio
             </q-tooltip>
           </q-btn>
         </template>
@@ -369,7 +369,7 @@
                 @keypress.enter.exact="enviarMensagem()"
               />
             </q-card-actions>
-            <span class="row col text-caption text-blue-grey-10">* Confirmar envio: Enter</span>
+            <span class="row col text-caption text-blue-grey-10">* Confirmar envío: Enter</span>
             <span class="row col text-caption text-blue-grey-10">** Cancelar: ESC</span>
           </q-card>
         </q-dialog>
@@ -387,7 +387,7 @@
           class="text-bold"
           color="positive"
           icon="mdi-send-circle"
-          label="Iniciar o atendimento"
+          label="Iniciar la atención"
           @click="iniciarAtendimento(ticketFocado)"
         />
 
@@ -396,7 +396,7 @@
     <!-- <p
       v-if="!cMostrarEnvioArquivo"
       class="row col text-caption text-blue-grey-10"
-    >Quebra linha/Parágrafo: Shift + Enter ||| Enviar Mensagem: Enter</p> -->
+    >Salto de línea/Párrafo: Shift + Enter ||| Enviar Mensaje: Enter</p> -->
   </div>
 </template>
 
@@ -483,7 +483,7 @@ export default {
         this.arquivos = [e.clipboardData.files[0]]
         this.abrirModalPreviewImagem = true
         this.urlMediaPreview = {
-          title: `Enviar imagem para ${this.ticketFocado?.contact?.name}`,
+          title: `Enviar imagen a ${this.ticketFocado?.contact?.name}`,
           src: this.openFilePreview(e)
         }
         this.$refs.inputEnvioMensagem.focus()
@@ -499,21 +499,25 @@ export default {
       const self = this
       var tArea = this.$refs.inputEnvioMensagem.$refs.input
       // get cursor's position:
+      // obtener la posición del cursor:
       var startPos = tArea.selectionStart,
         endPos = tArea.selectionEnd,
         cursorPos = startPos,
         tmpStr = tArea.value
 
       // filter:
+      // filtro:
       if (!emoji.data) {
         return
       }
 
       // insert:
+      // insertar:
       self.txtContent = this.textChat
       self.txtContent = tmpStr.substring(0, startPos) + emoji.data + tmpStr.substring(endPos, tmpStr.length)
       this.textChat = self.txtContent
       // move cursor:
+      // mover cursor:
       setTimeout(() => {
         tArea.selectionStart = tArea.selectionEnd = cursorPos + emoji.data.length
       }, 10)
@@ -571,7 +575,7 @@ export default {
       } catch (error) {
         this.isRecordingAudio = false
         this.loading = false
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
     },
     async handleCancelRecordingAudio () {
@@ -580,12 +584,12 @@ export default {
         this.isRecordingAudio = false
         this.loading = false
       } catch (error) {
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
     },
     prepararUploadMedia () {
       if (!this.arquivos.length) {
-        throw new Error('Não existem arquivos para envio')
+        throw new Error('No existen archivos para envío')
       }
       const formData = new FormData()
       formData.append('fromMe', true)
@@ -602,7 +606,7 @@ export default {
     },
     prepararMensagemTexto () {
       if (this.textChat.trim() === '') {
-        throw new Error('Mensagem Inexistente')
+        throw new Error('Mensaje Inexistente')
       }
 
       if (this.textChat.trim() && this.textChat.trim().startsWith('/')) {
@@ -613,8 +617,8 @@ export default {
           this.textChat = mensagemRapida.message
         } else {
           const error = this.cMensagensRapidas.length > 1
-            ? 'Várias mensagens rápidas encontradas. Selecione uma ou digite uma chave única da mensagem.'
-            : '/ indica que você deseja enviar uma mensagem rápida, mas nenhuma foi localizada. Cadastre ou apague a / e digite sua mensagem.'
+            ? 'Varios mensajes rápidos encontrados. Seleccione uno o escriba una clave única del mensaje.'
+            : '/ indica que desea enviar un mensaje rápido, pero no se encontró ninguno. Registre o elimine / y escriba su mensaje.'
           this.$notificarErro(error)
           this.loading = false
           throw new Error(error)
@@ -623,7 +627,8 @@ export default {
       let mensagem = this.textChat.trim()
       const username = localStorage.getItem('username')
       if (username && this.sign) {
-        mensagem = `*${username}*:\n ${mensagem}`
+        mensagem = `*${username}*:
+ ${mensagem}`
       }
       const message = {
         read: 1,
@@ -642,7 +647,7 @@ export default {
     },
     async enviarMensagem () {
       if (this.isScheduleDate && !this.scheduleDate) {
-        this.$notificarErro('Para agendar uma mensagem, informe o campo Data/Hora Agendamento.')
+        this.$notificarErro('Para programar un mensaje, informe el campo Fecha/Hora Programación.')
         return
       }
       this.loading = true
@@ -669,7 +674,7 @@ export default {
       } catch (error) {
         this.isRecordingAudio = false
         this.loading = false
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
       this.isRecordingAudio = false
       this.loading = false
@@ -682,7 +687,8 @@ export default {
       let mensagem = link
       const username = localStorage.getItem('username')
       if (username && this.sign) {
-        mensagem = `*${username}*:\n ${mensagem}`
+        mensagem = `*${username}*:
+ ${mensagem}`
       }
       const message = {
         read: 1,
@@ -712,7 +718,7 @@ export default {
         }, 800)
       } catch (error) {
         this.loading = false
-        this.$notificarErro('Ocorreu um erro!', error)
+        this.$notificarErro('¡Ocurrió un error!', error)
       }
       this.loading = false
     },
@@ -735,16 +741,16 @@ export default {
       let message
 
       if (this.ticketFocado.channel === 'hub_instagram') {
-        message = `Ops... Ocorreu um erro! <br>
+        message = `¡Ups... Ocurrió un error! <br>
     <ul>
-    <li>Cada arquivo deve ter no máximo 8MB.</li>
-    <li>Apenas arquivos nos formatos .jpeg, .png, .ico, .bmp, .webp e .* são aceitos.</li>
+    <li>Cada archivo debe tener como máximo 8MB.</li>
+    <li>Solo se aceptan archivos en formatos .jpeg, .png, .ico, .bmp, .webp y .*</li>
     </ul>`
       } else {
-        message = `Ops... Ocorreu um erro! <br>
+        message = `¡Ups... Ocurrió un error! <br>
     <ul>
-    <li>Cada arquivo deve ter no máximo 10MB.</li>
-    <li>Em caso de múltiplos arquivos, o tamanho total (soma de todos) deve ser de até 30MB.</li>
+    <li>Cada archivo debe tener como máximo 10MB.</li>
+    <li>En caso de múltiples archivos, el tamaño total (suma de todos) debe ser de hasta 30MB.</li>
     </ul>`
       }
       this.$q.notify({

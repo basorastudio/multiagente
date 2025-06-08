@@ -11,7 +11,7 @@
       class="q-pa-lg"
     >
       <q-card-section>
-        <div class="text-h6">{{ acaoEtapaEdicao.id ? 'Editar': 'Criar' }} Ação Etapa</div>
+        <div class="text-h6">{{ acaoEtapaEdicao.id ? 'Editar': 'Crear' }} Acción Etapa</div>
       </q-card-section>
       <q-card-section>
         <div class="row">
@@ -21,7 +21,7 @@
               square
               outlined
               v-model="acaoEtapa.words"
-              label="Chave"
+              label="Clave"
             />
           </div>
         </div>
@@ -61,7 +61,7 @@
               :options="filas"
               option-label="queue"
               option-value="id"
-              label="Fila"
+              label="Cola"
               map-options
               emit-value
               clearable
@@ -76,7 +76,7 @@
               :options="usuarios"
               option-label="name"
               option-value="id"
-              label="Usuário"
+              label="Usuario"
               map-options
               emit-value
               clearable
@@ -106,20 +106,20 @@
                   style="width: 40vw"
                   :showSearch="false"
                   :emojisByRow="20"
-                  labelSearch="Localizar..."
-                  lang="pt-BR"
+                  labelSearch="Buscar..."
+                  lang="es"
                   @select="onInsertSelectEmoji"
                 />
               </q-menu>
             </q-btn>
           </div>
           <div class="col-xs-8 col-sm-10 col-md-11 q-pl-sm">
-            <label class="text-caption">Mensagem retorno:</label>
+            <label class="text-caption">Mensaje de retorno:</label>
             <textarea
               ref="inputEnvioMensagem"
               style="min-height: 10vh; max-height: 10vh;"
               class="q-pa-sm bg-white full-width"
-              placeholder="Digita a mensagem"
+              placeholder="Escribe el mensaje"
               autogrow
               dense
               outlined
@@ -142,7 +142,7 @@
         />
         <q-btn
           flat
-          label="Salvar"
+          label="Guardar"
           color="primary"
           @click="handleAcaoEtapa"
         />
@@ -203,9 +203,9 @@ export default {
         replyDefinition: null
       },
       optionsAcao: [
-        { value: 0, label: 'Proxima Etapa' },
-        { value: 1, label: 'Enviar para Fila' },
-        { value: 2, label: 'Enviar para usuário' }
+        { value: 0, label: 'Próxima Etapa' },
+        { value: 1, label: 'Enviar a Cola' },
+        { value: 2, label: 'Enviar a Usuario' }
       ]
     }
   },
@@ -250,7 +250,7 @@ export default {
           progress: true,
           position: 'top',
           textColor: 'black',
-          message: 'Ação editada!',
+          message: '¡Acción editada!',
           actions: [{
             icon: 'close',
             round: true,
@@ -264,7 +264,7 @@ export default {
           type: 'positive',
           progress: true,
           position: 'top',
-          message: 'Ação criada!',
+          message: '¡Acción creada!',
           actions: [{
             icon: 'close',
             round: true,

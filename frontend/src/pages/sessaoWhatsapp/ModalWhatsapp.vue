@@ -16,7 +16,7 @@
             class="q-mr-md"
             :name="whatsapp.type ? `img:${whatsapp.type}-logo.png` : 'mdi-alert'"
           /> {{ whatsapp.id ? 'Editar' :
-              'Adicionar'
+              'Añadir'
             }}
           Canal
         </div>
@@ -40,7 +40,7 @@
             <c-input
               outlined
               rounded
-              label="Nome"
+              label="Nombre"
               dense
               v-model="whatsapp.name"
               :validator="$v.whatsapp.name"
@@ -54,7 +54,7 @@
               outlined
               dense
               :options="hubOptions"
-              label="Selecione um Hub"
+              label="Seleccione un Hub"
               filled />
           </div>
           <div
@@ -64,7 +64,7 @@
             <c-input
               outlined
               dense
-              label="Token Telegram"
+              label="Token de Telegram"
               v-model="whatsapp.tokenTelegram"
             />
           </div>
@@ -74,7 +74,7 @@
           >
             <div class="col">
               <fieldset class="full-width q-pa-md rounded-all">
-                <legend>Dados da conta do Instagram</legend>
+                <legend>Datos de la cuenta de Instagram</legend>
                 <div
                   class="col-12 q-mb-md"
                   v-if="whatsapp.type === 'instagram'"
@@ -82,9 +82,9 @@
                   <c-input
                     outlined
                     dense
-                    label="Usuário"
+                    label="Usuario"
                     v-model="whatsapp.instagramUser"
-                    hint="Seu usuário do Instagram (sem @)"
+                    hint="Su usuario de Instagram (sin @)"
                   />
                 </div>
                 <div
@@ -94,11 +94,11 @@
                   <q-btn
                     color="positive"
                     icon="edit"
-                    label="Nova senha"
+                    label="Nueva contraseña"
                     @click="isEdit = !isEdit"
                   >
                     <q-tooltip>
-                      Alterar senha
+                      Cambiar contraseña
                     </q-tooltip>
                   </q-btn>
                 </div>
@@ -109,10 +109,10 @@
                   <c-input
                     outlined
                     rounded
-                    label="Senha"
+                    label="Contraseña"
                     :type="isPwd ? 'password' : 'text'"
                     v-model="whatsapp.instagramKey"
-                    hint="Senha utilizada para logar no Instagram"
+                    hint="Contraseña utilizada para iniciar sesión en Instagram"
                     placeholder="*************"
                     :disable="!isEdit"
                   >
@@ -126,7 +126,7 @@
                         @click="isEdit = !isEdit"
                       >
                         <q-tooltip>
-                          Cancelar alteração de senha
+                          Cancelar cambio de contraseña
                         </q-tooltip>
 
                       </q-btn>
@@ -148,13 +148,13 @@
 
         <div class="row q-my-md" v-if="!whatsapp?.type?.includes('hub')">
           <div class="col-12 relative-position">
-            <label class="text-caption">Mensagem Despedida:
+            <label class="text-caption">Mensaje de Despedida:
             </label>
             <textarea
               ref="inputFarewellMessage"
               style="min-height: 15vh; max-height: 15vh;"
               class="q-pa-sm rounded-all bg-white full-width"
-              placeholder="Digite a mensagem"
+              placeholder="Escriba el mensaje"
               autogrow
               dense
               outlined
@@ -184,8 +184,8 @@
                   style="width: 40vw"
                   :showSearch="false"
                   :emojisByRow="20"
-                  labelSearch="Localizar..."
-                  lang="pt-BR"
+                  labelSearch="Buscar..."
+                  lang="es"
                   @select="onInsertSelectEmoji"
                 />
               </q-menu>
@@ -201,7 +201,7 @@
                   name="mdi-variable"
                 />
                 <q-tooltip>
-                  Variáveis
+                  Variables
                 </q-tooltip>
                 <q-menu touch-position>
                   <q-list
@@ -225,7 +225,7 @@
         </div>
         <div class="col-12" v-if="whatsapp.type === 'whatsapp'">
           <c-input outlined
-                   label="Wavoip chamadas whatsapp"
+                   label="Wavoip llamadas de whatsapp"
                    v-model="whatsapp.wavoip"/>
         </div>
       </q-card-section>
@@ -235,13 +235,13 @@
       >
         <q-btn
           rounded
-          label="Sair"
+          label="Salir"
           class="q-px-md q-mr-lg"
           color="negative"
           v-close-popup
         />
         <q-btn
-          label="Salvar"
+          label="Guardar"
           color="positive"
           rounded
           class="q-px-md"
@@ -300,8 +300,8 @@ export default {
         // { label: 'Instagram', value: 'instagram' }
       ],
       variaveis: [
-        { label: 'Nome', value: '{{name}}' },
-        { label: 'Saudação', value: '{{greeting}}' },
+        { label: 'Nombre', value: '{{name}}' },
+        { label: 'Saludo', value: '{{greeting}}' },
         { label: 'Protocolo', value: '{{protocol}}' }
       ]
     }
@@ -335,7 +335,7 @@ export default {
             value: hub
           }))
       } catch (error) {
-        console.error('Erro ao listar Hubs:', error)
+        console.error('Error al listar Hubs:', error)
       }
     },
     onInsertSelectEmoji (emoji) {
@@ -361,7 +361,7 @@ export default {
     },
     copy (text) {
       copyToClipboard(text)
-        .then(this.$notificarSucesso('URL de integração copiada!'))
+        .then(this.$notificarSucesso('¡URL de integración copiada!'))
         .catch()
     },
 
@@ -408,7 +408,7 @@ export default {
             type: 'warning',
             progress: true,
             position: 'top',
-            message: 'Ops! Verifique os erros...',
+            message: '¡Ups! Verifique los errores...',
             actions: [{
               icon: 'close',
               round: true,
@@ -426,7 +426,7 @@ export default {
             type: 'positive',
             progress: true,
             position: 'top',
-            message: `Whatsapp ${this.whatsAppEdit.id ? 'editado' : 'criado'} com sucesso!`,
+            message: `¡Whatsapp ${this.whatsAppEdit.id ? 'editado' : 'creado'} con éxito!`,
             actions: [{
               icon: 'close',
               round: true,
@@ -440,7 +440,7 @@ export default {
           if (error.data.error === 'ERR_NO_PERMISSION_CONNECTIONS_LIMIT') {
             Notify.create({
               type: 'negative',
-              message: 'Limite de conexões atingida.',
+              message: 'Límite de conexiones alcanzado.',
               caption: 'ERR_NO_PERMISSION_CONNECTIONS_LIMIT',
               position: 'top',
               progress: true
@@ -451,7 +451,7 @@ export default {
               type: 'error',
               progress: true,
               position: 'top',
-              message: 'Ops! Verifique os erros... O nome da conexão não pode existir na plataforma, é um identificador único.',
+              message: '¡Ups! Verifique los errores... El nombre de la conexión no puede existir en la plataforma, es un identificador único.',
               actions: [{
                 icon: 'close',
                 round: true,
@@ -466,7 +466,7 @@ export default {
             type: 'warning',
             progress: true,
             position: 'top',
-            message: 'Ops! Verifique os erros...',
+            message: '¡Ups! Verifique los errores...',
             actions: [{
               icon: 'close',
               round: true,
@@ -477,7 +477,7 @@ export default {
         if (!this.selectedHubOption) {
           return this.$q.notify({
             type: 'warning',
-            message: 'Por favor, selecione um Hub antes de continuar.',
+            message: 'Por favor, seleccione un Hub antes de continuar.',
             position: 'top',
             actions: [{ icon: 'close', round: true, color: 'white' }]
           })
@@ -502,16 +502,16 @@ export default {
           console.log(response)
           this.$q.notify({
             type: 'positive',
-            message: 'Hub adicionado com sucesso!',
+            message: '¡Hub añadido con éxito!',
             position: 'top'
           })
           this.$emit('recarregar-lista')
           this.fecharModal()
         } catch (error) {
-          console.error('Erro ao adicionar o Hub:', error)
+          console.error('Error al añadir el Hub:', error)
           this.$q.notify({
             type: 'negative',
-            message: 'Erro ao adicionar o Hub. Por favor, tente novamente.',
+            message: 'Error al añadir el Hub. Por favor, inténtelo de nuevo.',
             position: 'top'
           })
         }

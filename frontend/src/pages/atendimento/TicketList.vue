@@ -21,7 +21,7 @@
           />
         </div>
         <div class="row col justify-center q-my-sm text-white">
-          Carregando...
+          Cargando...
         </div>
       </div>
     </q-scroll-area>
@@ -154,11 +154,11 @@ export default {
 
       try {
         const { data } = await ConsultarTickets(params)
-        this.countTickets = data.count // count total de tickets no status
+        this.countTickets = data.count // count total de tickets en el estado
         this.$store.commit('LOAD_TICKETS', { type: this.status, tickets: data.tickets })
         this.hasMore = data.hasMore
       } catch (err) {
-        this.$notificarErro('Algum problema', err)
+        this.$notificarErro('Algún problema', err)
         console.error(err)
       }
       // return () => clearTimeout(delayDebounceFn)

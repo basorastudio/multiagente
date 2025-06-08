@@ -32,7 +32,7 @@
                   :showSearch="false"
                   :emojisByRow="20"
                   labelSearch="Localizar..."
-                  lang="pt-BR"
+                  lang="es"
                   @select="onInsertSelectEmoji"
                 />
               </q-menu>
@@ -47,7 +47,7 @@
                 name="mdi-variable"
               />
               <q-tooltip>
-                Variáveis
+                Variables
               </q-tooltip>
               <q-menu touch-position>
                 <q-list
@@ -71,7 +71,7 @@
             ref="inputEnvioMensagem"
             style="min-height: 10vh; max-height: 30vh; flex: auto"
             class="q-pa-sm bg-white rounded-all"
-            placeholder="Digite a mensagem"
+            placeholder="Escriba el mensaje"
             autogrow
             dense
             outlined
@@ -94,8 +94,8 @@ export default {
   data () {
     return {
       variaveis: [
-        { label: 'Nome', value: '{{name}}' },
-        { label: 'Saudação', value: '{{greeting}}' },
+        { label: 'Nombre', value: '{{name}}' },
+        { label: 'Saludo', value: '{{greeting}}' },
         { label: 'Protocolo', value: '{{protocol}}' }
       ]
     }
@@ -104,20 +104,20 @@ export default {
     onInsertSelectEmoji (emoji) {
       const self = this
       var tArea = this.$refs.inputEnvioMensagem
-      // get cursor's position:
+      // obtener la posición del cursor:
       var startPos = tArea.selectionStart,
         endPos = tArea.selectionEnd,
         cursorPos = startPos,
         tmpStr = tArea.value
-      // filter:
+      // filtrar:
       if (!emoji.data) {
         return
       }
-      // insert:
+      // insertar:
       self.txtContent = this.$attrs.element.data.message
       self.txtContent = tmpStr.substring(0, startPos) + emoji.data + tmpStr.substring(endPos, tmpStr.length)
       this.$attrs.element.data.message = self.txtContent
-      // move cursor:
+      // mover el cursor:
       setTimeout(() => {
         tArea.selectionStart = tArea.selectionEnd = cursorPos + emoji.data.length
       }, 10)
@@ -126,20 +126,20 @@ export default {
       console.log('onInsertSelectVariable', variable)
       const self = this
       var tArea = this.$refs.inputEnvioMensagem
-      // get cursor's position:
+      // obtener la posición del cursor:
       var startPos = tArea.selectionStart,
         endPos = tArea.selectionEnd,
         cursorPos = startPos,
         tmpStr = tArea.value
-      // filter:
+      // filtrar:
       if (!variable) {
         return
       }
-      // insert:
+      // insertar:
       self.txtContent = this.$attrs.element.data.message
       self.txtContent = tmpStr.substring(0, startPos) + variable + tmpStr.substring(endPos, tmpStr.length)
       this.$attrs.element.data.message = self.txtContent
-      // move cursor:
+      // mover el cursor:
       setTimeout(() => {
         tArea.selectionStart = tArea.selectionEnd = cursorPos + 1
       }, 10)

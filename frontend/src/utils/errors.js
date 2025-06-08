@@ -1,13 +1,13 @@
 const errors = [
   {
     error: 'ERR_SESSION_EXPIRED',
-    description: 'Sua conexão expirou.',
-    detail: 'A validade da sua conexão expurou. É necessário realizar novo login.'
+    description: 'Su conexión ha expirado.',
+    detail: 'La validez de su conexión ha expirado. Es necesario realizar un nuevo login.'
   },
   {
     error: 'ERR_API_CONFIG_NOT_FOUND',
-    description: 'Configurações de API não localizadas.',
-    detail: 'Atualize a página e tente novamente. Caso o erro persista, faço contato com o suporte.'
+    description: 'Configuraciones de API no localizadas.',
+    detail: 'Actualice la página e intente nuevamente. Si el error persiste, contacte al soporte.'
   },
   // {
   //   error: 'ERR_CREATING_MESSAGE',
@@ -16,208 +16,208 @@ const errors = [
   // },
   {
     error: 'ERR_NO_CONTACT_FOUND',
-    description: 'Contato não localizado no sistema.',
-    detail: 'Verifique se o número realmente está salvo no sistema de forma correta ou cadastre o contato.'
+    description: 'Contacto no localizado en el sistema.',
+    detail: 'Verifique si el número realmente está guardado en el sistema de forma correcta o registre el contacto.'
   },
   {
     error: 'ERR_DUPLICATED_CONTACT',
-    description: 'Contato já cadastrado no sistema.',
-    detail: 'Localize o contato já cadastro.'
+    description: 'Contacto ya registrado en el sistema.',
+    detail: 'Localice el contacto ya registrado.'
   },
   {
     error: 'ERR_CONTACT_TICKETS_REGISTERED',
-    description: 'O contato não pode ser apagado.',
-    detail: 'O contato possui atendimentos registrados e não pode ser excluso para garantir a integridade da informação.'
+    description: 'El contacto no puede ser eliminado.',
+    detail: 'El contacto posee atenciones registradas y no puede ser eliminado para garantizar la integridad de la información.'
   },
   {
     error: 'ERR_CREATING_MESSAGE',
-    description: 'Mensagem não foi criada.',
-    detail: 'Verifique se a conexão com o Whatsapp está ativa ou se a mensagem não feriu os termos do whatsapp.'
+    description: 'El mensaje no fue creado.',
+    detail: 'Verifique si la conexión con WhatsApp está activa o si el mensaje no violó los términos de WhatsApp.'
   },
   {
     error: 'ERR_NO_TICKET_FOUND',
-    description: 'Atendimento não localizado.',
-    detail: 'Não localizamos o atendimento informado. Atualize a página (F5) e tente novamente. Consulte o suporte caso o erro persista'
+    description: 'Atención no localizada.',
+    detail: 'No localizamos la atención informada. Actualice la página (F5) e intente nuevamente. Consulte al soporte si el error persiste.'
   },
   {
     error: 'ERR_AUTO_REPLY_RELATIONED_TICKET',
-    description: 'Não é possível apagar o registro.',
-    detail: 'O fluxo já foi utilizado em diversos atendimentos.'
+    description: 'No es posible eliminar el registro.',
+    detail: 'El flujo ya fue utilizado en diversas atenciones.'
   },
   {
     error: 'ERR_NO_AUTO_REPLY_FOUND',
-    description: 'Fluxo informado não encontrado.',
-    detail: 'Verifique se o fluxo realmente existe. Atualize a página e tente novamente.'
+    description: 'Flujo informado no encontrado.',
+    detail: 'Verifique si el flujo realmente existe. Actualice la página e intente nuevamente.'
   },
   {
     error: 'ERR_NO_STEP_AUTO_REPLY_FOUND',
-    description: 'Não localizao etapa para o fluxo.',
-    detail: 'Verifique o cadastro das etapas do chatbot. Confirme se a etapa realmente existe.'
+    description: 'No se localizó etapa para el flujo.',
+    detail: 'Verifique el registro de las etapas del chatbot. Confirme si la etapa realmente existe.'
   },
   {
     error: 'ERR_CAMPAIGN_CONTACTS_NOT_EXISTS_OR_NOT_ACESSIBLE',
-    description: 'Campanha não existe ou não está acessível.',
-    detail: 'Verifique se a campanha ainda existe ou se está disponível.'
+    description: 'La campaña no existe o no está accesible.',
+    detail: 'Verifique si la campaña aún existe o si está disponible.'
   },
   {
     error: 'ERROR_CAMPAIGN_NOT_EXISTS',
-    description: 'Campanha não localizada.',
-    detail: 'Verifique se a campanha ainda existe ou se está disponível.'
+    description: 'Campaña no localizada.',
+    detail: 'Verifique si la campaña aún existe o si está disponible.'
   },
   {
     error: 'ERR_NO_CAMPAIGN_FOUND',
-    description: 'Campanha não localizada.',
-    detail: 'Verifique se a campanha ainda existe ou se está disponível.'
+    description: 'Campaña no localizada.',
+    detail: 'Verifique si la campaña aún existe o si está disponible.'
   },
   {
     error: 'ERR_NO_UPDATE_CAMPAIGN_NOT_IN_CANCELED_PENDING',
-    description: 'Campanha não está cancelada ou pendente.',
-    detail: 'Somente campanhas nos status mencionados podem ser alteradas.'
+    description: 'La campaña no está cancelada o pendiente.',
+    detail: 'Solamente las campañas en los estados mencionados pueden ser alteradas.'
   },
   {
     error: 'ERROR_CAMPAIGN_DATE_NOT_VALID',
-    description: 'Data para programação inválida.',
-    detail: 'A data precisa ser maior que a data atual.'
+    description: 'Fecha para programación inválida.',
+    detail: 'La fecha debe ser mayor que la fecha actual.'
   },
   {
     error: 'ERR_NO_CAMPAIGN_CONTACTS_NOT_FOUND',
-    description: 'A campanha não existe.',
-    detail: 'A campanha não localizada. Atualize a página.'
+    description: 'La campaña no existe.',
+    detail: 'La campaña no fue localizada. Actualice la página.'
   },
   {
     error: 'ERR_CAMPAIGN_CONTACTS_NOT_EXISTS',
-    description: 'Campanha não existe. Contatos não vínculados.',
-    detail: 'Possívelmente a campanha já foi apagada e não existem contatos vínculados. Atualize a pagína.'
+    description: 'La campaña no existe. Contactos no vinculados.',
+    detail: 'Posiblemente la campaña ya fue eliminada y no existen contactos vinculados. Actualice la página.'
   },
   {
     error: 'ERR_CAMPAIGN_CONTACTS',
-    description: 'Probleme com a campanha.',
-    detail: 'Atualize a página e tente novamente.'
+    description: 'Problema con la campaña.',
+    detail: 'Actualice la página e intente nuevamente.'
   },
   {
     error: 'ERR_NO_FAST_REPLY_FOUND',
-    description: 'Resposta rápida não localizada.',
-    detail: 'Verifique se o registro realmente existe. Atualize a página e tente novamente.'
+    description: 'Respuesta rápida no localizada.',
+    detail: 'Verifique si el registro realmente existe. Actualice la página e intente nuevamente.'
   },
   {
     error: 'ERR_FAST_REPLY_EXISTS',
-    description: 'Resposta rápida não existe.',
-    detail: 'Possívelmente o registro já foi deletado. Atualize a página.'
+    description: 'La respuesta rápida no existe.',
+    detail: 'Posiblemente el registro ya fue eliminado. Actualice la página.'
   },
   {
     error: 'ERR_NO_QUEUE_FOUND',
-    description: 'Fila não localizada.',
-    detail: 'Possívelmente o registro já foi deletado. Atualize a página.'
+    description: 'Cola no localizada.',
+    detail: 'Posiblemente el registro ya fue eliminado. Actualice la página.'
   },
   {
     error: 'ERR_QUEUE_TICKET_EXISTS',
-    description: 'Fila possui atendimentos vinculados. ',
-    detail: 'Não é possível apagar o registro para manter a integridade das informações.'
+    description: 'La cola posee atenciones vinculadas.',
+    detail: 'No es posible eliminar el registro para mantener la integridad de las informaciones.'
   },
   {
     error: 'ERR_NO_TAG_FOUND',
-    description: 'Etiqueta não localizada.',
-    detail: 'Possívelmente o registro já foi deletado. Atualize a página.'
+    description: 'Etiqueta no localizada.',
+    detail: 'Posiblemente el registro ya fue eliminado. Actualice la página.'
   },
   {
     error: 'ERR_TAG_CONTACTS_EXISTS',
-    description: 'Etiqueta possui contatos vinculados. ',
-    detail: 'Não é possível apagar o registro para manter a integridade das informações.'
+    description: 'La etiqueta posee contactos vinculados.',
+    detail: 'No es posible eliminar el registro para mantener la integridad de las informaciones.'
   },
   {
     error: 'ERR_NO_SETTING_FOUND',
-    description: 'Configuração não existe.',
-    detail: 'Atualize a pagína e tente novamente. Consulte o suporte caso o erro persista.'
+    description: 'La configuración no existe.',
+    detail: 'Actualice la página e intente nuevamente. Consulte al soporte si el error persiste.'
   },
   {
     error: 'ERR_NO_TENANT_FOUND',
-    description: 'Não localizamos empresa cadastrada ou ativa.',
-    detail: 'Atualize a pagína e tente novamente. Consulte o suporte caso o erro persista.'
+    description: 'No localizamos empresa registrada o activa.',
+    detail: 'Actualice la página e intente nuevamente. Consulte al soporte si el error persiste.'
   },
   {
     error: 'ERR_CREATING_TICKET',
-    description: 'Não foi possível criar o atendimento.',
-    detail: 'Atualize a pagína e tente novamente. Consulte o suporte caso o erro persista.'
+    description: 'No fue posible crear la atención.',
+    detail: 'Actualice la página e intente nuevamente. Consulte al soporte si el error persiste.'
   },
   {
     error: 'ERR_NO_STATUS_SELECTED',
-    description: 'Nenhum status selecionado.',
-    detail: 'É necessário selecionar status para listar o atendimentos.'
+    description: 'Ningún estado seleccionado.',
+    detail: 'Es necesario seleccionar estado para listar las atenciones.'
   },
   {
     error: 'ERR_INVALID_CREDENTIALS',
-    description: 'Usuário e/ou senha inválidos.',
-    detail: 'Os dados de login são inválidos. Caso o problmea persista, procure um administrador do sistema para redefinição das crendenciais.'
+    description: 'Usuario y/o contraseña inválidos.',
+    detail: 'Los datos de login son inválidos. Si el problema persiste, procure un administrador del sistema para redefinición de las credenciales.'
   },
   {
     error: 'ERR_NO_USER_FOUND',
-    description: 'Usuário não localizado.',
-    detail: 'Verifique se o usuário realmente existe. Atualize a página se necessário.'
+    description: 'Usuario no localizado.',
+    detail: 'Verifique si el usuario realmente existe. Actualice la página si es necesario.'
   },
   {
     error: 'ERR_WAPP_INVALID_CONTACT',
-    description: 'Número informado no contato é inválido',
-    detail: 'O número não é um contato vinculdo à uma conta do Whatsapp.'
+    description: 'Número informado en el contacto es inválido.',
+    detail: 'El número no es un contacto vinculado a una cuenta de WhatsApp.'
   },
   {
     error: 'ERR_WAPP_CHECK_CONTACT',
-    description: 'Ocorreu um erro ao válidar o contato pelo whatsapp.',
-    detail: 'Verifique se a conexão com o whatsapp está ativa. Se necessário, atualize a página e tente novamente em alguns instantes.'
+    description: 'Ocurrió un error al validar el contacto por WhatsApp.',
+    detail: 'Verifique si la conexión con WhatsApp está activa. Si es necesario, actualice la página e intente nuevamente en algunos instantes.'
   },
   {
     error: 'ERR_DELETE_WAPP_MSG',
-    description: 'O Whatsapp não permitiu apagar a mensagem.',
-    detail: 'Não é possível apagar mensagens antigas. Se a mensagem for das últimas 24h, verifique se a conexão com o whatsapp está ativa. Se necessário, atualize a página e tente novamente em alguns instantes.'
+    description: 'WhatsApp no permitió eliminar el mensaje.',
+    detail: 'No es posible eliminar mensajes antiguos. Si el mensaje es de las últimas 24h, verifique si la conexión con WhatsApp está activa. Si es necesario, actualice la página e intente nuevamente en algunos instantes.'
   },
   {
     error: 'ERR_SENDING_WAPP_MSG',
-    description: 'Mensagem não enviada pelo Whatsapp.',
-    detail: 'Verifique se a conexão com o whatsapp está ativa. Se necessário, atualize a página e tente novamente em alguns instantes.'
+    description: 'Mensaje no enviado por WhatsApp.',
+    detail: 'Verifique si la conexión con WhatsApp está activa. Si es necesario, actualice la página e intente nuevamente en algunos instantes.'
   },
   {
     error: 'ERR_WAPP_NOT_INITIALIZED',
-    description: 'Sessão com o Whatsapp não inicializada',
-    detail: 'Verifique o status da conexão com o whatsapp do sistema. Necessário que a conexão seja estabelecida com sucesso.'
+    description: 'Sesión con WhatsApp no inicializada.',
+    detail: 'Verifique el estado de la conexión con WhatsApp del sistema. Es necesario que la conexión sea establecida con éxito.'
   },
   {
     error: 'ERR_CONTACTS_NOT_EXISTS_WHATSAPP',
-    description: 'Contato não existe no Whatsapp.',
-    detail: 'O número não é um contato válido para o Whatsapp.'
+    description: 'El contacto no existe en WhatsApp.',
+    detail: 'El número no es un contacto válido para WhatsApp.'
   },
   {
     error: 'ERR_NO_WAPP_FOUND',
-    description: 'Sessão não localizada.',
-    detail: 'Verifique se o registro realmente existe. Se necessário, atualize a página.'
+    description: 'Sesión no localizada.',
+    detail: 'Verifique si el registro realmente existe. Si es necesario, actualice la página.'
   },
   {
     error: 'ERR_OTHER_OPEN_TICKET',
-    description: 'Já existe um atendimento aberto para o contato.',
-    detail: 'Localize o contato na lista de atendimentos.'
+    description: 'Ya existe una atención abierta para el contacto.',
+    detail: 'Localice el contacto en la lista de atenciones.'
   },
   {
     error: 'ERR_NO_DEF_WAPP_FOUND',
-    description: 'Não existe uma conexão marcado com "PADRÃO".',
-    detail: 'Necessário realizar a definição no menu de sessões.'
+    description: 'No existe una conexión marcada como "POR DEFECTO".',
+    detail: 'Es necesario realizar la definición en el menú de sesiones.'
   },
   {
     error: 'ERR_FETCH_WAPP_MSG',
-    description: 'Não foi possível localizar mensagens.',
-    detail: 'Valide o status de conexão com o whatsapp.'
+    description: 'No fue posible localizar mensajes.',
+    detail: 'Valide el estado de conexión con WhatsApp.'
   },
   {
     error: 'ERROR_USER_MESSAGES_NOT_EXISTS',
-    description: 'Não foi possivel apagar Usuário.',
-    detail: 'Usuários que possuem conversas não são possiveis de apagar.'
+    description: 'No fue posible eliminar el usuario.',
+    detail: 'Usuarios que poseen conversaciones no pueden ser eliminados.'
   },
   {
     error: 'ERR_COMPANY_NOT_ACTIVE',
-    description: 'Não foi possivel fazer login empresa Inativa.',
-    detail: 'Verique com o administrador do sistema.'
+    description: 'No fue posible hacer login, empresa inactiva.',
+    detail: 'Verifique con el administrador del sistema.'
   },
   {
     error: 'ERR_NO_PERMISSION',
-    description: 'Usuário sem permissão.',
-    detail: 'Seu usuário não possui permissão para executar a ação.'
+    description: 'Usuario sin permiso.',
+    detail: 'Su usuario no posee permiso para ejecutar la acción.'
   }
 
 ]
