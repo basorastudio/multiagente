@@ -121,7 +121,7 @@
 <script>
 import { CancelarCampanha, DeletarCampanha, IniciarCampanha, ListarCampanhas } from 'src/service/campanhas'
 import ModalCampanha from './ModalCampanha'
-import { format, parseISO, startOfDay } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 
 export default {
   name: 'Campanhas',
@@ -173,7 +173,9 @@ export default {
       this.campanhas = data
     },
     isValidDate (v) {
-      return startOfDay(new Date(parseISO(v))).getTime() >= startOfDay(new Date()).getTime()
+      const campaignDate = new Date(parseISO(v))
+      const currentDate = new Date()
+      return campaignDate.getTime() > currentDate.getTime()
     },
     campanhaCriada (campanha) {
       this.listarCampanhas()

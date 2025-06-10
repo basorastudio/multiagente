@@ -157,12 +157,12 @@ const StartCampaignService = async ({
 
   const timeDelay = campaign.delay ? campaign.delay * 1000 : 20000;
 
-  let dateDelay = zonedTimeToUtc(campaign.start, "America/Sao_Paulo");
+  let dateDelay = zonedTimeToUtc(campaign.start, "America/Santo_Domingo");
   const data = campaignContacts.map((campaignContact: CampaignContacts) => {
     dateDelay = addSeconds(dateDelay, timeDelay / 1000);
     return mountMessageData(campaign, campaignContact, {
       ...options,
-      jobId: `campaginId_${campaign.id}_contact_${campaignContact.contactId}_id_${campaignContact.id}`,
+      jobId: `campaignId_${campaign.id}_contact_${campaignContact.contactId}_id_${campaignContact.id}`,
       delay: calcDelay(dateDelay, timeDelay)
     });
   });
