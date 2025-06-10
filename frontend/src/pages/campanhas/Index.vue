@@ -66,7 +66,7 @@
           <q-btn
             flat
             round
-            v-if="['pending', 'canceled'].includes(props.row.status)"
+            v-if="['pending', 'canceled', 'finished'].includes(props.row.status)"
             icon="mdi-calendar-clock"
             @click="iniciarCampanha(props.row)"
           >
@@ -182,8 +182,9 @@ export default {
       this.listarCampanhas()
     },
     editarCampanha (campanha) {
-      if (campanha.status !== 'pending' && campanha.status !== 'canceled') {
-        this.$notificarErro('Solo se permite editar campañas que estén pendientes o canceladas.')
+      if (campanha.status !== 'pending' && campanha.status !== 'canceled' && campanha.status !== 'finished') {
+        this.$notificarErro('Solo se permite editar campañas que estén pendientes, canceladas o finalizadas.')
+        return
       }
       this.campanhaEdicao = {
         ...campanha,
@@ -259,14 +260,17 @@ export default {
     iniciarCampanha (campanha) {
       if (!this.isValidDate(campanha.start)) {
         this.$notificarErro('No es posible programar campaña con fecha anterior a la actual')
+        return
       }
 
       if (campanha.contactsCount == 0) {
         this.$notificarErro('Es necesario tener contactos vinculados para programar la campaña.')
+        return
       }
 
-      if (campanha.status !== 'pending' && campanha.status !== 'canceled') {
-        this.$notificarErro('Solo se permite programar campañas que estén pendientes o canceladas.')
+      if (campanha.status !== 'pending' && campanha.status !== 'canceled' && campanha.status !== 'finished') {
+        this.$notificarErro('Solo se permite programar campañas que estén pendientes, canceladas o finalizadas.')
+        return
       }
 
       IniciarCampanha(campanha.id).then(res => {

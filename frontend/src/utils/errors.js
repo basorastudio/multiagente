@@ -75,6 +75,11 @@ const errors = [
     detail: 'Solamente las campañas en los estados mencionados pueden ser alteradas.'
   },
   {
+    error: 'ERR_NO_DELETE_CAMPAIGN_INVALID_STATUS',
+    description: 'La campaña no puede ser eliminada.',
+    detail: 'Solamente las campañas pendientes, canceladas o finalizadas pueden ser eliminadas.'
+  },
+  {
     error: 'ERROR_CAMPAIGN_DATE_NOT_VALID',
     description: 'Fecha para programación inválida.',
     detail: 'La fecha debe ser mayor que la fecha actual.'

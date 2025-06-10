@@ -16,7 +16,7 @@ const VerifyCall = async (call: Call, wbot: Session): Promise<void> => {
   return new Promise<void>((resolve, reject) => {
     (async () => {
       const messageDefault =
-        "As chamadas de voz e vídeo estão desabilitas para esse WhatsApp, favor enviar uma mensagem de texto.";
+        "Las llamadas de voz y video están deshabilitadas para este WhatsApp, favor enviar un mensaje de texto.";
       let settings;
 
       try {

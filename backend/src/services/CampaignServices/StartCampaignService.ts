@@ -128,6 +128,23 @@ const StartCampaignService = async ({
     throw new AppError("ERROR_CAMPAIGN_NOT_EXISTS", 404);
   }
 
+  // Si la campaña está finalizada y se va a reprogramar, resetear el estado de los contactos
+  if (campaign.status === "finished") {
+    await CampaignContacts.update(
+      {
+        ack: 0,
+        body: null,
+        mediaName: null,
+        timestamp: null,
+        messageId: null
+      },
+      {
+        where: {
+          campaignId: campaign.id
+        }
+      }
+    );
+  }
 
   const campaignContacts = await CampaignContacts.findAll({
     where: { campaignId },

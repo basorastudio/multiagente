@@ -51,7 +51,7 @@ export class MissingValueError extends Error {
 
   constructor(key) {
     super(
-      `Missing a value for ${key ? `the placeholder: ${key}` : "a placeholder"}`
+      `Falta un valor para ${key ? `el marcador de posición: ${key}` : "un marcador de posición"}`
     );
     this.name = "MissingValueError";
     this.key = key;
@@ -65,28 +65,28 @@ export const pupa = function pupa(
 ) {
   if (typeof template !== "string") {
     throw new TypeError(
-      `Expected a \`string\` in the first argument, got \`${typeof template}\``
+      `Se esperaba una \`cadena\` en el primer argumento, se obtuvo \`${typeof template}\``
     );
   }
 
   if (typeof data !== "object") {
     throw new TypeError(
-      `Expected an \`object\` or \`Array\` in the second argument, got \`${typeof data}\``
+      `Se esperaba un \`objeto\` o \`Array\` en el segundo argumento, se obtuvo \`${typeof data}\``
     );
   }
 
   const hours = getHours(new Date());
   const getGreeting = () => {
     if (hours >= 6 && hours <= 11) {
-      return "Bom dia!";
+      return "¡Buenos días!";
     }
     if (hours > 11 && hours <= 17) {
-      return "Boa Tarde!";
+      return "¡Buenas tardes!";
     }
     if (hours > 17 && hours <= 23) {
-      return "Boa Noite!";
+      return "¡Buenas noches!";
     }
-    return "Olá!";
+    return "¡Hola!";
   };
 
   data = { ...data, greeting: getGreeting() };
@@ -114,7 +114,7 @@ export const pupa = function pupa(
       (...args: any) =>
         htmlEscape(replacer(...args));
 
-  // The regex tries to match either a number inside `{{ }}` or a valid JS identifier or key path.
+  // La expresión regular intenta coincidir con un número dentro de `{{ }}` o un identificador JS válido o ruta de clave.
   const doubleBraceRegex = /{{(\d+|[a-z$_][\w\-$]*?(?:\.[\w\-$]*?)*?)}}/gi;
 
   if (doubleBraceRegex.test(template)) {

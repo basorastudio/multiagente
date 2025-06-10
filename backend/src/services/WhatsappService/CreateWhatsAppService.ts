@@ -40,17 +40,17 @@ const CreateWhatsAppService = async ({
   isDefault = false
 }: Request): Promise<Response> => {
   if (type === "waba" && (!tokenAPI || !wabaBSP)) {
-    throw new AppError("WABA: favor informar o Token e a BSP");
+    throw new AppError("WABA: favor informar el Token y la BSP");
   }
 
   if (type === "instagram" && !instagramUser) {
     throw new AppError(
-      "Instagram: favor informar o Usuário e senha corretamente."
+      "Instagram: favor informar el Usuario y contraseña correctamente."
     );
   }
 
   if (type === "telegram" && !tokenTelegram) {
-    throw new AppError("Telegram: favor informar o Token.");
+    throw new AppError("Telegram: favor informar el Token.");
   }
 
   const whatsappFound = await Whatsapp.findOne({
