@@ -15,7 +15,7 @@ interface Request {
   tokenAPI?: string;
   fbPageId?: string;
   farewellMessage?: string;
-  type: "waba" | "instagram" | "telegram" | "whatsapp" | "messenger" | "baileys";
+  type: "waba" | "instagram" | "telegram" | "whatsapp" | "messenger";
   wavoip?: string;
 }
 

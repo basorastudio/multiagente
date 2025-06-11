@@ -78,15 +78,15 @@ export const pupa = function pupa(
   const hours = getHours(new Date());
   const getGreeting = () => {
     if (hours >= 6 && hours <= 11) {
-      return "¡Buenos días!";
+      return "Bom dia!";
     }
     if (hours > 11 && hours <= 17) {
-      return "¡Buenas tardes!";
+      return "Boa Tarde!";
     }
     if (hours > 17 && hours <= 23) {
-      return "¡Buenas noches!";
+      return "Boa Noite!";
     }
-    return "¡Hola!";
+    return "Olá!";
   };
 
   data = { ...data, greeting: getGreeting() };

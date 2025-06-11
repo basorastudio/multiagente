@@ -9,7 +9,6 @@ import { StartInstaBotSession } from "../InstagramBotServices/StartInstaBotSessi
 import { StartTbotSession } from "../TbotServices/StartTbotSession";
 import { StartWaba360 } from "../WABA360/StartWaba360";
 import { StartMessengerBot } from "../MessengerChannelServices/StartMessengerBot";
-import { StartBaileysSession } from "../BaileysServices/StartBaileysSession";
 
 export const StartWhatsAppSession = async (
   whatsapp: Whatsapp
@@ -27,10 +26,6 @@ export const StartWhatsAppSession = async (
       const wbot = await initWbot(whatsapp);
       wbotMessageListener(wbot);
       wbotMonitor(wbot, whatsapp);
-    }
-
-    if (whatsapp.type === "baileys") {
-      StartBaileysSession(whatsapp);
     }
 
     if (whatsapp.type === "telegram") {
