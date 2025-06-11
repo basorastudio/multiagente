@@ -39,14 +39,14 @@ const AdminCreateTenantService = async ({
     maxConnections,
     businessHours: [
       {"day": 0, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Domingo"},
-      {"day": 1, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Segunda-Feira"},
-      {"day": 2, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Terça-Feira"},
-      {"day": 3, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Quarta-Feira"},
-      {"day": 4, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Quinta-Feira"},
-      {"day": 5, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Sexta-Feira"},
+      {"day": 1, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Lunes"},
+      {"day": 2, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Martes"},
+      {"day": 3, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Miércoles"},
+      {"day": 4, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Jueves"},
+      {"day": 5, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Viernes"},
       {"day": 6, "hr1": "08:00", "hr2": "12:00", "hr3": "14:00", "hr4": "18:00", "type": "O", "label": "Sábado"}
     ],
-    messageBusinessHours: "Olá! Fantástico receber seu contato! No momento estamos ausentes e não poderemos lhe atender, mas vamos priorizar seu atendimento e retornaremos logo mais. Agradecemos muito o contato."
+    messageBusinessHours: "¡Hola! ¡Nos alegra saber de usted! Actualmente no estamos disponibles y no podremos ayudarle, pero priorizaremos su servicio y le responderemos en breve. Muchas gracias por contactarnos."
   });
 
   // Inserir as configurações padrão para o novo inquilino
@@ -60,7 +60,7 @@ const AdminCreateTenantService = async ({
     { key: 'ignoreGroupMsg', value: 'enabled' },
     { key: 'rejectCalls', value: 'disabled' },
     { key: 'hubToken', value: 'disabled' },
-    { key: 'callRejectMessage', value: 'As chamadas de voz e vídeo estão desabilitas para esse WhatsApp, favor enviar uma mensagem de texto.' }
+    { key: 'callRejectMessage', value: 'Las llamadas de voz y video están deshabilitadas para este WhatsApp, por favor envíe un mensaje de texto.' }
   ];
 
   for (const setting of defaultSettings) {
