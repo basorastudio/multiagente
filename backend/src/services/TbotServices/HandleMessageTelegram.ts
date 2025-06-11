@@ -40,7 +40,6 @@ const HandleMessage = async (ctx: Context, tbot: Session): Promise<void> => {
     whatsappId: tbot.id!,
     unreadMessages: fromMe ? 0 : 1,
     tenantId: channel.tenantId,
-    msg: { ...messageData, fromMe },
     channel: "telegram"
   });
   if (ticket?.isFarewellMessage) {
@@ -55,16 +54,27 @@ const HandleMessage = async (ctx: Context, tbot: Session): Promise<void> => {
 
   await VerifyStepsChatFlowTicket(
     {
-      fromMe,
-      body: message.text || ""
+      key: {
+        id: message.message_id?.toString() || "",
+        fromMe,
+        remoteJid: chat?.id?.toString() || ""
+      },
+      message: {
+        conversation: message.text || ""
+      },
+      messageTimestamp: messageData.timestamp
     },
     ticket
   );
 
   await verifyBusinessHours(
     {
-      fromMe,
-      timestamp: messageData.timestamp
+      key: {
+        fromMe,
+        id: message.message_id?.toString() || "",
+        remoteJid: chat?.id?.toString() || ""
+      },
+      messageTimestamp: messageData.timestamp
     },
     ticket
   );

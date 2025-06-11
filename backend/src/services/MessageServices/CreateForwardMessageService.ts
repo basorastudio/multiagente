@@ -4,6 +4,7 @@ import Contact from "../../models/Contact";
 import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
 import ShowTicketService from "../TicketServices/ShowTicketService";
+import { getCurrentTimestamp } from "../../utils/dateUtils";
 
 interface Request {
   message: Message;
@@ -61,7 +62,7 @@ const CreateForwardMessageService = async ({
     mediaType: message?.mediaType,
     mediaUrl: message?.mediaName,
     mediaName: message?.mediaName,
-    timestamp: new Date().getTime(),
+    timestamp: getCurrentTimestamp(),
     userId,
     scheduleDate: null,
     sendType: "chat",
@@ -95,7 +96,7 @@ const CreateForwardMessageService = async ({
 
   await ticket.update({
     lastMessage: messageCreated.body,
-    lastMessageAt: new Date().getTime(),
+    lastMessageAt: getCurrentTimestamp(),
     answered: true
   });
 

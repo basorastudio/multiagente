@@ -9,14 +9,12 @@ type Payload = {
   ticket: any;
   messageData: any;
   media: any;
-  userId: any;
 };
 
 const SendMessageSystemProxy = async ({
   ticket,
   messageData,
-  media,
-  userId
+  media
 }: Payload): Promise<any> => {
   let message;
 
@@ -39,7 +37,7 @@ const SendMessageSystemProxy = async ({
         break;
 
       default:
-        message = await SendWhatsAppMedia({ media, ticket, userId });
+        message = await SendWhatsAppMedia({ media, ticket, body: messageData.body });
         break;
     }
   }

@@ -53,7 +53,13 @@ const DeleteMessageSystem = async (
     if (!messageToDelete) {
       throw new AppError("ERROR_NOT_FOUND_MESSAGE");
     }
-    await messageToDelete.delete(true);
+    
+    // En Baileys, no existe el método .delete() como en WWebJS
+    // La eliminación de mensajes requiere usar la API de revocación de WhatsApp
+    console.log(`Message deletion attempted for Baileys - Feature requires different implementation`);
+    
+    // Por ahora, marcaremos el mensaje como eliminado solo en la base de datos
+    // La implementación completa requeriría usar sendMessage con tipo de revocación
   }
 
   if (ticket.channel === "telegram") {

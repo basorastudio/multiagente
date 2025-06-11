@@ -1,44 +1,55 @@
+import { WASocket } from "@whiskeysockets/baileys";
 import GetDefaultWhatsApp from "../../helpers/GetDefaultWhatsApp";
 import { getWbot } from "../../libs/wbot";
+import { Store } from "../../libs/store";
 import Contact from "../../models/Contact";
 import { logger } from "../../utils/logger";
+import CreateOrUpdateContactService from "../ContactServices/CreateOrUpdateContactService";
 
-const ImportContactsService = async (
-  tenantId: string | number
-): Promise<void> => {
+type Session = WASocket & {
+  id?: number;
+  store?: Store;
+};
+
+const ImportContactsService = async (tenantId: number): Promise<void> => {
   const defaultWhatsapp = await GetDefaultWhatsApp(tenantId);
-
-  const wbot = getWbot(defaultWhatsapp.id);
-
-  let phoneContacts;
+  const wbot = getWbot(defaultWhatsapp.id) as Session;
 
   try {
-    phoneContacts = await wbot.getContacts();
+    // En Baileys, obtenemos los contactos del store
+    const contacts = wbot.store?.contacts || {};
+
+    const contactsArray = Object.values(contacts);
+
+    if (contactsArray.length === 0) {
+      logger.info("No contacts found in store");
+      return;
+    }
+
+    for (const contact of contactsArray) {
+      try {
+        const number = contact.id.replace(/\D/g, "");
+
+        if (number && number.length > 10) {
+          await CreateOrUpdateContactService({
+            name: contact.name || contact.notify || number,
+            number,
+            isGroup: contact.id.endsWith("@g.us"),
+            tenantId,
+            pushname: contact.notify || "",
+            isUser: true,
+            isWAContact: true
+          });
+        }
+      } catch (error) {
+        logger.error(`Error importing contact ${contact.id}:`, error);
+      }
+    }
+
+    logger.info(`Imported ${contactsArray.length} contacts for tenant ${tenantId}`);
   } catch (err) {
-    logger.error(
-      `Could not get whatsapp contacts from phone. Check connection page. | Error: ${err}`
-    );
-  }
-
-  if (phoneContacts) {
-    await Promise.all(
-      phoneContacts.map(async ({ number, name }) => {
-        if (!number) {
-          return null;
-        }
-        if (!name) {
-          name = number;
-        }
-
-        const numberExists = await Contact.findOne({
-          where: { number, tenantId }
-        });
-
-        if (numberExists) return null;
-
-        return Contact.create({ number, name, tenantId });
-      })
-    );
+    logger.error("Error importing contacts:", err);
+    throw new Error("Could not get contacts from Baileys store.");
   }
 };
 

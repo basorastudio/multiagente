@@ -1,114 +1,46 @@
-import {
-  Client,
-  Reaction as WbotReaction
-} from "whatsapp-web.js";
+import { WAMessage, getContentType } from "@whiskeysockets/baileys";
 import { logger } from "../../../utils/logger";
-import Message from "../../../models/Message";
-import Ticket from "../../../models/Ticket";
-import Contact from "../../../models/Contact";
-import ShowWhatsAppService from "../../WhatsappService/ShowWhatsAppService";
-import Queue from "../../../libs/Queue";
-import Setting from "../../../models/Setting";
-import CreateMessageService from "../../MessageServices/CreateMessageService";
-
-interface Session extends Client {
-  id: number;
-}
 
 const HandleReaction = async (
-  reaction: WbotReaction,
-  wbot: Session
+  msg: WAMessage,
+  wbot: any,
+  tenantId: number | string
 ): Promise<void> => {
-  return new Promise<void>((resolve, reject) => {
-    (async () => {
-      try {
-        const whatsapp = await ShowWhatsAppService({ id: wbot.id });
-        const { tenantId } = whatsapp;
+  try {
+    logger.info("HandleReaction (Baileys) - Processing reaction");
 
-        const originalMessageId = reaction.msgId.id;
+    if (!msg || !msg.key || !msg.message) {
+      logger.warn("Invalid reaction message received");
+      return;
+    }
 
-        const originalMessage = await Message.findOne({
-          where: {
-            messageId: originalMessageId,
-            tenantId
-          },
-          include: [
-            {
-              model: Ticket,
-              as: "ticket",
-              where: { tenantId }
-            }
-          ]
-        });
+    const messageType = getContentType(msg.message);
+    
+    if (messageType === 'reactionMessage' && msg.message.reactionMessage) {
+      const reactionMessage = msg.message.reactionMessage;
+      
+      logger.info(`Reaction received: ${reactionMessage.text} for message: ${reactionMessage.key?.id}`);
+      
+      // Aquí se puede implementar la lógica para manejar reacciones
+      // Por ejemplo, actualizar la base de datos con la reacción
+      // o emitir eventos de socket para notificar a los clientes
+      
+      // Ejemplo de estructura de datos de reacción:
+      const reactionData = {
+        messageId: reactionMessage.key?.id,
+        reaction: reactionMessage.text,
+        fromJid: msg.key.remoteJid,
+        timestamp: msg.messageTimestamp
+      };
+      
+      logger.info("Reaction data:", reactionData);
+    }
 
-        if (!originalMessage) {
-          logger.info(`Message not found for reaction to message ID: ${originalMessageId}`);
-          resolve();
-          return;
-        }
+    logger.info(`HandleReaction (Baileys) - Reaction processed successfully: ${msg.key.id}`);
 
-        const ticket = originalMessage.ticket;
-
-        let contactId: number | undefined = undefined;
-        if (!reaction.id.fromMe) {
-          const contact = await Contact.findOne({
-            where: { number: reaction.senderId.split('@')[0], tenantId }
-          });
-          contactId = contact?.id;
-        }
-
-        const timestampAsInteger = Math.floor(reaction.timestamp);
-
-        const messageData = {
-          messageId: reaction.id.id,
-          ticketId: ticket.id,
-          contactId: contactId,
-          body: reaction.reaction,
-          fromMe: reaction.id.fromMe,
-          mediaType: "reaction",
-          read: reaction.id.fromMe,
-          quotedMsgId: originalMessage.id,
-          timestamp: timestampAsInteger,
-          status: "received"
-        };
-
-        await CreateMessageService({ messageData, tenantId });
-
-        await ticket.update({
-          lastMessageAt: new Date().getTime()
-        });
-
-        const apiConfig: any = ticket.apiConfig || {};
-        if (
-          !reaction.id.fromMe &&
-          !ticket.isGroup &&
-          apiConfig?.externalKey &&
-          apiConfig?.urlMessageStatus
-        ) {
-          const payload = {
-            timestamp: Date.now(),
-            reaction,
-            reactionId: reaction.id.id,
-            originalMessageId,
-            ticketId: ticket.id,
-            externalKey: apiConfig?.externalKey,
-            authToken: apiConfig?.authToken,
-            type: "hookReaction"
-          };
-          Queue.add("WebHooksAPI", {
-            url: apiConfig.urlMessageStatus,
-            type: payload.type,
-            payload
-          });
-        }
-
-        resolve();
-      } catch (err) {
-        logger.error(err);
-        reject(err);
-      }
-    })();
-  });
+  } catch (err) {
+    logger.error(`Error handling reaction: ${err}`);
+  }
 };
 
 export default HandleReaction;

@@ -1,69 +1,55 @@
-import { QueryTypes } from "sequelize";
+import { WASocket } from "@whiskeysockets/baileys";
 import { getWbot } from "../../libs/wbot";
+import { Store } from "../../libs/store";
 import Contact from "../../models/Contact";
-import AppError from "../../errors/AppError";
 import { logger } from "../../utils/logger";
+import CreateOrUpdateContactService from "../ContactServices/CreateOrUpdateContactService";
+
+type Session = WASocket & {
+  id?: number;
+  store?: Store;
+};
 
 const SyncContactsWhatsappInstanceService = async (
   whatsappId: number,
   tenantId: number
 ): Promise<void> => {
-  const wbot = getWbot(whatsappId);
-
-  let contacts;
+  const wbot = getWbot(whatsappId) as Session;
 
   try {
-    contacts = await wbot.getContacts();
-  } catch (err) {
-    logger.error(
-      `Could not get whatsapp contacts from phone. Check connection page. | Error: ${err}`
-    );
-  }
+    // En Baileys, obtenemos los contactos del store
+    const contacts = wbot.store?.contacts || {};
+    const contactsArray = Object.values(contacts);
 
-  if (!contacts) {
-    throw new AppError("ERR_CONTACTS_NOT_EXISTS_WHATSAPP", 404);
-  }
-
-  try {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const dataArray: object[] = [];
-    await Promise.all(
-      contacts.map(async ({ name, pushname, number, isGroup, id }) => {
-        if ((name || pushname) && !isGroup && id.server !== "lid") {
-          // const profilePicUrl = await wbot.getProfilePicUrl(`${number}@c.us`);
-          const contactObj = { name: name || pushname, number, tenantId };
-          dataArray.push(contactObj);
-        }
-      })
-    );
-    if (dataArray.length) {
-      const d = new Date().toJSON();
-      const query = `INSERT INTO "Contacts" (number, name, "tenantId", "createdAt", "updatedAt") VALUES
-        ${dataArray
-          .map((e: any) => {
-		    const cleanedName = e.name.replace(/[^a-zA-Z0-9 ]+/g, '');
-            return `('${e.number}',
-			'${cleanedName}',
-            '${e.tenantId}',
-            '${d}'::timestamp,
-            '${d}'::timestamp)`;
-          })
-          .join(",")}
-        ON CONFLICT (number, "tenantId") DO NOTHING`;
-
-      await Contact.sequelize?.query(query, {
-        type: QueryTypes.INSERT
-      });
-      // await Contact.bulkCreate(dataArray, {
-      //   fields: ["number", "name", "tenantId"],
-      //   updateOnDuplicate: ["number", "name"],
-      //   logging: console.log
-      // });
-      // console.log("sql contact");
+    if (contactsArray.length === 0) {
+      logger.info("No contacts found in store");
+      return;
     }
-  } catch (error) {
-    console.error(error);
-    throw new Error(error);
+
+    for (const contact of contactsArray) {
+      try {
+        const number = contact.id.replace(/\D/g, "");
+        
+        if (number && number.length > 10) {
+          await CreateOrUpdateContactService({
+            name: contact.name || contact.notify || number,
+            number,
+            isGroup: contact.id.endsWith("@g.us"),
+            tenantId,
+            pushname: contact.notify || "",
+            isUser: true,
+            isWAContact: true
+          });
+        }
+      } catch (error) {
+        logger.error(`Error syncing contact ${contact.id}:`, error);
+      }
+    }
+
+    logger.info(`Synced ${contactsArray.length} contacts for WhatsApp ${whatsappId}`);
+  } catch (err) {
+    logger.error("Error syncing contacts:", err);
+    throw new Error("Could not sync contacts from Baileys store.");
   }
 };
 

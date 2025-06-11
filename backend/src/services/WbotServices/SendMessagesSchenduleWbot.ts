@@ -7,14 +7,11 @@ import { logger } from "../../utils/logger";
 import Contact from "../../models/Contact";
 import SendMessage from "./SendMessage";
 import SendMessageSystemProxy from "../../helpers/SendMessageSystemProxy";
+import { getCurrentDate } from "../../utils/dateUtils";
 // import SetTicketMessagesAsRead from "../../helpers/SetTicketMessagesAsRead";
 
 const SendMessagesSchenduleWbot = async (): Promise<void> => {
-  const currentDate = new Date(
-    new Date().toLocaleString("en-US", {
-      timeZone: process.env.TIMEZONE || "America/Sao_Paulo"
-    })
-  );
+  const currentDate = getCurrentDate();
   const twentyFourHoursAgo = new Date(
     currentDate.getTime() - 24 * 60 * 60 * 1000
   );
@@ -62,8 +59,7 @@ const SendMessagesSchenduleWbot = async (): Promise<void> => {
         const sent = await SendMessageSystemProxy({
           ticket: message.ticket,
           messageData: message.toJSON(),
-          media: null,
-          userId: message.userId
+          media: null
         });
 
         message.update({

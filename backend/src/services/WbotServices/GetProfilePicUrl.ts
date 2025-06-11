@@ -1,18 +1,28 @@
+import { WASocket } from "@whiskeysockets/baileys";
 import GetDefaultWhatsApp from "../../helpers/GetDefaultWhatsApp";
 import { getWbot } from "../../libs/wbot";
-import { logger } from "../../utils/logger";
+import { Store } from "../../libs/store";
+
+type Session = WASocket & {
+  id?: number;
+  store?: Store;
+};
 
 const GetProfilePicUrl = async (
   number: string,
-  tenantId: string | number
+  tenantId: number | string
 ): Promise<string> => {
+  const defaultWhatsapp = await GetDefaultWhatsApp(tenantId);
+  const wbot = getWbot(defaultWhatsapp.id) as Session;
+
   try {
-    const defaultWhatsapp = await GetDefaultWhatsApp(tenantId);
-    const wbot = getWbot(defaultWhatsapp.id);
-    const profilePicUrl = await wbot.getProfilePicUrl(`${number}@c.us`);
-    return profilePicUrl;
-  } catch (error) {
-    logger.error(`GetProfilePicUrl - ${error}`);
+    const jid = `${number}@s.whatsapp.net`;
+    
+    // En Baileys, usamos profilePictureUrl en lugar de getProfilePicUrl
+    const profilePicUrl = await wbot.profilePictureUrl(jid, 'image');
+    
+    return profilePicUrl || "";
+  } catch (err) {
     return "";
   }
 };

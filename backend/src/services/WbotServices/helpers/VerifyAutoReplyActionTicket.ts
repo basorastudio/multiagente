@@ -1,4 +1,4 @@
-import { Message as WbotMessage } from "whatsapp-web.js";
+import { WAMessage } from "@whiskeysockets/baileys";
 import socketEmit from "../../../helpers/socketEmit";
 // import SetTicketMessagesAsRead from "../../../helpers/SetTicketMessagesAsRead";
 import Ticket from "../../../models/Ticket";
@@ -11,7 +11,7 @@ import CreateLogTicketService from "../../TicketServices/CreateLogTicketService"
 // import SendWhatsAppMessage from "../SendWhatsAppMessage";
 
 const verifyAutoReplyActionTicket = async (
-  msg: WbotMessage | any,
+  msg: WAMessage | any,
   ticket: Ticket
 ): Promise<void> => {
   const celularContato = ticket.contact.number;

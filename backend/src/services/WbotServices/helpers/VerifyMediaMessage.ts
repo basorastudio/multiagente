@@ -1,114 +1,91 @@
+import { downloadMediaMessage, WAMessage, getContentType } from "@whiskeysockets/baileys";
+import { writeFile } from "fs/promises";
 import { join } from "path";
-import { promisify } from "util";
-import { writeFile } from "fs";
-import fs from "fs";
-
-import { Message as WbotMessage } from "whatsapp-web.js";
-import Contact from "../../../models/Contact";
-import Ticket from "../../../models/Ticket";
-
-
-import Message from "../../../models/Message";
-import VerifyQuotedMessage from "./VerifyQuotedMessage";
-import CreateMessageService from "../../MessageServices/CreateMessageService";
 import { logger } from "../../../utils/logger";
 
-import ffmpeg from "fluent-ffmpeg";
-import { path as ffmpegPath } from "@ffmpeg-installer/ffmpeg";
-
-const writeFileAsync = promisify(writeFile);
-
 const VerifyMediaMessage = async (
-  msg: WbotMessage,
-  ticket: Ticket,
-  contact: Contact
-): Promise<Message | void> => {
-  const quotedMsg = await VerifyQuotedMessage(msg);
-
-  const media = await msg.downloadMedia();
-
-  if (!media) {
-    logger.error(`ERR_WAPP_DOWNLOAD_MEDIA:: ID: ${msg.id.id}`);
-    return;
-  }
-
-  if (!media.filename) {
-    const ext = media.mimetype.split("/")[1].split(";")[0];
-    media.filename = `${new Date().getTime()}.${ext}`;
-  } else {
-    const originalFilename = media.filename ? `-${media.filename}` : "";
-    // Always write a random filename
-    media.filename = `${new Date().getTime()}${originalFilename}`;
-  }
-
-  const inputFile = `./public/${media.filename}`;
-  let outputFile: string;
-
+  msg: WAMessage,
+  ticket: any,
+  contact: any
+): Promise<any> => {
   try {
-    await writeFileAsync(
-      join(__dirname, "..", "..", "..", "..", "public", media.filename),
-      media.data,
-      "base64"
-    )
-      .then(() => {
+    if (!msg || !msg.message) {
+      logger.warn(`Message or message content is null for message: ${msg?.key?.id}`);
+      return null;
+    }
 
-        if (inputFile.endsWith(".ogg")) {
-          outputFile = inputFile.replace(".ogg", ".mp3");
-        } else {
-          return;
-        }
+    const messageType = getContentType(msg.message);
+    
+    if (!messageType) {
+      return null;
+    }
 
-        return new Promise<void>((resolve, reject) => {
-          ffmpeg(inputFile)
-            .toFormat("mp3")
-            .save(outputFile)
-            .on("end", () => {
-              resolve();
-            })
-            .on("error", (err: any) => {
-              reject(err);
-            });
-        });
-      })
-      .then(() => {
-        if (outputFile) {
-          fs.unlinkSync(inputFile);
-          media.filename = outputFile.split('/').pop();
-        }
-      })
-      .catch(err => {
-        console.error("Ocorreu um erro:", err);
-        // Trate o erro de acordo com sua lógica de aplicativo.
-      });
-  } catch (err: any) {
-    logger.error(err);
+    // Verificar si es un mensaje de media
+    const mediaTypes = ['imageMessage', 'videoMessage', 'audioMessage', 'documentMessage', 'stickerMessage'];
+    
+    if (!mediaTypes.includes(messageType)) {
+      return null;
+    }
+
+    let fileName = "";
+    let mimeType = "";
+
+    try {
+      // Descargar el media usando Baileys
+      const buffer = await downloadMediaMessage(msg, 'buffer', {});
+      
+      if (!buffer) {
+        logger.warn(`No media buffer for message: ${msg.key.id}`);
+        return null;
+      }
+
+      // Determinar el tipo de archivo y nombre según el tipo de mensaje
+      switch (messageType) {
+        case 'imageMessage':
+          mimeType = msg.message.imageMessage?.mimetype || 'image/jpeg';
+          fileName = `image_${msg.key.id}.${mimeType.split('/')[1]}`;
+          break;
+        case 'videoMessage':
+          mimeType = msg.message.videoMessage?.mimetype || 'video/mp4';
+          fileName = `video_${msg.key.id}.${mimeType.split('/')[1]}`;
+          break;
+        case 'audioMessage':
+          mimeType = msg.message.audioMessage?.mimetype || 'audio/ogg';
+          fileName = `audio_${msg.key.id}.${mimeType.split('/')[1]}`;
+          break;
+        case 'documentMessage':
+          mimeType = msg.message.documentMessage?.mimetype || 'application/octet-stream';
+          fileName = msg.message.documentMessage?.fileName || `document_${msg.key.id}`;
+          break;
+        case 'stickerMessage':
+          mimeType = msg.message.stickerMessage?.mimetype || 'image/webp';
+          fileName = `sticker_${msg.key.id}.webp`;
+          break;
+      }
+
+      // Guardar el archivo en el directorio público
+      const publicDir = join(__dirname, '..', '..', '..', '..', 'public');
+      const filePath = join(publicDir, fileName);
+      
+      await writeFile(filePath, buffer);
+
+      return {
+        mediaType: messageType,
+        fileName,
+        mimeType,
+        filePath: `/public/${fileName}`,
+        buffer
+      };
+
+    } catch (downloadError) {
+      logger.error(`Error downloading media: ${downloadError}`);
+      return null;
+    }
+
+  } catch (err) {
+    logger.error(`Error verifying media message: ${err}`);
+    return null;
   }
-
-  const messageData = {
-    messageId: msg.id.id,
-    ticketId: ticket.id,
-    contactId: msg.fromMe ? undefined : contact.id,
-    body: msg.body,
-    fromMe: msg.fromMe,
-    read: msg.fromMe,
-    mediaUrl: media.filename,
-    mediaType: media.mimetype.split("/")[0],
-    quotedMsgId: quotedMsg?.id,
-    timestamp: msg.timestamp,
-    status: msg.fromMe ? "sended" : "received"
-  };
-
-  await ticket.update({
-    lastMessage: msg.body,
-    lastMessageAt: new Date().getTime(),
-    answered: msg.fromMe || false
-  });
-  const newMessage = await CreateMessageService({
-    messageData,
-    tenantId: ticket.tenantId
-  });
-
-  return newMessage;
 };
 
 export default VerifyMediaMessage;

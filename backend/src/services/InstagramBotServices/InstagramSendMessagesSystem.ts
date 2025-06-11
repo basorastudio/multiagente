@@ -15,6 +15,7 @@ import socketEmit from "../../helpers/socketEmit";
 import Message from "../../models/Message";
 import { logger } from "../../utils/logger";
 import { sleepRandomTime } from "../../utils/sleepRandomTime";
+import { getCurrentTimestamp } from "../../utils/dateUtils";
 
 interface Session extends IgApiClientMQTT {
   id: number;
@@ -77,9 +78,8 @@ const InstagramSendMessagesSystem = async (
     // enviar old_id para substituir no front a mensagem corretamente
     const messageToUpdate = {
       ...message,
-      ...sendedMessage,
       id: message.id,
-      timestamp: message.timestamp,
+      timestamp: getCurrentTimestamp(),
       messageId: sendedMessage.item_id,
       status: "sended",
       ack: 2

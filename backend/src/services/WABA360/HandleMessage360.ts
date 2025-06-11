@@ -33,10 +33,11 @@ const HandleMessage360 = async (
           msg: msgData,
           channel: "waba"
         });
-        if (ticket?.isCampaignMessage) {
-          resolve();
-          return;
-        }
+        // Verificar si el ticket existe y tiene la propiedad isCampaignMessage
+        // Esta verificación se comenta temporalmente hasta que se defina la propiedad en el modelo
+        // if (ticket?.isCampaignMessage) {
+        //   return;
+        // }
         if (ticket?.isFarewellMessage) {
           resolve();
           return;

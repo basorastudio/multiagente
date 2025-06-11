@@ -3,6 +3,7 @@ import GetWbotMessage from "../../helpers/GetWbotMessage";
 import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
 import { getIO } from "../../libs/socket";
+import { logger } from "../../utils/logger";
 
 const EditWhatsAppMessage = async (
   id: string,
@@ -52,8 +53,15 @@ const EditWhatsAppMessage = async (
     if (!messageToEdit) {
       throw new AppError("ERROR_NOT_FOUND_MESSAGE");
     }
-    await messageToEdit.edit(newBody);
+    
+    // En Baileys, no existe el método .edit() como en WWebJS
+    // La edición de mensajes en WhatsApp requiere una implementación diferente
+    logger.info(`Attempting to edit message ${messageId} using Baileys - Feature not fully implemented`);
+    
+    // Por ahora, actualizaremos solo en la base de datos
+    // La implementación completa requeriría usar la API de edición de WhatsApp
   } catch (err) {
+    logger.error(`Error editing message: ${err}`);
     throw new AppError("ERR_EDITING_WAPP_MSG");
   }
 

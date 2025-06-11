@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-// import path from "path";
-// import { rmdir } from "fs/promises";
 import { apagarPastaSessao, getWbot, removeWbot } from "../libs/wbot";
 import ShowWhatsAppService from "../services/WhatsappService/ShowWhatsAppService";
 import { StartWhatsAppSession } from "../services/WbotServices/StartWhatsAppSession";
 import UpdateWhatsAppService from "../services/WhatsappService/UpdateWhatsAppService";
+import DeleteBaileysService from "../services/BaileysServices/DeleteBaileysService";
 import { setValue } from "../libs/redisClient";
 import { logger } from "../utils/logger";
 import { getTbot, removeTbot } from "../libs/tbot";
@@ -21,7 +20,7 @@ const store = async (req: Request, res: Response): Promise<Response> => {
     isInternal: true
   });
 
-  StartWhatsAppSession(whatsapp);
+  StartWhatsAppSession(whatsapp, tenantId);
 
   return res.status(200).json({ message: "Starting session." });
 };
@@ -41,8 +40,7 @@ const update = async (req: Request, res: Response): Promise<Response> => {
     tenantId
   });
 
-  // await apagarPastaSessao(whatsappId);
-  StartWhatsAppSession(whatsapp);
+  StartWhatsAppSession(whatsapp, tenantId);
   return res.status(200).json({ message: "Starting session." });
 };
 
@@ -59,11 +57,9 @@ const remove = async (req: Request, res: Response): Promise<Response> => {
       await setValue(`${channel.id}-retryQrCode`, 0);
       await wbot
         .logout()
-        .catch(error => logger.error("Erro ao fazer logout da conexão", error)); // --> fecha o client e conserva a sessão para reconexão (criar função desconectar)
+        .catch(error => logger.error("Erro ao fazer logout da conexão", error));
       removeWbot(channel.id);
-      // await wbot
-      //   .destroy()
-      //   .catch(error => logger.error("Erro ao destuir conexão", error)); // --> encerra a sessão e desconecta o bot do whatsapp, geando um novo QRCODE
+      await DeleteBaileysService(channel.id);
     }
 
     if (channel.type === "telegram") {

@@ -1,25 +1,20 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
 import { join } from "path";
-import {
-  Message as WbotMessage,
-  Buttons,
-  Client,
-  List,
-  MessageMedia
-} from "whatsapp-web.js";
+import { readFile } from "fs/promises";
+import { WASocket, proto } from "@whiskeysockets/baileys";
 import { Op } from "sequelize";
 import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
 import { logger } from "../../utils/logger";
 import { sleepRandomTime } from "../../utils/sleepRandomTime";
 import Contact from "../../models/Contact";
-import GetWbotMessage from "../../helpers/GetWbotMessage";
-// import SetTicketMessagesAsRead from "../../helpers/SetTicketMessagesAsRead";
+import { Store } from "../../libs/store";
 
-interface Session extends Client {
-  id: number;
-}
+type Session = WASocket & {
+  id?: number;
+  store?: Store;
+};
 
 const SendMessagesSystemWbot = async (
   wbot: Session,
@@ -75,76 +70,101 @@ const SendMessagesSystemWbot = async (
     ],
     order: [["createdAt", "ASC"]]
   });
-  let sendedMessage;
-
-  // logger.info(
-  //   `SystemWbot SendMessages | Count: ${messages.length} | Tenant: ${tenantId} `
-  // );
+  let sendedMessage: proto.WebMessageInfo | null = null;
 
   for (const message of messages) {
-    let quotedMsgSerializedId: string | undefined;
     const { ticket } = message;
     const contactNumber = ticket.contact.number;
-    const typeGroup = ticket?.isGroup ? "g" : "c";
-    const chatId = `${contactNumber}@${typeGroup}.us`;
+    const chatId = `${contactNumber}@${ticket?.isGroup ? "g.us" : "s.whatsapp.net"}`;
 
+    // Buscar mensaje citado si existe
+    let quotedMessage;
     if (message.quotedMsg) {
-      const inCache: WbotMessage | undefined = await GetWbotMessage(
-        ticket,
-        message.quotedMsg.messageId,
-        200
-      );
-      if (inCache) {
-        quotedMsgSerializedId = inCache?.id?._serialized || undefined;
-      } else {
-        quotedMsgSerializedId = undefined;
-      }
-      // eslint-disable-next-line no-underscore-dangle
+      const chatMessages = wbot.store?.getMessages(chatId) || [];
+      quotedMessage = chatMessages.find(m => m.key.id === message.quotedMsg?.messageId);
     }
 
     try {
       if (message.mediaType !== "chat" && message.mediaName) {
         const customPath = join(__dirname, "..", "..", "..", "public");
         const mediaPath = join(customPath, message.mediaName);
-        const newMedia = MessageMedia.fromFilePath(mediaPath);
-        sendedMessage = await wbot.sendMessage(chatId, newMedia, {
-          quotedMessageId: quotedMsgSerializedId,
-          linkPreview: false, // fix: send a message takes 2 seconds when there's a link on message body
-          sendAudioAsVoice: true
-        });
-        logger.info("sendMessage media");
+        
+        try {
+          const mediaBuffer = await readFile(mediaPath);
+          
+          let messageData: any = {};
+          
+          if (message.mediaType === "image") {
+            messageData = {
+              image: mediaBuffer,
+              caption: message.body || '',
+              fileName: message.mediaName
+            };
+          } else if (message.mediaType === "video") {
+            messageData = {
+              video: mediaBuffer,
+              caption: message.body || '',
+              fileName: message.mediaName
+            };
+          } else if (message.mediaType === "audio") {
+            messageData = {
+              audio: mediaBuffer,
+              ptt: true
+            };
+          } else {
+            messageData = {
+              document: mediaBuffer,
+              fileName: message.mediaName,
+              caption: message.body || ''
+            };
+          }
+
+          if (quotedMessage) {
+            const result = await wbot.sendMessage(chatId, messageData, { quoted: quotedMessage });
+            sendedMessage = result || null;
+          } else {
+            const result = await wbot.sendMessage(chatId, messageData);
+            sendedMessage = result || null;
+          }
+          logger.info("sendMessage media");
+        } catch (error) {
+          logger.error("Error reading media file:", error);
+          // Fallback: enviar solo el texto
+          const options = quotedMessage ? { quoted: quotedMessage } : {};
+          const result = await wbot.sendMessage(chatId, { text: message.body }, options);
+          sendedMessage = result || null;
+        }
       } else {
-        sendedMessage = await wbot.sendMessage(chatId, message.body, {
-          quotedMessageId: quotedMsgSerializedId,
-          linkPreview: false // fix: send a message takes 2 seconds when there's a link on message body
-        });
+        const options = quotedMessage ? { quoted: quotedMessage } : {};
+        const result = await wbot.sendMessage(chatId, { text: message.body }, options);
+        sendedMessage = result || null;
         logger.info("sendMessage text");
       }
 
-      // enviar old_id para substituir no front a mensagem corretamente
-      const messageToUpdate = {
-        ...message,
-        ...sendedMessage,
-        id: message.id,
-        messageId: sendedMessage.id.id,
-        status: "sended"
-      };
+      if (sendedMessage) {
+        // enviar old_id para substituir no front a mensagem corretamente
+        const messageToUpdate = {
+          ...message,
+          id: message.id,
+          messageId: sendedMessage.key?.id || null,
+          status: "sended"
+        };
 
-      await Message.update(
-        { ...messageToUpdate },
-        { where: { id: message.id } }
-      );
+        await Message.update(
+          { ...messageToUpdate },
+          { where: { id: message.id } }
+        );
 
-      logger.info("Message Update");
-      // await SetTicketMessagesAsRead(ticket);
+        logger.info("Message Update");
 
-      // delay para processamento da mensagem
-      await sleepRandomTime({
-        minMilliseconds: Number(process.env.MIN_SLEEP_INTERVAL || 500),
-        maxMilliseconds: Number(process.env.MAX_SLEEP_INTERVAL || 2000)
-      });
+        // delay para processamento da mensagem
+        await sleepRandomTime({
+          minMilliseconds: Number(process.env.MIN_SLEEP_INTERVAL || 500),
+          maxMilliseconds: Number(process.env.MAX_SLEEP_INTERVAL || 2000)
+        });
 
-      logger.info("sendMessage", sendedMessage.id.id);
+        logger.info("sendMessage", sendedMessage.key?.id);
+      }
     } catch (error) {
       const idMessage = message.id;
       const ticketId = message.ticket.id;

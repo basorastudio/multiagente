@@ -10,10 +10,13 @@ import ShowTicketService from "./ShowTicketService";
 interface Request {
   contactId: number;
   status: string;
-  userId: number;
+  userId?: number;
   tenantId: string | number;
-  channel: string;
+  channel?: string;
   channelId?: number;
+  isGroup?: boolean;
+  unreadMessages?: number;
+  whatsappId?: number;
 }
 
 const CreateTicketService = async ({

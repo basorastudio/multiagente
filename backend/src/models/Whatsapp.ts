@@ -16,7 +16,8 @@ import {
   BelongsTo,
   AfterUpdate,
   BeforeCreate,
-  BeforeUpdate
+  BeforeUpdate,
+  HasOne
   // DefaultScope
 } from "sequelize-typescript";
 import webHooks from "../config/webHooks.dev.json";
@@ -29,6 +30,8 @@ import ApiConfig from "./ApiConfig";
 import Tenant from "./Tenant";
 import Ticket from "./Ticket";
 import ChatFlow from "./ChatFlow";
+import Baileys from "./Baileys";
+import BaileysChats from "./BaileysChats";
 
 // @DefaultScope(() => ({
 //   where: { isDeleted: false }
@@ -121,6 +124,12 @@ class Whatsapp extends Model<Whatsapp> {
 
   @HasMany(() => Ticket)
   tickets: Ticket[];
+
+  @HasOne(() => Baileys)
+  baileys: Baileys;
+
+  @HasMany(() => BaileysChats)
+  baileysChats: BaileysChats[];
 
   @ForeignKey(() => Tenant)
   @Column

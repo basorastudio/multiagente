@@ -9,6 +9,7 @@ import Ticket from "../../models/Ticket";
 import Whatsapp from "../../models/Whatsapp";
 import { logger } from "../../utils/logger";
 import SentMessage from "./SentMessage";
+import { getCurrentTimestamp } from "../../utils/dateUtils";
 
 const buildWabaMessage360 = async (
   message: Message,

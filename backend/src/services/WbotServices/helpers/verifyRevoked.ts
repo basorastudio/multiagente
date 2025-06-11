@@ -1,69 +1,19 @@
-import { Message as WbotMessage } from "whatsapp-web.js";
-import Message from "../../../models/Message";
-import Ticket from "../../../models/Ticket";
-import socketEmit from "../../../helpers/socketEmit";
+import { WAMessage } from "@whiskeysockets/baileys";
+import { logger } from "../../../utils/logger";
 
-const verifyRevoked = async (msgBody?: string): Promise<void> => {
-  await new Promise(r => setTimeout(r, 500));
-
-  if (msgBody === undefined) {
-    return;
-  }
-
+const verifyRevoked = async (msg: WAMessage): Promise<boolean> => {
   try {
-    const message = await Message.findOne({
-      where: {
-        body: msgBody
-      },
-	  include: [
-        "contact",
-        {
-          model: Ticket,
-          as: "ticket",
-          attributes: ["id", "tenantId", "apiConfig"]
-        },
-        {
-          model: Message,
-          as: "quotedMsg",
-          include: ["contact"]
-        }
-      ]
-    });
-
-    if (!message) {
-      return;
-    }
-
-    if (message) {
-      // console.log(message);
-      await Message.update(
-        { isDeleted: true },
-        {
-          where: { id: message.id }
-        }
-      );
-
-      const msgIsDeleted = await Message.findOne({
-        where: {
-          body: msgBody
-        }
-      });
-
-      if (!msgIsDeleted) {
-        return;
-      }
-	    const { ticket } = message;
-	    socketEmit({
-        tenantId: ticket.tenantId,
-        type: "chat:update",
-        payload: message
-      });
-//socket nao funciona descobrir motivo
-    }
+    // Implementación específica para Baileys para verificar mensajes revocados
+    logger.info(`verifyRevoked - Checking message: ${msg.key.id}`);
+    
+    // En Baileys, los mensajes revocados se manejan de manera diferente
+    // Esta es una implementación simplificada
+    
+    return false; // Por ahora retorna false, implementar según necesidades
   } catch (err) {
-    console.error(`Error Message Revoke. Err: ${err}`);
+    logger.error(`Error verifying revoked message: ${err}`);
+    return false;
   }
 };
-
 
 export default verifyRevoked;

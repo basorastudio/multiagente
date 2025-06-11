@@ -5,6 +5,7 @@ import Ticket from "../../models/Ticket";
 import Message from "../../models/Message";
 import socketEmit from "../../helpers/socketEmit";
 import SendMessageSystemProxy from "../../helpers/SendMessageSystemProxy";
+import { getCurrentTimestamp } from "../../utils/dateUtils";
 
 interface MessageData {
   id?: string;
@@ -97,8 +98,7 @@ const BuildSendMessageService = async ({
       const messageSent = await SendMessageSystemProxy({
         ticket,
         messageData: message,
-        media,
-        userId
+        media
       });
 
       const msgCreated = await Message.create({
@@ -130,7 +130,7 @@ const BuildSendMessageService = async ({
 
       await ticket.update({
         lastMessage: messageCreated.body,
-        lastMessageAt: new Date().getTime()
+        lastMessageAt: getCurrentTimestamp()
       });
 
       socketEmit({
@@ -152,8 +152,7 @@ const BuildSendMessageService = async ({
           ...messageData,
           body: msg.data.message
         },
-        media: null,
-        userId: null
+        media: null
       });
 
       const msgCreated = await Message.create({
@@ -186,7 +185,7 @@ const BuildSendMessageService = async ({
 
       await ticket.update({
         lastMessage: messageCreated.body,
-        lastMessageAt: new Date().getTime(),
+        lastMessageAt: getCurrentTimestamp(),
         answered: true
       });
 

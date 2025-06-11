@@ -1,64 +1,51 @@
-import { Message as WbotMessage } from "whatsapp-web.js";
+import { WAMessage, WASocket } from "@whiskeysockets/baileys";
+import * as Sentry from "@sentry/node";
 import AppError from "../../errors/AppError";
 import GetTicketWbot from "../../helpers/GetTicketWbot";
-import GetWbotMessage from "../../helpers/GetWbotMessage";
-import SerializeWbotMsgId from "../../helpers/SerializeWbotMsgId";
-import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
-import UserMessagesLog from "../../models/UserMessagesLog";
-import { logger } from "../../utils/logger";
-// import { StartWhatsAppSessionVerify } from "./StartWhatsAppSessionVerify";
+import Message from "../../models/Message";
+import { Store } from "../../libs/store";
 
 interface Request {
   body: string;
   ticket: Ticket;
   quotedMsg?: Message;
-  userId?: number | string | undefined;
 }
+
+type Session = WASocket & {
+  id?: number;
+  store?: Store;
+};
 
 const SendWhatsAppMessage = async ({
   body,
   ticket,
   quotedMsg,
-  userId
-}: Request): Promise<WbotMessage> => {
-  let quotedMsgSerializedId: string | undefined;
+}: Request): Promise<WAMessage | null> => {
+  let options = {};
+  const wbot = await GetTicketWbot(ticket) as Session;
+  const number = `${ticket.contact.number}@${ticket.isGroup ? "g.us" : "s.whatsapp.net"}`;
+
   if (quotedMsg) {
-    await GetWbotMessage(ticket, quotedMsg.id);
-    quotedMsgSerializedId = SerializeWbotMsgId(ticket, quotedMsg);
+    const chatMessages = wbot.store?.getMessages(number) || [];
+    const quotedMessage = chatMessages.find(m => m.key.id === quotedMsg.messageId);
+    
+    if (quotedMessage) {
+      options = {
+        quoted: quotedMessage
+      };
+    }
   }
 
-  const wbot = await GetTicketWbot(ticket);
-
   try {
-    const sendMessage = await wbot.sendMessage(
-      `${ticket.contact.number}@${ticket.isGroup ? "g" : "c"}.us`,
-      body,
-      {
-        quotedMessageId: quotedMsgSerializedId,
-        linkPreview: false // fix: send a message takes 2 seconds when there's a link on message body
-      }
-    );
+    const sentMessage = await wbot.sendMessage(number, {
+      text: body
+    }, options);
 
-    await ticket.update({
-      lastMessage: body,
-      lastMessageAt: new Date().getTime()
-    });
-    try {
-      if (userId) {
-        await UserMessagesLog.create({
-          messageId: sendMessage.id.id,
-          userId,
-          ticketId: ticket.id
-        });
-      }
-    } catch (error) {
-      logger.error(`Error criar log mensagem ${error}`);
-    }
-    return sendMessage;
+    return sentMessage || null;
   } catch (err) {
-    logger.error(`SendWhatsAppMessage | Error: ${err}`);
-    // await StartWhatsAppSessionVerify(ticket.whatsappId, err);
+    Sentry.captureException(err);
+    console.log(err);
     throw new AppError("ERR_SENDING_WAPP_MSG");
   }
 };

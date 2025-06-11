@@ -17,11 +17,8 @@ export default {
     try {
       const wbot = getWbot(data.ticket.whatsappId);
       const message = await wbot.sendMessage(
-        `${data.ticket.contact.number}@c.us`,
-        data.tenant.messageBusinessHours,
-        {
-          linkPreview: false
-        }
+        `${data.ticket.contact.number}@s.whatsapp.net`,
+        { text: data.tenant.messageBusinessHours }
       );
 
       const result = {

@@ -42,7 +42,6 @@ const handleRealtimeReceive = async (
     whatsappId: instaBot.id!,
     unreadMessages: fromMe ? 0 : 1,
     tenantId: channel.tenantId,
-    msg: { ...ctx.message, fromMe },
     channel: "instagram"
   });
 
@@ -62,16 +61,27 @@ const handleRealtimeReceive = async (
 
   await VerifyStepsChatFlowTicket(
     {
-      fromMe,
-      body: ctx.message?.text || ""
+      key: {
+        id: ctx.message.item_id,
+        fromMe,
+        remoteJid: ctx.message.thread_id
+      },
+      message: {
+        conversation: ctx.message?.text || ""
+      },
+      messageTimestamp: ctx.message.timestamp / 1000
     },
     ticket
   );
 
   await verifyBusinessHours(
     {
-      fromMe,
-      timestamp: ctx.message.timestamp / 1000 // adequar horário node
+      key: {
+        fromMe,
+        id: ctx.message.item_id,
+        remoteJid: ctx.message.thread_id
+      },
+      messageTimestamp: ctx.message.timestamp / 1000
     },
     ticket
   );

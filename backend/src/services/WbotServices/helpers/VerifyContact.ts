@@ -1,31 +1,41 @@
-import { Contact as WbotContact } from "whatsapp-web.js";
+import { Contact as BaileysContact } from "@whiskeysockets/baileys";
 import Contact from "../../../models/Contact";
 import CreateOrUpdateContactService from "../../ContactServices/CreateOrUpdateContactService";
 
+type ContactType = BaileysContact | any;
+
 const VerifyContact = async (
-  msgContact: WbotContact,
+  msgContact: ContactType,
   tenantId: string | number
 ): Promise<Contact> => {
   let profilePicUrl;
-  try {
-    profilePicUrl = await msgContact.getProfilePicUrl();
-  } catch (error) {
-    profilePicUrl = undefined;
-  }
+
+  // Solo manejar contactos de Baileys
+  profilePicUrl = undefined; // Para Baileys necesitaremos obtener la imagen por separado
+
+  // Extraer datos del contacto adaptándose al formato de Baileys
+  const number =
+    msgContact.id?.user ||
+    msgContact.id?.split("@")[0] ||
+    msgContact.number ||
+    msgContact.id;
+
+  const name =
+    msgContact.name ||
+    msgContact.pushName ||
+    msgContact.notify ||
+    msgContact.verifiedName ||
+    number;
 
   const contactData = {
-    name:
-      msgContact.name ||
-      msgContact.pushname ||
-      msgContact.shortName ||
-      msgContact.id.user,
-    number: msgContact.id.user,
+    name,
+    number,
     profilePicUrl,
     tenantId,
-    pushname: msgContact.pushname,
-    isUser: msgContact.isUser,
-    isWAContact: msgContact.isWAContact,
-    isGroup: msgContact.isGroup
+    pushname: name,
+    isUser: true,
+    isWAContact: true,
+    isGroup: msgContact.id?.includes("@g.us") || false
   };
 
   const contact = await CreateOrUpdateContactService(contactData);

@@ -13,8 +13,7 @@ import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
 import { logger } from "../../utils/logger";
 import { sleepRandomTime } from "../../utils/sleepRandomTime";
-// import { sleepRandomTime } from "../../utils/sleepRandomTime";
-// import SetTicketMessagesAsRead from "../../helpers/SetTicketMessagesAsRead";
+import { getCurrentTimestamp } from "../../utils/dateUtils";
 
 interface Session extends MessengerClient {
   id: number;
@@ -128,7 +127,7 @@ const MessengerSendMessagesSystem = async (
         ...message,
         ...sendedMessage,
         id: message.id,
-        timestamp: message.timestamp,
+        timestamp: getCurrentTimestamp(),
         messageId: sendedMessage.messageId,
         status: "sended",
         ack: 2

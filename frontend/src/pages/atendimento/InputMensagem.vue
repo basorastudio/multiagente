@@ -85,6 +85,7 @@
             color="primary"
             v-model="scheduleDate"
             format24h
+            :timezone="localTimeZone"
           />
         </div>
 
@@ -450,7 +451,8 @@ export default {
       arquivos: [],
       textChat: '',
       sign: false,
-      scheduleDate: null
+      scheduleDate: null,
+      localTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Santo_Domingo'
     }
   },
   computed: {

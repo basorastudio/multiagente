@@ -1,54 +1,70 @@
-import fs from "fs";
-import { MessageMedia, Message as WbotMessage } from "whatsapp-web.js";
+import { WAMessage, WASocket } from "@whiskeysockets/baileys";
+import * as Sentry from "@sentry/node";
+import { readFile } from "fs/promises";
 import AppError from "../../errors/AppError";
 import GetTicketWbot from "../../helpers/GetTicketWbot";
 import Ticket from "../../models/Ticket";
-import UserMessagesLog from "../../models/UserMessagesLog";
-import { logger } from "../../utils/logger";
+import { Store } from "../../libs/store";
 
 interface Request {
   media: Express.Multer.File;
   ticket: Ticket;
-  userId: number | string | undefined;
+  body?: string;
 }
+
+type Session = WASocket & {
+  id?: number;
+  store?: Store;
+};
 
 const SendWhatsAppMedia = async ({
   media,
   ticket,
-  userId
-}: Request): Promise<WbotMessage> => {
+  body
+}: Request): Promise<WAMessage | null> => {
+  const wbot = await GetTicketWbot(ticket) as Session;
+  const number = `${ticket.contact.number}@${ticket.isGroup ? "g.us" : "s.whatsapp.net"}`;
+
   try {
-    const wbot = await GetTicketWbot(ticket);
+    const mediaBuffer = await readFile(media.path);
+    
+    let messageData: any = {};
 
-    const newMedia = MessageMedia.fromFilePath(media.path);
-
-    const sendMessage = await wbot.sendMessage(
-      `${ticket.contact.number}@${ticket.isGroup ? "g" : "c"}.us`,
-      newMedia,
-      { sendAudioAsVoice: true }
-    );
-
-    await ticket.update({
-      lastMessage: media.filename,
-      lastMessageAt: new Date().getTime()
-    });
-    try {
-      if (userId) {
-        await UserMessagesLog.create({
-          messageId: sendMessage.id.id,
-          userId,
-          ticketId: ticket.id
-        });
-      }
-    } catch (error) {
-      logger.error(`Error criar log mensagem ${error}`);
+    if (media.mimetype.startsWith('image/')) {
+      messageData = {
+        image: mediaBuffer,
+        caption: body || '',
+        mimetype: media.mimetype,
+        fileName: media.originalname
+      };
+    } else if (media.mimetype.startsWith('video/')) {
+      messageData = {
+        video: mediaBuffer,
+        caption: body || '',
+        mimetype: media.mimetype,
+        fileName: media.originalname
+      };
+    } else if (media.mimetype.startsWith('audio/')) {
+      messageData = {
+        audio: mediaBuffer,
+        mimetype: media.mimetype,
+        ptt: false
+      };
+    } else {
+      messageData = {
+        document: mediaBuffer,
+        mimetype: media.mimetype,
+        fileName: media.originalname,
+        caption: body || ''
+      };
     }
- //   fs.unlinkSync(media.path);
 
-    return sendMessage;
+    const sentMessage = await wbot.sendMessage(number, messageData);
+
+    return sentMessage || null;
   } catch (err) {
-    logger.error(`SendWhatsAppMedia | Error: ${err}`);
-    // StartWhatsAppSessionVerify(ticket.whatsappId, err);
+    Sentry.captureException(err);
+    console.log(err);
     throw new AppError("ERR_SENDING_WAPP_MSG");
   }
 };

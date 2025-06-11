@@ -13,7 +13,7 @@ module.exports = {
     idle: process.env.POSTGRES_POOL_IDLE || 10000
   },
   dialect: process.env.DB_DIALECT || "postgres",
-  timezone: "UTC",
+  timezone: process.env.DB_TIMEZONE || "-04:00",
   host: process.env.POSTGRES_HOST || "localhost",
   port: process.env.DB_PORT || "5432",
   database: process.env.POSTGRES_DB || "wchats",

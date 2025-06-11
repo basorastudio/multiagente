@@ -1,52 +1,73 @@
-import { Message as WbotMessage } from "whatsapp-web.js";
+import { WAMessage, getContentType } from "@whiskeysockets/baileys";
+import { logger } from "../../../utils/logger";
 import Contact from "../../../models/Contact";
 import Ticket from "../../../models/Ticket";
 import CreateMessageService from "../../MessageServices/CreateMessageService";
 import VerifyQuotedMessage from "./VerifyQuotedMessage";
 
-const prepareLocation = (msg: WbotMessage): WbotMessage => {
-  const gmapsUrl = `https://maps.google.com/maps?q=${msg.location.latitude}%2C${msg.location.longitude}&z=17`;
-  msg.body = `${gmapsUrl}`;
-  return msg;
-};
-
 const VerifyMessage = async (
-  msg: WbotMessage,
-  ticket: Ticket,
-  contact: Contact
-) => {
-  if (msg.type === "location") msg = prepareLocation(msg);
+  msg: WAMessage,
+  ticket: any,
+  contact: any
+): Promise<any> => {
+  try {
+    // Verificar que el mensaje y su contenido existan
+    if (!msg || !msg.message) {
+      logger.warn(`Message or message content is null/undefined for message: ${msg?.key?.id}`);
+      return null;
+    }
 
-  const quotedMsg = await VerifyQuotedMessage(msg);
+    const messageType = getContentType(msg.message);
+    
+    if (!messageType) {
+      logger.warn(`Message type not recognized for message: ${msg.key.id}`);
+      return null;
+    }
 
-  const messageData = {
-    messageId: msg.id.id,
-    ticketId: ticket.id,
-    contactId: msg.fromMe ? undefined : contact.id,
-    body: msg.body,
-    fromMe: msg.fromMe,
-    mediaType: msg.type,
-    read: msg.fromMe,
-    quotedMsgId: quotedMsg?.id,
-    timestamp: msg.timestamp,
-    status: "received"
-  };
-  
-  await ticket.update({
-    lastMessage:
-      msg.type === "location"
-        ? msg.location.options
-          ? `Localization - ${msg.location.options}`
-          : "Localization"
-        : msg.body
-  });
+    let messageBody = "";
+    let mediaUrl = "";
+    let messageId = msg.key.id;
+    let fromMe = msg.key.fromMe;
+    let timestamp = msg.messageTimestamp;
 
-  await ticket.update({
-    lastMessage: msg.body,
-    lastMessageAt: new Date().getTime(),
-    answered: msg.fromMe || false
-  });
-  await CreateMessageService({ messageData, tenantId: ticket.tenantId });
+    // Extraer contenido según el tipo de mensaje con verificaciones de null
+    switch (messageType) {
+      case "conversation":
+        messageBody = msg.message.conversation || "";
+        break;
+      case "extendedTextMessage":
+        messageBody = msg.message.extendedTextMessage?.text || "";
+        break;
+      case "imageMessage":
+        messageBody = msg.message.imageMessage?.caption || "";
+        break;
+      case "videoMessage":
+        messageBody = msg.message.videoMessage?.caption || "";
+        break;
+      case "documentMessage":
+        messageBody = msg.message.documentMessage?.caption || "";
+        break;
+      case "audioMessage":
+        messageBody = "🎵 Audio";
+        break;
+      default:
+        messageBody = `Mensaje de tipo: ${messageType}`;
+    }
+
+    return {
+      messageId,
+      body: messageBody,
+      fromMe,
+      timestamp,
+      messageType,
+      mediaUrl,
+      quotedMsgId: msg.message?.extendedTextMessage?.contextInfo?.stanzaId || null
+    };
+
+  } catch (err) {
+    logger.error(`Error verifying message: ${err}`);
+    return null;
+  }
 };
 
 export default VerifyMessage;

@@ -29,8 +29,8 @@ export const StartWhatsAppSessionVerify = async (
           session: whatsapp
         });
         const wbot = await initWbot(whatsapp);
-        wbotMessageListener(wbot);
-        wbotMonitor(wbot, whatsapp);
+        wbotMessageListener(wbot, whatsapp.tenantId);
+        wbotMonitor(wbot, whatsapp, whatsapp.tenantId);
       }
     } catch (err) {
       logger.error(err);

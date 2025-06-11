@@ -1,6 +1,12 @@
 import { format, parseISO, parseJSON } from 'date-fns'
+import { utcToZonedTime } from 'date-fns-tz'
 import es from 'date-fns/locale/es'
 import { mapGetters } from 'vuex'
+
+// Obtener zona horaria del navegador o usar una por defecto
+const getLocalTimeZone = () => {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Santo_Domingo'
+}
 
 export default {
   computed: {
@@ -18,7 +24,25 @@ export default {
       }, 200)
     },
     dataInWords (date) {
-      return format(parseJSON(date), 'HH:mm', { locale: es })
+      try {
+        const timeZone = getLocalTimeZone()
+        let dateObj
+
+        if (typeof date === 'string') {
+          dateObj = parseISO(date)
+        } else if (typeof date === 'number') {
+          dateObj = new Date(date)
+        } else {
+          dateObj = parseJSON(date)
+        }
+
+        // Convertir a zona horaria local y formatear
+        const zonedDate = utcToZonedTime(dateObj, timeZone)
+        return format(zonedDate, 'HH:mm', { locale: es })
+      } catch (error) {
+        console.error('Error formatting date:', error)
+        return format(new Date(), 'HH:mm', { locale: es })
+      }
     },
     farmatarMensagemWhatsapp (body) {
       if (!body) return
@@ -56,7 +80,25 @@ export default {
       return format
     },
     formatarData (data, formato = 'dd/MM/yyyy') {
-      return format(parseISO(data), formato, { locale: es })
+      try {
+        const timeZone = getLocalTimeZone()
+        let dateObj
+
+        if (typeof data === 'string') {
+          dateObj = parseISO(data)
+        } else if (typeof data === 'number') {
+          dateObj = new Date(data)
+        } else {
+          dateObj = data
+        }
+
+        // Convertir a zona horaria local y formatear
+        const zonedDate = utcToZonedTime(dateObj, timeZone)
+        return format(zonedDate, formato, { locale: es })
+      } catch (error) {
+        console.error('Error formatting date:', error)
+        return format(parseISO(data), formato, { locale: es })
+      }
     }
   }
 }

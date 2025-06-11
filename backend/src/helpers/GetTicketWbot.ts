@@ -1,18 +1,13 @@
-import { Client as Session } from "whatsapp-web.js";
 import { getWbot } from "../libs/wbot";
 import GetDefaultWhatsApp from "./GetDefaultWhatsApp";
 import Ticket from "../models/Ticket";
 
-const GetTicketWbot = async (ticket: Ticket): Promise<Session> => {
+const GetTicketWbot = async (ticket: Ticket): Promise<any> => {
   if (!ticket.whatsappId) {
     const defaultWhatsapp = await GetDefaultWhatsApp(ticket.tenantId);
-
-    await ticket.$set("whatsapp", defaultWhatsapp);
+    return getWbot(defaultWhatsapp.id);
   }
-
-  const wbot = getWbot(ticket.whatsappId);
-
-  return wbot;
+  return getWbot(ticket.whatsappId);
 };
 
 export default GetTicketWbot;

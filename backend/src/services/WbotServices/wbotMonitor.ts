@@ -1,85 +1,98 @@
-import { Client } from "whatsapp-web.js";
-
-import { getIO } from "../../libs/socket";
+import {
+  WASocket,
+  BinaryNode,
+  Contact as BContact,
+} from "@whiskeysockets/baileys";
+import * as Sentry from "@sentry/node";
+import { Op } from "sequelize";
+import Contact from "../../models/Contact";
+import Setting from "../../models/Setting";
+import Ticket from "../../models/Ticket";
 import Whatsapp from "../../models/Whatsapp";
 import { logger } from "../../utils/logger";
-import { StartWhatsAppSession } from "./StartWhatsAppSession";
-// import { apagarPastaSessao } from "../../libs/wbot";
+import createOrUpdateBaileysService from "../BaileysServices/CreateOrUpdateBaileysService";
+import CreateMessageService from "../MessageServices/CreateMessageService";
+import { Store } from "../../libs/store";
 
-interface Session extends Client {
+type Session = WASocket & {
   id?: number;
+  store?: Store;
+};
+
+interface IContact {
+  contacts: BContact[];
 }
 
 const wbotMonitor = async (
   wbot: Session,
-  whatsapp: Whatsapp
+  whatsapp: Whatsapp,
+  tenantId: number
 ): Promise<void> => {
-  const io = getIO();
-  const sessionName = whatsapp.name;
-
   try {
-    wbot.on("change_state", async newState => {
-      logger.info(`Monitor session: ${sessionName} - NewState: ${newState}`);
-      try {
-        await whatsapp.update({ status: newState });
-      } catch (err) {
-        logger.error(err);
+    wbot.ws.on("CB:call", async (node: BinaryNode) => {
+      const content = node.content?.[0] as any;
+
+      if (content?.tag === "offer") {
+        const { from, id } = node.attrs;
       }
 
-      io.emit(`${whatsapp.tenantId}:whatsappSession`, {
-        action: "update",
-        session: whatsapp
-      });
-    });
+      if (content?.tag === "terminate") {
+        const sendMsgCall = await Setting.findOne({
+          where: { key: "call", tenantId },
+        });
 
-    wbot.on("change_battery", async batteryInfo => {
-      const { battery, plugged } = batteryInfo;
-      logger.info(
-        `Battery session: ${sessionName} ${battery}% - Charging? ${plugged}`
-      );
+        if (sendMsgCall?.value === "disabled") {
+          await wbot.sendMessage(node.attrs.from, {
+            text:
+              "*Mensagem Automática:*\n\nAs chamadas de voz e vídeo estão desabilitadas para esse WhatsApp, favor enviar uma mensagem de texto. Obrigado",
+          });
 
-      if (battery <= 20 && !plugged) {
-        io.emit(`${whatsapp.tenantId}:change_battery`, {
-          action: "update",
-          batteryInfo: {
-            ...batteryInfo,
-            sessionName
+          const number = node.attrs.from.replace(/\D/g, "");
+
+          const contact = await Contact.findOne({
+            where: { tenantId, number },
+          });
+
+          if (contact && wbot.id) {
+            const ticket = await Ticket.findOne({
+              where: {
+                contactId: contact.id,
+                whatsappId: wbot.id,
+                status: {
+                  [Op.or]: ["open", "pending"]
+                }
+              },
+            });
+
+            if (ticket) {
+              await CreateMessageService({
+                messageData: {
+                  messageId: `call_${Date.now()}`,
+                  body: "*Chamada de voz/vídeo realizada*",
+                  fromMe: false,
+                  read: true,
+                  mediaType: "call_log",
+                  timestamp: Math.floor(Date.now() / 1000),
+                  ticketId: ticket.id,
+                  contactId: contact.id
+                },
+                tenantId
+              });
+            }
           }
-        });
+        }
       }
+    });
 
-      try {
-        await whatsapp.update({ battery, plugged });
-      } catch (err) {
-        logger.error(err);
-      }
-
-      io.emit(`${whatsapp.tenantId}:whatsappSession`, {
-        action: "update",
-        session: whatsapp
+    wbot.ev.on("contacts.upsert", async (contacts: BContact[]) => {
+      await createOrUpdateBaileysService({
+        whatsappId: wbot.id!,
+        contacts
       });
     });
 
-    wbot.on("disconnected", async reason => {
-      logger.info(`Disconnected session: ${sessionName} | Reason: ${reason}`);
-      try {
-        await whatsapp.update({
-          status: "OPENING",
-          session: "",
-          qrcode: null
-        });
-        // await apagarPastaSessao(whatsapp.id);
-        setTimeout(() => StartWhatsAppSession(whatsapp), 2000);
-      } catch (err) {
-        logger.error(err);
-      }
-
-      io.emit(`${whatsapp.tenantId}:whatsappSession`, {
-        action: "update",
-        session: whatsapp
-      });
-    });
   } catch (err) {
+    Sentry.captureException(err);
     logger.error(err);
   }
 };

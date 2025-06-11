@@ -19,6 +19,7 @@ import InstagramSendMessagesSystem from "../InstagramBotServices/InstagramSendMe
 import TelegramSendMessagesSystem from "../TbotServices/TelegramSendMessagesSystem";
 import { getTbot } from "../../libs/tbot";
 import SendMessageSystemProxy from "../../helpers/SendMessageSystemProxy";
+import { getCurrentTimestamp, getCurrentDate } from "../../utils/dateUtils";
 
 interface MessageData {
   ticketId: number;
@@ -141,7 +142,7 @@ const CreateMessageSystemService = async ({
     mediaUrl: undefined,
     mediaName: undefined,
     originalName: undefined,
-    timestamp: new Date().getTime(),
+    timestamp: getCurrentTimestamp(),
     quotedMsgId: msg?.quotedMsg?.id,
     quotedMsg: msg?.quotedMsg,
     userId,
@@ -195,8 +196,7 @@ const CreateMessageSystemService = async ({
             message = await SendMessageSystemProxy({
               ticket,
               messageData,
-              media,
-              userId
+              media
             });
             ///
           }
@@ -236,7 +236,7 @@ const CreateMessageSystemService = async ({
 
           await ticket.update({
             lastMessage: messageCreated.body,
-            lastMessageAt: new Date().getTime()
+            lastMessageAt: getCurrentTimestamp()
           });
 
           socketEmit({
@@ -254,8 +254,7 @@ const CreateMessageSystemService = async ({
         message = await SendMessageSystemProxy({
           ticket,
           messageData,
-          media: null,
-          userId
+          media: null
         });
         ///
       }
@@ -292,7 +291,7 @@ const CreateMessageSystemService = async ({
 
       await ticket.update({
         lastMessage: messageCreated.body,
-        lastMessageAt: new Date().getTime(),
+        lastMessageAt: getCurrentTimestamp(),
         answered: true
       });
 

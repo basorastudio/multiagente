@@ -1,20 +1,31 @@
-import { Message as WbotMessage } from "whatsapp-web.js";
-import Message from "../../../models/Message";
+import { WAMessage, proto } from "@whiskeysockets/baileys";
+import { logger } from "../../../utils/logger";
 
-const VerifyQuotedMessage = async (
-  msg: WbotMessage
-): Promise<Message | null> => {
-  if (!msg.hasQuotedMsg) return null;
+const VerifyQuotedMessage = async (msg: WAMessage): Promise<proto.IMessage | null> => {
+  try {
+    // Implementación específica para Baileys para verificar mensajes citados
+    if (!msg.message) return null;
 
-  const wbotQuotedMsg = await msg.getQuotedMessage();
+    // En Baileys, los mensajes citados se encuentran en diferentes lugares según el tipo
+    let quotedMessage: proto.IMessage | null = null;
 
-  const quotedMsg = await Message.findOne({
-    where: { messageId: wbotQuotedMsg.id.id }
-  });
+    if (msg.message.extendedTextMessage?.contextInfo?.quotedMessage) {
+      quotedMessage = msg.message.extendedTextMessage.contextInfo.quotedMessage;
+    } else if (msg.message.imageMessage?.contextInfo?.quotedMessage) {
+      quotedMessage = msg.message.imageMessage.contextInfo.quotedMessage;
+    } else if (msg.message.videoMessage?.contextInfo?.quotedMessage) {
+      quotedMessage = msg.message.videoMessage.contextInfo.quotedMessage;
+    } else if (msg.message.documentMessage?.contextInfo?.quotedMessage) {
+      quotedMessage = msg.message.documentMessage.contextInfo.quotedMessage;
+    } else if (msg.message.audioMessage?.contextInfo?.quotedMessage) {
+      quotedMessage = msg.message.audioMessage.contextInfo.quotedMessage;
+    }
 
-  if (!quotedMsg) return null;
-
-  return quotedMsg;
+    return quotedMessage;
+  } catch (err) {
+    logger.error(`Error verifying quoted message: ${err}`);
+    return null;
+  }
 };
 
 export default VerifyQuotedMessage;

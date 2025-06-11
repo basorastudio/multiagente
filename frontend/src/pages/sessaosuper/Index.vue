@@ -70,7 +70,7 @@
 <script>
 import { AdminListarChannels } from 'src/service/channels'
 import { format, parseISO } from 'date-fns'
-import pt from 'date-fns/locale/es/index'
+import es from 'date-fns/locale/es'
 import { mapGetters } from 'vuex'
 import ItemStatusChannel from './ItemStatusChannel'
 import { AdminListarEmpresas } from 'src/service/empresas'
@@ -146,7 +146,7 @@ export default {
   },
   methods: {
     formatarData (data, formato) {
-      return format(parseISO(data), formato, { locale: pt })
+      return format(parseISO(data), formato, { locale: es })
     },
     async listarChannels () {
       const { data } = await AdminListarChannels()

@@ -1,5 +1,5 @@
 /* eslint-disable no-return-assign */
-import { Message as WbotMessage } from "whatsapp-web.js";
+import { WAMessage } from "@whiskeysockets/baileys";
 import socketEmit from "../../helpers/socketEmit";
 import Ticket from "../../models/Ticket";
 import CreateMessageSystemService from "../MessageServices/CreateMessageSystemService";
@@ -7,6 +7,7 @@ import CreateLogTicketService from "../TicketServices/CreateLogTicketService";
 import BuildSendMessageService from "./BuildSendMessageService";
 import DefinedUserBotService from "./DefinedUserBotService";
 import IsContactTest from "./IsContactTest";
+import { logger } from "../../utils/logger";
 
 const isNextSteps = async (
   ticket: Ticket,
@@ -237,126 +238,138 @@ const isAnswerCloseTicket = async (
 };
 
 const VerifyStepsChatFlowTicket = async (
-  msg: WbotMessage | any,
-  ticket: Ticket | any
+  msg: WAMessage,
+  ticket: any
 ): Promise<void> => {
-  let celularTeste; // ticket.chatFlow?.celularTeste;
+  try {
+    let celularTeste; // ticket.chatFlow?.celularTeste;
 
-  if (
-    ticket.chatFlowId &&
-    ticket.status === "pending" &&
-    !msg.fromMe &&
-    !ticket.isGroup &&
-    !ticket.answered
-  ) {
-    if (ticket.chatFlowId) {
-      const chatFlow = await ticket.getChatFlow();
-      if (chatFlow.celularTeste) {
-        celularTeste = chatFlow.celularTeste.replace(/\s/g, ""); // retirar espaços
-      }
+    if (
+      ticket.chatFlowId &&
+      ticket.status === "pending" &&
+      !msg.key.fromMe &&
+      !ticket.isGroup &&
+      !ticket.answered
+    ) {
+      if (ticket.chatFlowId) {
+        const chatFlow = await ticket.getChatFlow();
+        if (chatFlow.celularTeste) {
+          celularTeste = chatFlow.celularTeste.replace(/\s/g, ""); // retirar espaços
+        }
 
-      const step = chatFlow.flow.nodeList.find(
-        (node: any) => node.id === ticket.stepChatFlow
-      );
-
-      const flowConfig = chatFlow.flow.nodeList.find(
-        (node: any) => node.type === "configurations"
-      );
-
-      // verificar condição com a ação do step
-      const stepCondition = step.conditions.find((conditions: any) => {
-        if (conditions.type === "US") return true;
-        const newConditions = conditions.condition.map((c: any) =>
-          String(c).toLowerCase().trim()
+        const step = chatFlow.flow.nodeList.find(
+          (node: any) => node.id === ticket.stepChatFlow
         );
-        const message = String(msg.body).toLowerCase().trim();
-        return newConditions.includes(message);
-      });
 
-      if (
-        !ticket.isCreated &&
-        (await isAnswerCloseTicket(flowConfig, ticket, msg.body))
-      )
-        return;
+        const flowConfig = chatFlow.flow.nodeList.find(
+          (node: any) => node.type === "configurations"
+        );
 
-      if (stepCondition && !ticket.isCreated) {
-        // await CreateAutoReplyLogsService(stepAutoReplyAtual, ticket, msg.body);
-        // Verificar se rotina em teste
-        if (
-          await IsContactTest(
-            ticket.contact.number,
-            celularTeste,
-            ticket.channel
-          )
-        )
-          return;
+        // Extraer el cuerpo del mensaje de Baileys
+        let messageBody = "";
+        if (msg.message?.conversation) {
+          messageBody = msg.message.conversation;
+        } else if (msg.message?.extendedTextMessage?.text) {
+          messageBody = msg.message.extendedTextMessage.text;
+        }
 
-        // action = 0: enviar para proximo step: nextStepId
-        await isNextSteps(ticket, chatFlow, step, stepCondition);
-
-        // action = 1: enviar para fila: queue
-        await isQueueDefine(ticket, flowConfig, step, stepCondition);
-
-        // action = 2: enviar para determinado usuário
-        await isUserDefine(ticket, step, stepCondition);
-
-        socketEmit({
-          tenantId: ticket.tenantId,
-          type: "ticket:update",
-          payload: ticket
+        // verificar condição com a ação do step
+        const stepCondition = step.conditions.find((conditions: any) => {
+          if (conditions.type === "US") return true;
+          const newConditions = conditions.condition.map((c: any) =>
+            String(c).toLowerCase().trim()
+          );
+          const message = String(messageBody).toLowerCase().trim();
+          return newConditions.includes(message);
         });
 
-        if (stepCondition.action === 1 || stepCondition.action === 2) {
-          await sendWelcomeMessage(ticket, flowConfig);
-        }
-      } else {
-        // Verificar se rotina em teste
         if (
-          await IsContactTest(
-            ticket.contact.number,
-            celularTeste,
-            ticket.channel
-          )
+          !ticket.isCreated &&
+          (await isAnswerCloseTicket(flowConfig, ticket, messageBody))
         )
           return;
 
-        // se ticket tiver sido criado, ingnorar na primeria passagem
-        if (!ticket.isCreated) {
-          if (await isRetriesLimit(ticket, flowConfig)) return;
+        if (stepCondition && !ticket.isCreated) {
+          // await CreateAutoReplyLogsService(stepAutoReplyAtual, ticket, msg.body);
+          // Verificar se rotina em teste
+          if (
+            await IsContactTest(
+              ticket.contact.number,
+              celularTeste,
+              ticket.channel
+            )
+          )
+            return;
 
-          const messageData = {
-            body:
-              flowConfig.configurations.notOptionsSelectMessage.message ||
-              "Desculpe! Não entendi sua resposta. Vamos tentar novamente! Escolha uma opção válida.",
-            fromMe: true,
-            read: true,
-            sendType: "bot"
-          };
-          await CreateMessageSystemService({
-            msg: messageData,
+          // action = 0: enviar para proximo step: nextStepId
+          await isNextSteps(ticket, chatFlow, step, stepCondition);
+
+          // action = 1: enviar para fila: queue
+          await isQueueDefine(ticket, flowConfig, step, stepCondition);
+
+          // action = 2: enviar para determinado usuário
+          await isUserDefine(ticket, step, stepCondition);
+
+          socketEmit({
             tenantId: ticket.tenantId,
-            ticket,
-            sendType: messageData.sendType,
-            status: "pending"
+            type: "ticket:update",
+            payload: ticket
           });
 
-          // tratar o número de retentativas do bot
-          await ticket.update({
-            botRetries: ticket.botRetries + 1,
-            lastInteractionBot: new Date()
-          });
+          if (stepCondition.action === 1 || stepCondition.action === 2) {
+            await sendWelcomeMessage(ticket, flowConfig);
+          }
+        } else {
+          // Verificar se rotina em teste
+          if (
+            await IsContactTest(
+              ticket.contact.number,
+              celularTeste,
+              ticket.channel
+            )
+          )
+            return;
+
+          // se ticket tiver sido criado, ingnorar na primeria passagem
+          if (!ticket.isCreated) {
+            if (await isRetriesLimit(ticket, flowConfig)) return;
+
+            const messageData = {
+              body:
+                flowConfig.configurations.notOptionsSelectMessage.message ||
+                "Desculpe! Não entendi sua resposta. Vamos tentar novamente! Escolha uma opção válida.",
+              fromMe: true,
+              read: true,
+              sendType: "bot"
+            };
+            await CreateMessageSystemService({
+              msg: messageData,
+              tenantId: ticket.tenantId,
+              ticket,
+              sendType: messageData.sendType,
+              status: "pending"
+            });
+
+            // tratar o número de retentativas do bot
+            await ticket.update({
+              botRetries: ticket.botRetries + 1,
+              lastInteractionBot: new Date()
+            });
+          }
+          for (const interaction of step.interactions) {
+            await BuildSendMessageService({
+              msg: interaction,
+              tenantId: ticket.tenantId,
+              ticket
+            });
+          }
         }
-        for (const interaction of step.interactions) {
-          await BuildSendMessageService({
-            msg: interaction,
-            tenantId: ticket.tenantId,
-            ticket
-          });
-        }
+        // await SetTicketMessagesAsRead(ticket);
+        // await SetTicketMessagesAsRead(ticket);
       }
-      // await SetTicketMessagesAsRead(ticket);
-      // await SetTicketMessagesAsRead(ticket);
     }
+  } catch (err) {
+    logger.error(`Error verifying chat flow steps: ${err}`);
   }
 };
 

@@ -83,7 +83,7 @@
 </template>
 <script>
 import { format, parseISO } from 'date-fns'
-import pt from 'date-fns/locale/es/index'
+import es from 'date-fns/locale/es'
 
 export default {
   name: 'ItemStatusChannel',
@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     formatarData (data, formato) {
-      return format(parseISO(data), formato, { locale: pt })
+      return format(parseISO(data), formato, { locale: es })
     }
   }
 }

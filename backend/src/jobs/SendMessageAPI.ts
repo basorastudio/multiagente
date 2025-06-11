@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MessageMedia, Message as WbotMessage } from "whatsapp-web.js";
+import { WASocket } from "@whiskeysockets/baileys";
 import fs from "fs";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
@@ -14,6 +14,12 @@ import AppError from "../errors/AppError";
 import VerifyContact from "../services/WbotServices/helpers/VerifyContact";
 import FindOrCreateTicketService from "../services/TicketServices/FindOrCreateTicketService";
 import CreateMessageSystemService from "../services/MessageServices/CreateMessageSystemService";
+import { Store } from "../libs/store";
+
+type Session = WASocket & {
+  id?: number;
+  store?: Store;
+};
 
 export default {
   key: "SendMessageAPI",
@@ -30,11 +36,21 @@ export default {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async handle({ data }: any) {
     try {
-      const wbot = getWbot(data.sessionId);
-      const message: any = {} as WbotMessage;
+      const wbot = getWbot(data.sessionId) as Session;
+      
       try {
-        const idNumber = await wbot.getNumberId(data.number);
-        if (!idNumber) {
+        // En Baileys, verificamos si el número es válido usando nuestro servicio
+        const jid = `${data.number}@s.whatsapp.net`;
+        
+        // Verificar si el contacto existe usando nuestro servicio
+        let isValidContact = true;
+        try {
+          await CheckIsValidContact(data.number, data.tenantId);
+        } catch (error) {
+          isValidContact = false;
+        }
+
+        if (!isValidContact) {
           const payload = {
             ack: -1,
             body: data.body,
@@ -61,9 +77,17 @@ export default {
           return payload;
         }
 
-        // '559891191708@c.us'
-        const msgContact = await wbot.getContactById(idNumber._serialized);
-        const contact = await VerifyContact(msgContact, data.tenantId);
+        // En Baileys, obtenemos el contacto del store o creamos uno básico
+        let contactData = wbot.store?.getContact(jid);
+        if (!contactData) {
+          contactData = {
+            id: jid,
+            name: data.number,
+            notify: data.number
+          };
+        }
+
+        const contact = await VerifyContact(contactData, data.tenantId);
         const ticket = await FindOrCreateTicketService({
           contact,
           whatsappId: wbot.id!,
@@ -109,21 +133,6 @@ export default {
         }
         throw new Error(error);
       }
-
-      // const apiMessage = await UpsertMessageAPIService({
-      //   sessionId: data.sessionId,
-      //   messageId: message.id.id,
-      //   body: data.body,
-      //   ack: message.ack,
-      //   number: data.number,
-      //   mediaName: data?.media?.filename,
-      //   mediaUrl: data.mediaUrl,
-      //   timestamp: message.timestamp,
-      //   externalKey: data.externalKey,
-      //   messageWA: message,
-      //   apiConfig: data.apiConfig,
-      //   tenantId: data.tenantId
-      // });
     } catch (error) {
       logger.error({ message: "Error send message api", error });
       throw new Error(error);

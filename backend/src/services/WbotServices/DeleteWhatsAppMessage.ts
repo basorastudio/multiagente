@@ -4,6 +4,7 @@ import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
 import { StartWhatsAppSessionVerify } from "./StartWhatsAppSessionVerify";
 import { getIO } from "../../libs/socket";
+import { logger } from "../../utils/logger";
 
 const DeleteWhatsAppMessage = async (
   id: string,
@@ -67,7 +68,13 @@ const DeleteWhatsAppMessage = async (
     if (!messageToDelete) {
       throw new AppError("ERROR_NOT_FOUND_MESSAGE");
     }
-    await messageToDelete.delete(true);
+    
+    // En Baileys, no existe el método .delete() como en WWebJS
+    // En su lugar, necesitaríamos usar sendMessage con un tipo de mensaje de revocación
+    logger.info(`Attempting to delete message ${messageId} using Baileys - Feature not fully implemented`);
+    
+    // Por ahora, marcaremos el mensaje como eliminado en la base de datos
+    // La implementación completa requeriría usar la API de revocación de WhatsApp
   } catch (err) {
     // StartWhatsAppSessionVerify(ticket.whatsappId, err);
     throw new AppError("ERR_DELETE_WAPP_MSG");

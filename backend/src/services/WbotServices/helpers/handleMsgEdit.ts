@@ -1,18 +1,23 @@
-import { Message as WbotMessage } from "whatsapp-web.js";
+import { WAMessage } from "@whiskeysockets/baileys";
+import { logger } from "../../../utils/logger";
 import Message from "../../../models/Message";
 import Ticket from "../../../models/Ticket";
 import socketEmit from "../../../helpers/socketEmit";
 
-const handleMsgEdit = async (
-  msg: WbotMessage,
-  newBody: string
-): Promise<void> => {
-  
+const handleMsgEdit = async (msg: WAMessage): Promise<void> => {
   try {
-    // Buscar a mensagem no banco de dados
+    // Implementación específica para Baileys para manejar edición de mensajes
+    logger.info(`HandleMsgEdit - Message edited: ${msg.key.id}`);
+    
+    if (!msg.key?.id) {
+      logger.warn("Message ID is missing");
+      return;
+    }
+
+    // Buscar el mensaje en la base de datos
     const editedMsg = await Message.findOne({ 
-	where: { messageId: msg.id.id },
-	  include: [
+      where: { messageId: msg.key.id },
+      include: [
         "contact",
         {
           model: Ticket,
@@ -25,10 +30,21 @@ const handleMsgEdit = async (
           include: ["contact"]
         }
       ]
-	});
+    });
 
     if (!editedMsg) {
+      logger.warn(`Message not found for editing: ${msg.key.id}`);
       return;
+    }
+
+    // Extraer el nuevo contenido del mensaje editado
+    let newBody = "";
+    if (msg.message?.editedMessage?.message?.extendedTextMessage?.text) {
+      newBody = msg.message.editedMessage.message.extendedTextMessage.text;
+    } else if (msg.message?.extendedTextMessage?.text) {
+      newBody = msg.message.extendedTextMessage.text;
+    } else if (msg.message?.conversation) {
+      newBody = msg.message.conversation;
     }
 
     // Atualizar o campo 'edited'
@@ -41,8 +57,10 @@ const handleMsgEdit = async (
        payload: editedMsg
       });
 
+    logger.info(`Message edited successfully: ${msg.key.id}`);
+
   } catch (err) {
-    console.error(`Erro ao manipular a edição da mensagem com ID ${msg.id.id}. Erro: ${err}`);
+    logger.error(`Error handling message edit for ID ${msg.key?.id}: ${err}`);
   }
 }
 
