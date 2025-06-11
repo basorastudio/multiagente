@@ -35,7 +35,7 @@ module.exports = {
           {
             key: "callRejectMessage",
             value:
-              "Las llamadas de voz y video están deshabilitadas para este WhatsApp, por favor envía un mensaje de texto.",
+              "As chamadas de voz e vídeo estão desabilitas para esse WhatsApp, favor enviar uma mensagem de texto.",
             tenantId: id,
             createdAt: new Date(),
             updatedAt: new Date()
@@ -49,7 +49,7 @@ module.exports = {
           }
         })
 
-        // Insertar las nuevas configuraciones para el inquilino
+        // Insere as novas configurações para o tenant
         await queryInterface.bulkInsert("Settings", bulk);
       })
     );

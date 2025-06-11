@@ -48,10 +48,9 @@ const UpdateCampaignService = async ({
 
   if (
     campaignModel?.status !== "pending" &&
-    campaignModel?.status !== "canceled" &&
-    campaignModel?.status !== "finished"
+    campaignModel?.status !== "canceled"
   ) {
-    throw new AppError("ERR_NO_UPDATE_CAMPAIGN_NOT_IN_CANCELED_PENDING_FINISHED", 404);
+    throw new AppError("ERR_NO_UPDATE_CAMPAIGN_NOT_IN_CANCELED_PENDING", 404);
   }
 
   if (medias && Array.isArray(medias) && medias.length) {
@@ -83,11 +82,6 @@ const UpdateCampaignService = async ({
 
   if (!campaignModel) {
     throw new AppError("ERR_NO_CAMPAIGN_FOUND", 404);
-  }
-
-  // Si la campaña está finalizada y se está editando, resetear el estado a pending
-  if (campaignModel.status === "finished") {
-    data.status = "pending";
   }
 
   await campaignModel.update(data);

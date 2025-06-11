@@ -10,7 +10,7 @@ export const BusinessHours = [
   },
   {
     day: 1,
-    label: "Lunes",
+    label: "Segunda-Feira",
     type: "O",
     hr1: "08:00",
     hr2: "12:00",
@@ -19,7 +19,7 @@ export const BusinessHours = [
   },
   {
     day: 2,
-    label: "Martes",
+    label: "Terça-Feira",
     type: "O",
     hr1: "08:00",
     hr2: "12:00",
@@ -28,7 +28,7 @@ export const BusinessHours = [
   },
   {
     day: 3,
-    label: "Miércoles",
+    label: "Quarta-Feira",
     type: "O",
     hr1: "08:00",
     hr2: "12:00",
@@ -37,7 +37,7 @@ export const BusinessHours = [
   },
   {
     day: 4,
-    label: "Jueves",
+    label: "Quinta-Feira",
     type: "O",
     hr1: "08:00",
     hr2: "12:00",
@@ -46,7 +46,7 @@ export const BusinessHours = [
   },
   {
     day: 5,
-    label: "Viernes",
+    label: "Sexta-Feira",
     type: "O",
     hr1: "08:00",
     hr2: "12:00",
@@ -65,4 +65,4 @@ export const BusinessHours = [
 ];
 
 export const messageBusinessHours =
-  "¡Hola! ¡Fantástico recibir tu contacto! En este momento estamos ausentes y no podremos atenderte, pero priorizaremos tu atención y regresaremos pronto. Agradecemos mucho el contacto.";
+  "Olá! Fantástico receber seu contato! No momento estamos ausentes e não poderemos lhe atender, mas vamos priorizar seu atendimento e retornaremos logo mais. Agradecemos muito o contato.";

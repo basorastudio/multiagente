@@ -12,7 +12,7 @@ import SendMessageSystemProxy from "../../helpers/SendMessageSystemProxy";
 const SendMessagesSchenduleWbot = async (): Promise<void> => {
   const currentDate = new Date(
     new Date().toLocaleString("en-US", {
-      timeZone: process.env.TIMEZONE || "America/Santo_Domingo"
+      timeZone: process.env.TIMEZONE || "America/Sao_Paulo"
     })
   );
   const twentyFourHoursAgo = new Date(

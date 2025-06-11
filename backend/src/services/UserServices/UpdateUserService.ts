@@ -60,17 +60,6 @@ const UpdateUserService = async ({
     throw new AppError(err?.message);
   }
 
-  // Verificar si el email ya existe
-  if (email && email !== user.email) {
-    const emailExists = await User.findOne({
-      where: { email, tenantId }
-    });
-
-    if (emailExists) {
-      throw new AppError("ERR_EMAIL_ALREADY_REGISTERED");
-    }
-  }
-
   if (queues) {
     await UsersQueues.destroy({ where: { userId } });
     await Promise.all(

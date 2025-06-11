@@ -50,7 +50,7 @@ const AdminUpdateUserService = async ({
     throw new AppError(err?.message);
   }
 
-  // Verificar si el email ya existe
+  // Verificar se o email já existe
   if (email && email !== user.email) {
     const existingUser = await User.findOne({
       where: { email },

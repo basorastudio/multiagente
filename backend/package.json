@@ -25,6 +25,8 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@sentry/node": "7.102.1",
     "@types/pino": "^6.3.5",
+    "@whiskeysockets/baileys": "^6.6.0",
+    "@hapi/boom": "^10.0.1",
     "amqplib": "^0.10.3",
     "asterisk-manager": "^0.2.0",
     "axios": "^1.6.7",

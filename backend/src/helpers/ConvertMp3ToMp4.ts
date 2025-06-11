@@ -3,14 +3,14 @@ import { path as ffmpegPath } from "@ffmpeg-installer/ffmpeg";
 import fs from "fs";
 import { logger } from "../utils/logger";
 
-// CONVERTIR MP3 A MP4
+// CONVERTER MP3 PARA MP4
 const convertMp3ToMp4 = (input: string, outputMP4: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     ffmpeg.setFfmpegPath(ffmpegPath);
-    logger.info(`Convirtiendo ${input} a ${outputMP4}`);
+    logger.info(`Converting ${input} to ${outputMP4}`);
 
     if (!fs.existsSync(input)) {
-      const errorMsg = `El archivo de entrada no existe: ${input}`;
+      const errorMsg = `Input file does not exist: ${input}`;
       logger.error(errorMsg);
       return reject(new Error(errorMsg));
     }
@@ -20,17 +20,17 @@ const convertMp3ToMp4 = (input: string, outputMP4: string): Promise<void> => {
       .output(outputMP4)
       .outputFormat("mp4")
       .on("start", (commandLine) => {
-        logger.info(`Comando Ffmpeg iniciado: ${commandLine}`);
+        logger.info(`Spawned Ffmpeg with command: ${commandLine}`);
       })
       .on("error", (error: Error) => {
-        logger.info(`Error de codificación: ${error.message}`);
+        logger.info(`Encoding Error: ${error.message}`);
         reject(error);
       })
       .on("progress", (progress) => {
-        logger.info(`Procesando: ${progress.percent}% completado`);
+        logger.info(`Processing: ${progress.percent}% done`);
       })
       .on("end", () => {
-        logger.info("¡Transcodificación de video exitosa!");
+        logger.info("Video Transcoding succeeded !");
         resolve();
       })
       .run();

@@ -1,7 +1,9 @@
 import { getInstaBot } from "../libs/InstaBot";
 import { getTbot } from "../libs/tbot";
+import { getBaileys } from "../libs/baileys";
 import InstagramSendMessagesSystem from "../services/InstagramBotServices/InstagramSendMessagesSystem";
 import TelegramSendMessagesSystem from "../services/TbotServices/TelegramSendMessagesSystem";
+import SendBaileysMessage from "../services/BaileysServices/SendBaileysMessage";
 import SendWhatsAppMedia from "../services/WbotServices/SendWhatsAppMedia";
 import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
 
@@ -38,6 +40,17 @@ const SendMessageSystemProxy = async ({
         );
         break;
 
+      case "baileys":
+        message = await SendBaileysMessage({
+          body: messageData.body,
+          ticket,
+          quotedMsg: messageData?.quotedMsg,
+          userId,
+          mediaPath: media?.path || media?.filename,
+          mediaType: media?.mimetype?.split("/")[0]
+        });
+        break;
+
       default:
         message = await SendWhatsAppMedia({ media, ticket, userId });
         break;
@@ -60,6 +73,15 @@ const SendMessageSystemProxy = async ({
           ticket,
           messageData
         );
+        break;
+
+      case "baileys":
+        message = await SendBaileysMessage({
+          body: messageData.body,
+          ticket,
+          quotedMsg: messageData?.quotedMsg,
+          userId
+        });
         break;
 
       default:

@@ -15,7 +15,7 @@ interface Request {
   tokenAPI?: string;
   fbPageId?: string;
   farewellMessage?: string;
-  type: "waba" | "instagram" | "telegram" | "whatsapp" | "messenger";
+  type: "waba" | "instagram" | "telegram" | "whatsapp" | "messenger" | "baileys";
   wavoip?: string;
 }
 
@@ -40,17 +40,17 @@ const CreateWhatsAppService = async ({
   isDefault = false
 }: Request): Promise<Response> => {
   if (type === "waba" && (!tokenAPI || !wabaBSP)) {
-    throw new AppError("WABA: favor informar el Token y la BSP");
+    throw new AppError("WABA: favor informar o Token e a BSP");
   }
 
   if (type === "instagram" && !instagramUser) {
     throw new AppError(
-      "Instagram: favor informar el Usuario y contraseña correctamente."
+      "Instagram: favor informar o Usuário e senha corretamente."
     );
   }
 
   if (type === "telegram" && !tokenTelegram) {
-    throw new AppError("Telegram: favor informar el Token.");
+    throw new AppError("Telegram: favor informar o Token.");
   }
 
   const whatsappFound = await Whatsapp.findOne({

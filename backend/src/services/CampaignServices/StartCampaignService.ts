@@ -128,23 +128,6 @@ const StartCampaignService = async ({
     throw new AppError("ERROR_CAMPAIGN_NOT_EXISTS", 404);
   }
 
-  // Si la campaña está finalizada y se va a reprogramar, resetear el estado de los contactos
-  if (campaign.status === "finished") {
-    await CampaignContacts.update(
-      {
-        ack: 0,
-        body: null,
-        mediaName: null,
-        timestamp: null,
-        messageId: null
-      },
-      {
-        where: {
-          campaignId: campaign.id
-        }
-      }
-    );
-  }
 
   const campaignContacts = await CampaignContacts.findAll({
     where: { campaignId },
@@ -157,12 +140,12 @@ const StartCampaignService = async ({
 
   const timeDelay = campaign.delay ? campaign.delay * 1000 : 20000;
 
-  let dateDelay = zonedTimeToUtc(campaign.start, "America/Santo_Domingo");
+  let dateDelay = zonedTimeToUtc(campaign.start, "America/Sao_Paulo");
   const data = campaignContacts.map((campaignContact: CampaignContacts) => {
     dateDelay = addSeconds(dateDelay, timeDelay / 1000);
     return mountMessageData(campaign, campaignContact, {
       ...options,
-      jobId: `campaignId_${campaign.id}_contact_${campaignContact.contactId}_id_${campaignContact.id}`,
+      jobId: `campaginId_${campaign.id}_contact_${campaignContact.contactId}_id_${campaignContact.id}`,
       delay: calcDelay(dateDelay, timeDelay)
     });
   });

@@ -33,7 +33,7 @@ const AdminCreateUserService = async ({
       .required()
       .test(
         "Check-email",
-        "Este e-mail já está registrado.",
+        "Este e-mail já está cadastrado.",
         async value => {
           const emailExists = await User.findOne({
             where: { email: value! }
